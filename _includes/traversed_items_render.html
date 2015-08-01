@@ -1,0 +1,8 @@
+{% case include.level %}
+{% when 0 %}{{traversed_items_0}}
+{% when 1 %}{{traversed_items_1}}
+{% when 2 %}{{traversed_items_2}}
+{% when 3 %}{{traversed_items_3}}
+{% when 4 %}{{traversed_items_4}}
+{% else   %}{{traversed_items_5}}
+{% endcase %}

@@ -1,0 +1,115 @@
+@import '../libs/vars';
+@import '../libs/functions';
+@import '../libs/mixins';
+
+///
+/// Slate by Pixelarity
+/// pixelarity.com @pixelarity
+/// License: pixelarity.com/license
+///
+
+/* Icon */
+
+	.icon {
+		@include icon;
+		border-bottom: none;
+		position: relative;
+
+		> .label {
+			display: none;
+		}
+
+		&:before {
+			cursor: inherit;
+		}
+	}
+
+	.icon-wrapper {
+		width: 4em;
+		height: 2em;
+		line-height: 2em;
+		display: inline-block;
+		text-align: center;
+		position: relative;
+		margin: 1.235em 0;
+
+		&:before, &:after {
+			content: '';
+			width: 0;
+			height: 0;
+			border-left: solid 2em transparent;
+			border-right: solid 2em transparent;
+			position: absolute;
+			left: 0;
+		}
+
+		&:before {
+			border-bottom: solid 1.235em;
+			top: -1.235em;
+		}
+
+		&:after {
+			border-top: solid 1.235em;
+			bottom: -1.235em;
+		}
+
+		.icon {
+			cursor: default;
+
+			&:before {
+				font-size: 1.5rem;
+			}
+		}
+
+		&.major {
+			display: block;
+			margin: 1.235em 0 (1.235em + _size(element-margin)) 0;
+		}
+
+		&.small {
+			font-size: 0.75em;
+
+			.icon {
+				&:before {
+					font-size: 1.25rem;
+				}
+			}
+		}
+	}
+
+	@mixin color-icon($p: null) {
+		$highlight: _palette($p, highlight);
+
+		.icon-wrapper {
+			@if $highlight == $p {
+				background-color: _palette($p, fg-bold);
+				box-shadow: 0 -1px 0 0 _palette($p, fg-bold), 0 1px 0 0 _palette($p, fg-bold);
+
+				&:before {
+					border-bottom-color: _palette($p, fg-bold);
+				}
+
+				&:after {
+					border-top-color: _palette($p, fg-bold);
+				}
+
+				.icon {
+					color: _palette($p, bg);
+				}
+			}
+			@else {
+				background-color: _palette($p, border-bg);
+				box-shadow: 0 -1px 0 0 _palette($p, border-bg), 0 1px 0 0 _palette($p, border-bg);
+
+				&:before {
+					border-bottom-color: _palette($p, border-bg);
+				}
+
+				&:after {
+					border-top-color: _palette($p, border-bg);
+				}
+			}
+		}
+	}
+
+	@include color-icon;

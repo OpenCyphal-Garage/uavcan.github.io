@@ -1,0 +1,275 @@
+@import '../libs/vars';
+@import '../libs/functions';
+@import '../libs/mixins';
+
+///
+/// Slate by Pixelarity
+/// pixelarity.com @pixelarity
+/// License: pixelarity.com/license
+///
+
+/* Wrapper */
+
+	.wrapper {
+		@include padding(4em, 0);
+		position: relative;
+
+		> .inner {
+			margin: 0 auto;
+			max-width: 90em;
+			width: 90%;
+		}
+
+		& + & {
+			border-top: solid 1px _palette(border);
+		}
+
+		// Apply more padding than usual.
+		&.major-pad {
+			@include padding(6em, 0);
+		}
+
+		// Apply padding to .content elements *inside* wrapper, instead of the wrapper itself.
+		&.content-pad {
+			padding: 0;
+
+			.content {
+				@include padding(4em, 0);
+			}
+		}
+
+		// Divide space evenly between two child elements.
+		&.split {
+			> .inner {
+				@include vendor('display', 'flex');
+				@include vendor('justify-content', 'space-between');
+
+				> * {
+					width: calc(50% - 3.75em);
+
+					&:before {
+						content: '';
+						display: block;
+						width: 1px;
+						height: 100%;
+						position: absolute;
+						top: 0;
+						margin-left: -3.75em;
+						background-color: _palette(border);
+					}
+
+					&:first-child {
+						border: 0;
+
+						&:before {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+
+		&.style1 {
+			@include color(accent1);
+			border-top: 0;
+
+			& + .wrapper {
+				border-top: 0;
+			}
+
+			&.split {
+				> .inner {
+					> * {
+						&:before {
+							background-color: _palette(accent1, border);
+						}
+					}
+				}
+			}
+		}
+
+		&.style2 {
+			@include color(accent2);
+			border-top: 0;
+
+			& + .wrapper {
+				border-top: 0;
+			}
+
+			&.split {
+				> .inner {
+					> * {
+						&:before {
+							background-color: _palette(accent2, border);
+						}
+					}
+				}
+			}
+		}
+
+		.breadcrumbs {
+			margin-left: 1em;
+			margin-top: -4em;
+			position: absolute;
+			font-size: 90%;
+			font-style: italic;
+			color: _palette(fg-light);
+			> * {
+				color: inherit;
+			}
+		}
+
+		&.sidebar {
+			> .inner {
+				@include vendor('display', 'flex');
+				@include vendor('flex-wrap', 'wrap');
+
+				> header {
+					width: 100%;
+				}
+
+				> .content {
+					width: 75%;
+					padding: 0 (_size(element-margin) * 2) 0 0;
+				}
+
+				> .sidebar {
+					width: 25%;
+				}
+			}
+
+			&.right {
+			}
+
+			&.left {
+				> .inner {
+					@include vendor('flex-direction', 'row-reverse');
+
+					> .content {
+						padding: 0 0 0 (_size(element-margin) * 2);
+					}
+				}
+			}
+
+			@include breakpoint(medium) {
+				> .inner {
+					@include vendor('flex-direction', 'row');
+
+					> .content {
+						width: 100%;
+						padding: 0;
+					}
+
+					> .sidebar {
+						border-top: solid 2px _palette(border);
+						margin: _size(element-margin) 0 0 0;
+						padding: (_size(element-margin) * 2) 0 0 0;
+						width: 100%;
+					}
+				}
+
+				&.style1 {
+					> .inner {
+						> .sidebar {
+							border-top-color: _palette(accent1, border);
+						}
+					}
+				}
+
+				&.style2 {
+					> .inner {
+						> .sidebar {
+							border-top-color: _palette(accent2, border);
+						}
+					}
+				}
+			}
+		}
+
+		@include breakpoint(large) {
+			@include padding(3em, 0);
+
+			> .inner {
+				width: 100%;
+				padding: 0 3em;
+			}
+
+			&.major-pad {
+				@include padding(4em, 0);
+			}
+
+			&.content-pad {
+				.content {
+					@include padding(3em, 0);
+				}
+			}
+
+			&.split {
+				> .inner {
+					> * {
+						width: calc(50% - 2em);
+
+						&:before {
+							margin-left: -2em;
+						}
+					}
+				}
+			}
+		}
+
+		@include breakpoint(medium) {
+			> .inner {
+				> * {
+					width: 100%;
+					padding-left: 0 !important;
+				}
+			}
+
+			&.split {
+				> .inner {
+					@include vendor('flex-direction', 'column');
+
+					> * {
+						width: 100%;
+						padding-top: 3em;
+						margin-top: 3em - _size(element-margin);
+
+						&:before {
+							margin-left: 0;
+							position: relative;
+							height: 1px;
+							width: 100%;
+							top: -3em;
+						}
+
+						&:first-child {
+							padding-top: 0;
+							margin-top: 0;
+
+							&:before {
+								display: none;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@include breakpoint(small) {
+			@include padding(2.5em, 0);
+
+			> .inner {
+				padding: 0 1.5em;
+			}
+
+			&.major-pad {
+				@include padding(2.5em, 0);
+			}
+
+			&.content-pad {
+				.content {
+					@include padding(2.5em, 0);
+				}
+			}
+		}
+	}

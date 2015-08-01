@@ -1,0 +1,66 @@
+@import '../libs/vars';
+@import '../libs/functions';
+@import '../libs/mixins';
+
+///
+/// Slate by Pixelarity
+/// pixelarity.com @pixelarity
+/// License: pixelarity.com/license
+///
+
+/* Footer */
+
+	#footer {
+		@include padding(4em, 0);
+		border-top: solid 1px _palette(border);
+		position: relative;
+
+		> .inner {
+			margin: 0 auto;
+			max-width: 90em;
+			position: relative;
+			width: 90%;
+		}
+
+		.copyright {
+			color: _palette(fg-light);
+			font-size: 0.9em;
+		}
+
+		.menu {
+			color: _palette(fg-light);
+			font-size: 0.9em;
+			position: absolute;
+			right: 0;
+			top: 0;
+
+			a {
+				color: inherit;
+			}
+		}
+
+		@include breakpoint(large) {
+			@include padding(3em, 0);
+			text-align: center;
+
+			.copyright {
+				margin: 0 0 (_size(element-margin) * 0.5) 0;
+			}
+
+			.menu {
+				position: relative;
+			}
+		}
+
+		@include breakpoint(xsmall) {
+			.menu {
+				li {
+					a {
+						span {
+							display: none;
+						}
+					}
+				}
+			}
+		}
+	}

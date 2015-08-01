@@ -1,0 +1,71 @@
+// Misc.
+	$misc: (
+		z-index-base:		10000
+	);
+
+// Duration.
+	$duration: (
+		nav:				0.5s,
+		transition:			0.2s
+	);
+
+// Size.
+	$size: (
+		navPanel-width:		20em,
+		element-height:		2.75em,
+		element-margin:		2em
+	);
+
+// Font.
+	$font: (
+		family:						('Open Sans', Helvetica, sans-serif),
+		family-heading:				('Open Sans', Helvetica, sans-serif),
+		family-fixed:				('Monospace', 'Courier New', monospace),
+		weight:						400,
+		weight-menu-current:		600,
+		weight-bold:				600,
+		weight-heading:				500,
+		weight-heading-bold:		700,
+		weight-heading-extrabold:	800
+	);
+
+// Palette.
+	$palette: (
+		bg:					#fff,
+		bg-header:			#ddd,
+		fg:					#000,
+		fg-bold:			#000,
+		fg-light:			#777,
+		border:				#e6e6e6,
+		border-bg:			#f6f6f6,
+		border2:			#a6a6a6,
+		border2-bg:			#e2e2e2,
+		highlight:			accent1,
+		box:				transparent,
+
+		accent1: (
+			bg:				#000,
+			fg:				#fff,
+			fg-bold:		#fff,
+			fg-light:		#888,
+			border:			rgba(255,255,255,0.25),
+			border-bg:		rgba(255,255,255,0.075),
+			border2:		rgba(255,255,255,0.5),
+			border2-bg:		rgba(255,255,255,0.2),
+			highlight:		accent1,
+			box:			transparent
+		),
+
+		accent2: (
+			bg:				#f6f6f6,
+			fg:				#000,
+			fg-bold:		#000,
+			fg-light:		#bbb,
+			border:			#e6e6e6,
+			border-bg:		rgba(144,144,144,0.075),
+			border2:		#a6a6a6,
+			border2-bg:		rgba(144,144,144,0.2),
+			highlight:		accent1,
+			box:			solid
+		)
+	);

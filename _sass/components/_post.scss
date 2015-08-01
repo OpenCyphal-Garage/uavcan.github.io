@@ -1,0 +1,64 @@
+@import '../libs/vars';
+@import '../libs/functions';
+@import '../libs/mixins';
+
+///
+/// Slate by Pixelarity
+/// pixelarity.com @pixelarity
+/// License: pixelarity.com/license
+///
+
+/* Post */
+
+	.post {
+		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'column');
+		@include vendor('align-items', 'stretch');
+		margin-bottom: _size(element-margin);
+
+		.image {
+			display: block;
+			margin-bottom: (_size(element-margin) * 0.5);
+			width: 100%;
+
+			img {
+				width: 100%;
+			}
+		}
+
+		.content {
+			@include padding(2.5em, 2.5em);
+			@include vendor('flex-grow', '1');
+		}
+
+		@include breakpoint(large) {
+			.content {
+				@include padding(2em, 2em);
+			}
+		}
+
+		@include breakpoint(small) {
+			display: block;
+
+			.content {
+				@include padding(2em, 1.5em);
+			}
+		}
+	}
+
+	@mixin color-post($p: null) {
+ 		.post {
+ 			.content {
+ 				@if _palette($p, box) == transparent {
+					background-color: transparent;
+					border: solid 1px _palette(border);
+ 				}
+ 				@else {
+					background-color: _palette(bg);
+ 					border: 0;
+	 			}
+ 			}
+ 		}
+	}
+
+	@include color-post;

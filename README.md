@@ -1,2 +1,3 @@
-# uavcan.github.io
-UAVCAN website
+# UAVCAN website
+
+This repository contains sources of the UAVCAN website.

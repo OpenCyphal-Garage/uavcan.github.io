@@ -1,0 +1,36 @@
+@import '../libs/vars';
+@import '../libs/functions';
+@import '../libs/mixins';
+
+///
+/// Slate by Pixelarity
+/// pixelarity.com @pixelarity
+/// License: pixelarity.com/license
+///
+
+/* Posts */
+
+	.posts {
+		@include vendor('display', 'flex');
+		@include vendor('flex-wrap', 'wrap');
+		@include vendor('justify-content', 'space-between');
+		@include vendor('align-items', 'stretch');
+
+		.post {
+			width: calc(33.33333333% - 1.25em);
+		}
+
+		@include breakpoint(large) {
+			.post {
+				width: calc(50% - 1em);
+			}
+		}
+
+		@include breakpoint(small) {
+			display: block;
+
+			.post {
+				width: 100%;
+			}
+		}
+	}

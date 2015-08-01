@@ -1,0 +1,7 @@
+<header id="header">
+    <a href="/"><img src="/images/logo.png" /></a>
+    <nav id="nav">
+        {% capture tmp %}{% include menu.html a_toplevel_opener_class="submenu fa-angle-down" %}{% endcapture %}
+        {% include render_without_empty_lines.html content=tmp %}
+    </nav>
+</header>

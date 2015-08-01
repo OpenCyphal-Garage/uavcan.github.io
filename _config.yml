@@ -1,0 +1,20 @@
+# Site settings
+title: UAVCAN
+email: uavcan@googlegroups.com
+description: >
+  UAVCAN is a lightweight protocol designed for reliable communication in aerospace
+  and robotic applications via CAN bus.
+baseurl: ""
+url: "http://uavcan.org"
+github_username: UAVCAN
+
+# Build settings
+highlighter: pygments
+markdown: redcarpet
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"

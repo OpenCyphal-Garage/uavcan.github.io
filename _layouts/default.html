@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+
+    {% include head.html %}
+
+    <body>
+
+        {% include header.html %}
+
+        <section id="main" class="wrapper sidebar right">
+            <div class="inner">
+
+                <!-- BREADCRUMBS -->
+                {% assign breadcrumbs_level = CLEAN_PAGE_URL | split: '/' | size %}
+                {% if breadcrumbs_level > 2 %}
+                <div class="breadcrumbs">
+                {% assign breadcrumb_url = '' %}
+                {% for x in PAGE_URL_PARTS %}{% if x != '' %}
+                    {% assign tmp1 = breadcrumb_url | append: '/' | append: x %}
+                    {% assign breadcrumb_url = tmp1 %}
+
+                    {% assign tmp2 = breadcrumb_url | remove: '/' %}
+                    {% assign tmp3 = page.url | remove: '/' %}
+                    {% assign tmp4 = breadcrumb_url | append: '/index.html' | remove: '/' %}
+
+                    {% if tmp3 != tmp2 %}
+                        {% if tmp3 != tmp4 %}
+                    <a href="{{breadcrumb_url}}">{{x | replace: '_', ' '}}</a><span>&nbsp;/&nbsp;</span>
+                        {% endif %}
+                    {% else %}
+                    <span>{{PAGE_TITLE}}</span>
+                    {% endif %}
+                {% endif %}{% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- CONTENT -->
+                <div class="content">
+                    {{ content }}
+                </div>
+
+                <!-- SIDEBAR -->
+                {% if PAGE_DEPTH > 0 %}
+                <div class="sidebar">
+                    <section>
+                        {% assign clean_url = page.url | remove: 'index.html' | remove: '.html' | split: '/' %}
+                        {% assign sub_heading = clean_url[2] %}
+                        {% if sub_heading == null %}
+                            {% assign sub_heading = clean_url[1] %}
+                        {% endif %}
+
+                        <h3>{{ sub_heading | replace: '_', ' ' }}</h3>
+
+                        {% assign menu_root_level = PAGE_DEPTH %}
+                        {% if menu_root_level > 2 %}
+                            {% assign menu_root_level = 2 %}
+                        {% endif %}
+
+                        {% assign menu_prefix = '' %}
+                        {% for x in (0..menu_root_level) %}
+                            {% assign tmp1 = PAGE_URL_PARTS[x] %}
+                            {% assign tmp2 = menu_prefix | append: tmp1 | append: '/' %}
+                            {% assign menu_prefix = tmp2 %}
+                        {% endfor %}
+
+                        <footer>
+                        {% capture tmp %}{% include menu.html level=menu_root_level prefix=menu_prefix class="actions" %}{% endcapture %}
+                        {% include render_without_empty_lines.html content=tmp %}
+                        </footer>
+                    </section>
+                </div>
+                {% endif %}
+
+            </div>
+        </section>
+
+        {% include footer.html %}
+
+    </body>
+</html>

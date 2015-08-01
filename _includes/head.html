@@ -1,0 +1,29 @@
+{% assign CLEAN_PAGE_URL = page.url | remove: '/index.html' | remove: '.html' | replace: '_', ' ' %}
+
+{% if page.url == '/index.html' %}
+    {% assign PAGE_TITLE = '' %}
+{% else %}
+    {% assign PAGE_TITLE = CLEAN_PAGE_URL | split: '/' | last %}
+{% endif %}
+
+{% assign PAGE_URL_PARTS = page.url | split: '/' %}
+{% assign PAGE_FILE = PAGE_URL_PARTS | last %}
+{% assign PAGE_DIRECTORY = page.url | remove: PAGE_FILE %}
+{% assign PAGE_DEPTH = PAGE_URL_PARTS | size | minus: 2 %}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% if PAGE_TITLE != '' %}{{ PAGE_TITLE }} - {% endif %}{{ site.title }}</title>
+    <meta name="description" content="{{ site.description }}">
+
+    <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+    <!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+    <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+</head>

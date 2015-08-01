@@ -1,0 +1,277 @@
+@import '../libs/vars';
+@import '../libs/functions';
+@import '../libs/mixins';
+
+///
+/// Slate by Pixelarity
+/// pixelarity.com @pixelarity
+/// License: pixelarity.com/license
+///
+
+/* List */
+
+	ol {
+		list-style: decimal;
+		margin: 0 0 _size(element-margin) 0;
+		padding-left: 1.25em;
+
+		li {
+			padding-left: 0.25em;
+		}
+	}
+
+	ul {
+		list-style: disc;
+		margin: 0 0 _size(element-margin) 0;
+		padding-left: 1em;
+
+		li {
+			padding-left: 0.5em;
+		}
+
+		&.alt {
+			list-style: none;
+			padding-left: 0;
+
+			li {
+				border-top: solid 1px;
+				padding: 0.5em 0;
+
+				&:first-child {
+					border-top: 0;
+					padding-top: 0;
+				}
+			}
+		}
+
+		&.icons {
+			list-style: none;
+			padding-left: 0;
+
+			li {
+				display: inline-block;
+				padding: 0 1em 0 0;
+
+				&:last-child {
+					padding-right: 0;
+				}
+
+				.icon {
+					&:before {
+						font-size: 2em;
+					}
+				}
+			}
+		}
+
+		&.bulleted-icons {
+			@include vendor('display', 'flex');
+			@include vendor('flex-wrap', 'wrap');
+			padding: 0;
+
+			li {
+				margin: _size(element-margin) 0 0 0;
+				overflow: hidden;
+				padding-left: 4.5em;
+				position: relative;
+				width: 50%;
+
+				.icon-wrapper {
+					font-size: 0.65em;
+					left: 0;
+					position: absolute;
+					top: 0;
+
+					.icon {
+						&:before {
+							font-size: 1rem;
+						}
+					}
+				}
+
+				h3 {
+					font-size: 0.9em;
+					margin-bottom: _size(element-margin) * 0.25;
+					padding-bottom: 0;
+
+					&:after {
+						display: none;
+					}
+				}
+			}
+
+			@include breakpoint(large) {
+				li {
+					width: 100%;
+					margin: (_size(element-margin) * 0.5) 0 0 0;
+				}
+			}
+		}
+
+		&.actions {
+			cursor: default;
+			list-style: none;
+			padding-left: 0;
+			margin-bottom: 0;
+
+			li {
+				display: block;
+				padding: 0 (_size(element-margin) * 0.5) 0 1em;
+				vertical-align: middle;
+				font-weight: _font(weight);
+
+				&:last-child {
+					padding-right: 0;
+				}
+			}
+
+			> li.current {
+				font-weight: _font(weight-menu-current);
+			}
+
+			&.small {
+				li {
+					padding: 0 (_size(element-margin) * 0.25) 0 0;
+				}
+			}
+
+			&.vertical {
+				li {
+					display: block;
+					padding: (_size(element-margin) * 0.5) 0 0 0;
+
+					&:first-child {
+						padding-top: 0;
+					}
+
+					> * {
+						margin-bottom: 0;
+					}
+				}
+
+				&.small {
+					li {
+						padding: (_size(element-margin) * 0.25) 0 0 0;
+
+						&:first-child {
+							padding-top: 0;
+						}
+					}
+				}
+			}
+
+			&.fit {
+				display: table;
+				margin-left: (_size(element-margin) * -0.5);
+				padding: 0;
+				table-layout: fixed;
+				width: calc(100% + #{(_size(element-margin) * 0.5)});
+
+				li {
+					display: table-cell;
+					padding: 0 0 0 (_size(element-margin) * 0.5);
+
+					> * {
+						margin-bottom: 0;
+					}
+				}
+
+				&.small {
+					margin-left: (_size(element-margin) * -0.25);
+					width: calc(100% + #{(_size(element-margin) * 0.25)});
+
+					li {
+						padding: 0 0 0 (_size(element-margin) * 0.25);
+					}
+				}
+			}
+
+			@include breakpoint(xsmall) {
+				margin: 0 0 _size(element-margin) 0;
+
+				li {
+					padding: (_size(element-margin) * 0.5) 0 0 0;
+					display: block;
+					text-align: center;
+					width: 100%;
+
+					&:first-child {
+						padding-top: 0;
+					}
+
+					> * {
+						width: 100%;
+						margin: 0 !important;
+
+						&.icon {
+							&:before {
+								margin-left: -2em;
+							}
+						}
+					}
+				}
+
+				&.small {
+					li {
+						padding: (_size(element-margin) * 0.25) 0 0 0;
+
+						&:first-child {
+							padding-top: 0;
+						}
+					}
+				}
+			}
+		}
+
+		&.menu {
+			padding: 0;
+			list-style: none;
+
+			li {
+				padding: 0;
+				display: inline-block;
+				margin-left: 0.75em;
+				padding-left: 0.75em;
+				border-left: solid 1px;
+				line-height: 1em;
+
+				&:first-child {
+					margin-left: 0;
+					padding-left: 0;
+					border-left: 0;
+				}
+			}
+		}
+	}
+
+	dl {
+		margin: 0 0 _size(element-margin) 0;
+
+		dt {
+			display: block;
+			font-weight: _font(weight-bold);
+			margin: 0 0 (_size(element-margin) * 0.5) 0;
+		}
+
+		dd {
+			margin-left: _size(element-margin);
+		}
+	}
+
+	@mixin color-list($p: null) {
+		ul {
+			&.alt {
+				li {
+					border-top-color: _palette($p, border);
+				}
+			}
+
+			&.menu {
+				li {
+					border-left-color: _palette($p, border);
+				}
+			}
+		}
+	}
+
+	@include color-list;
