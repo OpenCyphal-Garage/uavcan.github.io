@@ -12,7 +12,7 @@
 
                 <!-- BREADCRUMBS -->
                 {% assign breadcrumbs_level = CLEAN_PAGE_URL | split: '/' | size %}
-                {% if breadcrumbs_level > 2 %}
+                {% if breadcrumbs_level > 1 %}
                 <div class="breadcrumbs">
                 {% assign breadcrumb_url = '' %}
                 {% for x in PAGE_URL_PARTS %}{% if x != '' %}
@@ -43,13 +43,7 @@
                 {% if PAGE_DEPTH > 0 %}
                 <div class="sidebar">
                     <section>
-                        {% assign clean_url = page.url | remove: 'index.html' | remove: '.html' | split: '/' %}
-                        {% assign sub_heading = clean_url[2] %}
-                        {% if sub_heading == null %}
-                            {% assign sub_heading = clean_url[1] %}
-                        {% endif %}
-
-                        <h3>{{ sub_heading | replace: '_', ' ' }}</h3>
+                        <h3>Chapters</h3>
 
                         {% assign menu_root_level = PAGE_DEPTH %}
                         {% if menu_root_level > 2 %}
