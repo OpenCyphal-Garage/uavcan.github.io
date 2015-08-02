@@ -11,6 +11,8 @@ github_username: UAVCAN
 # Build settings
 highlighter: pygments
 markdown: redcarpet
+redcarpet:
+  extensions: ["fenced_code_blocks", "autolink", "tables"]
 
 defaults:
   -

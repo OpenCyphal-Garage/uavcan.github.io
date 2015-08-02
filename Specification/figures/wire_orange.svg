@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+viewBox="-11 -12 80 24"
+width="1000" height="300">
+<defs>
+<clipPath id="shape">
+<path d="M0,9 l 60,0 a 6,9,0 0,0 0,-18 l -60,0 a 6,9,0 0,1 0,18"/>
+</clipPath>
+<linearGradient id="shine"
+x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="white" stop-opacity="0"/>
+<stop offset=".1" stop-color="white" stop-opacity="0.2" />
+<stop offset=".12" stop-color="white" stop-opacity="0.2" />
+<stop offset=".22" stop-color="white" stop-opacity="0" />
+<stop offset="1" stop-color="black" stop-opacity="0" />
+</linearGradient>
+<linearGradient id="shadow"
+x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="black" stop-opacity=".2"/>
+<stop offset=".2" stop-color="black" stop-opacity="0" />
+<stop offset=".8" stop-color="black" stop-opacity="0" />
+<stop offset="1" stop-color="black" stop-opacity=".4" />
+</linearGradient>
+</defs>
+<path d="M0,9 l 60,0 a 6,9,0 0,0 0,-18 l -60,0 a 6,9,0 0,0 0,18" fill="orange"/>
+<line x1="0" y1="0" x2="70" y2="0" clip-path="url(#shape)" stroke-width="5" stroke="orange"/>
+<rect x="-5" y="-9" width="80" height="18" fill="url(#shadow)" clip-path="url(#shape)"/>
+<rect x="-5" y="-9" width="80" height="18" fill="url(#shine)" clip-path="url(#shape)"/>
+<ellipse rx="6" ry="9" fill-opacity=".2" cx="0" cy="0" stroke="black" stroke-width="1"/>
+<path d="M0,9 l 60,0 a 6,9,0 0,0 0,-18 l -60,0 a 6,9,0 0,0 0,18" stroke="black" stroke-width="1" fill="none"/>
+<path d="M-6,6 l 5,0 a 4,6,0 0,0 0,-12 l -5,0 a 4,6,0 0,0 0,12" stroke="maroon" stroke-width="1" fill="sandybrown"/>
+<path d="M-6,6 l 5,0 a 4,6,0 0,0 0,-12 l -5,0 a 4,6,0 0,1 0,12" fill="url(#shadow)" stroke="maroon" stroke-width="1"/>
+<path d="M-6,6 l 5,0 a 4,6,0 0,0 0,-12 l -5,0 a 4,6,0 0,1 0,12" fill="url(#shine)" stroke="maroon" stroke-width="1"/>
+</svg>
