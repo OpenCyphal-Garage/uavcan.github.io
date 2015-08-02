@@ -68,6 +68,10 @@
                         {% include render_without_empty_lines.html content=tmp %}
                         </footer>
                     </section>
+
+                    <section>
+                        <div id="toc"></div>
+                    </section>
                 </div>
                 {% endif %}
 
@@ -76,5 +80,9 @@
 
         {% include footer.html %}
 
+        <script src="/assets/js/toc.js"></script>
+        <script type="text/javascript">
+        $(document).ready(function() { $('#toc').toc(); });
+        </script>
     </body>
 </html>
