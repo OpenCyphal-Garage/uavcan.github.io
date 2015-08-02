@@ -2,4 +2,4 @@
 weight: 1000
 ---
 
-This page is empty.
+UAVCAN specification consists of the several parts listed here.
