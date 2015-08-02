@@ -1,5 +1,5 @@
 ---
-weight: 2000
+weight: 20
 ---
 
 This page is empty.

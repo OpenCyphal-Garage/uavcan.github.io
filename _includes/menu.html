@@ -1,6 +1,43 @@
 <ul{% if include.class != null %} class="{{include.class}}"{% endif %}>
 
-{% assign sorted_pages = site.pages | sort:"url" | sort:"weight","last" %}
+{% comment %}
+This pathetic disaster is nothing else but implementation of a stable sorting algorithm,
+needed to ensure that all menu and sub-menu entries are properly arranged with respect to each other.
+{% endcomment %}
+{% if SORTED_PAGE_URLS == null %}
+    {% assign urls = '' %}
+
+    {% for weight in (0..100) %}
+        {% assign matching_unsorted = site.pages | where:"weight",weight %}
+        {% if matching_unsorted != null %}
+            {% assign matching = matching_unsorted | sort:"url" %}
+            {% for match in matching %}
+                {% if urls != '' %}
+                    {% assign tmp = urls | append: ' ' %}
+                    {% assign urls = tmp %}
+                {% endif %}
+                {% assign tmp = urls | append: match.url %}
+                {% assign urls = tmp %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {% assign matching = site.pages | where:"weight",null | sort:"url" %}
+    {% for match in matching %}
+        {% if urls != '' %}
+            {% assign tmp = urls | append: ' ' %}
+            {% assign urls = tmp %}
+        {% endif %}
+        {% assign tmp = urls | append: match.url %}
+        {% assign urls = tmp %}
+    {% endfor %}
+
+    {% assign SORTED_PAGE_URLS = urls | split: ' ' %}
+    <!-- SORTED_PAGE_URLS: -->
+    {% for node_url in SORTED_PAGE_URLS %}
+        <!-- {{node_url}} -->
+    {% endfor %}
+{% endif %}
 
 {% if include.level == null or include.level == 0 %}
     <li{% if page.url == '/index.html' %} class="current"{% endif %}>
@@ -8,7 +45,7 @@
     </li>
 {% endif %}
 
-{% for node in sorted_pages %}
+{% for node_url in SORTED_PAGE_URLS %}
     {% if include.max_depth == null %}  {% assign MAX_DEPTH = 5 %}
     {% else %}                          {% assign MAX_DEPTH = include.max_depth %}
     {% endif %}
@@ -21,9 +58,9 @@
     {% else %}                      {% assign PREFIX = include.prefix %}
     {% endif %}
 
-    {% assign node_level = node.url | split: '/' | size | minus: 2 %}
-    {% assign file_name  = node.url | split: '/' | last %}
-    {% assign url_parts  = node.url | split: '/' %}
+    {% assign node_level = node_url | split: '/' | size | minus: 2 %}
+    {% assign file_name  = node_url | split: '/' | last %}
+    {% assign url_parts  = node_url | split: '/' %}
     {% assign next_level = LEVEL | plus: 1 %}
     {% assign node_name = url_parts[next_level] %}
 
@@ -40,7 +77,7 @@
 
     {% capture traversed_items %}{% include traversed_items_render.html level=LEVEL %}{% endcapture %}
 
-    {% if node_level >= LEVEL and valid_page and node.url contains PREFIX %}
+    {% if node_level >= LEVEL and valid_page and node_url contains PREFIX %}
     {% unless traversed_items contains node_name or node_name == 'index.html' %}
         {% include traversed_items_append.html level=LEVEL value=node_name %}
 
@@ -48,7 +85,7 @@
         {% if LEVEL == 0 and page.url contains node_name %}
             {% assign active_item = true %}
         {% endif %}
-        {% if page.url == node.url and file_name == node_name %}
+        {% if page.url == node_url and file_name == node_name %}
             {% assign active_item = true %}
         {% endif %}
         {% assign page_url_sans_index = page.url | remove: 'index.html' %}
@@ -67,7 +104,7 @@
             {% endif %}
 
             {% if node_name == file_name %}
-                <a {{a_class}} href="{{node.url}}">{{node_title}}</a>
+                <a {{a_class}} href="{{node_url}}">{{node_title}}</a>
             {% else %}
                 <a {{a_class}} href="{{prefix}}">{{node_title}}</a>
             {% endif %}
