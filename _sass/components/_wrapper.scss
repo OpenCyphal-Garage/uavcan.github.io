@@ -186,6 +186,10 @@
 			}
 		}
 
+		img {
+			max-width: 100%;
+		}
+
 		@include breakpoint(large) {
 			@include padding(3em, 0);
 
