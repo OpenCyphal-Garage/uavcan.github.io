@@ -1,5 +1,4 @@
 ---
-weight: 99
 ---
 
 # Adding support for a new platform
