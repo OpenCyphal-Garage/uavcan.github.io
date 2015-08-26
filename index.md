@@ -8,12 +8,11 @@ Lightweight protocol designed for reliable communication in aerospace and roboti
 
 ## Key features
 
-- Very low data overhead - suitable for high frequency distributed control loops.
 - Democratic network - no single point of failure.
-- Supports network-wide time synchronization with microsecond precision.
-- Allows to efficiently exchange long datagrams.
 - Publish/subscribe or request/response exchange semantics.
-- Doubly-redundant or triply-redundant CAN bus.
+- Allows to efficiently exchange large data structures.
 - Lightweight, easy to implement protocol.
-- Can be used in deeply embedded systems (the reference implementation runs on a 32K ROM, 8K RAM MCU).
+- Supports network-wide time synchronization with microsecond precision.
+- Doubly-redundant or triply-redundant CAN bus.
+- Can be used in deeply embedded, resource constrained, hard real-time systems.
 - The specification and the reference implementation are open and free to use ([MIT License](http://opensource.org/licenses/MIT)).
