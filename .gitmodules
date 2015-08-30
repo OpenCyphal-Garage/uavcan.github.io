@@ -1,0 +1,3 @@
+[submodule "Specification/dsdl"]
+	path = Specification/dsdl
+	url = https://github.com/UAVCAN/dsdl
