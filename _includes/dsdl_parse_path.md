@@ -8,6 +8,7 @@
     {% assign DEFAULT_DTID = tmp1 | split: '.' | first %}
     {% assign TYPE_NAME = tmp1 | split: '.' | last %}
 {% else %}
+    {% assign DEFAULT_DTID = null %}
     {% assign TYPE_NAME = tmp1 %}
 {% endif %}
 {% capture FULL_TYPE_NAME %}{{NAMESPACE}}.{{TYPE_NAME}}{% endcapture %}
