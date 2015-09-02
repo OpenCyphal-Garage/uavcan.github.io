@@ -6,6 +6,7 @@
 {% endif %}
 
 {% assign dsdl_files = site.static_files | where: 'extname', '.uavcan' | sort: 'path' %}
+{% assign DSDL_FOUND = false %}
 
 {% for x in dsdl_files %}
     {% include dsdl_parse_path.md input_path=x.path %}
@@ -26,5 +27,10 @@ Default data type ID: {{DEFAULT_DTID}}
 ```python
 {% include_relative {{RELATIVE_PATH}} %}
 ```
+    {% assign DSDL_FOUND = true %}
     {% endif %}
 {% endfor %}
+
+{% unless DSDL_FOUND %}
+### <font color="red">DSDL RENDERING ERROR: PREFIX `{{PREFIX}}` IS INVALID</font>
+{% endunless %}
