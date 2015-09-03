@@ -1,4 +1,4 @@
 ---
 ---
 
-This page is empty.
+<https://github.com/UAVCAN/pyuavcan/issues/2>
