@@ -41,25 +41,27 @@
 
                 <!-- SIDEBAR -->
                 {% if PAGE_DEPTH > 0 %}
+
+                {% assign menu_root_level = PAGE_DEPTH %}
+                {% if menu_root_level > 2 %}
+                    {% assign menu_root_level = 2 %}
+                {% endif %}
+
+                {% assign menu_prefix = '' %}
+                {% for x in (0..menu_root_level) %}
+                    {% assign tmp1 = PAGE_URL_PARTS[x] %}
+                    {% assign tmp2 = menu_prefix | append: tmp1 | append: '/' %}
+                    {% assign menu_prefix = tmp2 %}
+                {% endfor %}
+
+                {% capture rendered_menu_html %}{% include menu.html level=menu_root_level prefix=menu_prefix class="actions" %}{% endcapture %}
+
+                {% if rendered_menu_html contains "</li>" %}
                 <div class="sidebar">
                     <section>
                         <h3>Sections</h3>
-
-                        {% assign menu_root_level = PAGE_DEPTH %}
-                        {% if menu_root_level > 2 %}
-                            {% assign menu_root_level = 2 %}
-                        {% endif %}
-
-                        {% assign menu_prefix = '' %}
-                        {% for x in (0..menu_root_level) %}
-                            {% assign tmp1 = PAGE_URL_PARTS[x] %}
-                            {% assign tmp2 = menu_prefix | append: tmp1 | append: '/' %}
-                            {% assign menu_prefix = tmp2 %}
-                        {% endfor %}
-
                         <footer>
-                        {% capture tmp %}{% include menu.html level=menu_root_level prefix=menu_prefix class="actions" %}{% endcapture %}
-                        {% include render_without_empty_lines.html content=tmp %}
+                        {% include render_without_empty_lines.html content=rendered_menu_html %}
                         </footer>
                     </section>
 
@@ -67,6 +69,7 @@
                         <div id="toc"></div>
                     </section>
                 </div>
+                {% endif %}
                 {% endif %}
 
             </div>
