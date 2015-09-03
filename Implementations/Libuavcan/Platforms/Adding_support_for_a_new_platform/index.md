@@ -3,8 +3,8 @@
 
 # Adding support for a new platform
 
-<a  href="../figures/libuavcan_data_flow.png">
-<img src="../figures/libuavcan_data_flow.png" style="float: right; max-width: 30%"/>
+<a  href="/Implementations/Libuavcan/figures/libuavcan_data_flow.png">
+<img src="/Implementations/Libuavcan/figures/libuavcan_data_flow.png" style="float: right; max-width: 30%"/>
 </a>
 
 Implementing a platform driver for libuavcan is generally a quite straightforward task,

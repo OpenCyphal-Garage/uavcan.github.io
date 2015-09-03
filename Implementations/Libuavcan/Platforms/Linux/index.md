@@ -240,7 +240,7 @@ Libuavcan driver for Linux also includes a couple of simple CLI applications for
 
 ### `uavcan_monitor`
 
-![](../figures/uavcan_monitor.png)
+![](/Implementations/Libuavcan/figures/uavcan_monitor.png)
 
 This application displays a list of online nodes, their health code, operational mode, and uptime in seconds.
 The information is displayed as a continuously updating colorized ASCII table.
@@ -260,7 +260,7 @@ To exit the application, press **Ctrl**+**C**.
 
 ### `uavcan_dynamic_node_id_server`
 
-![](../figures/uavcan_dynamic_node_id_server.png)
+![](/Implementations/Libuavcan/figures/uavcan_dynamic_node_id_server.png)
 
 This application implements a dynamic node ID allocation server. Start without arguments to see usage info.
 
