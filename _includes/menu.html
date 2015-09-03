@@ -71,9 +71,10 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% assign prefix = tmp2 %}
     {% endfor %}
 
-    {% assign valid_page = false %}
-    {% if file_name contains ".html" %}{% assign valid_page = true %}{% endif %}
-    {% unless file_name contains '.' %}{% assign valid_page = true %}{% endunless %}
+    {% assign valid_page = true %}
+    {% if file_name contains '.xml' or node_url contains '/assets/' %}
+        {% assign valid_page = false %}
+    {% endif %}
 
     {% capture traversed_items %}{% include traversed_items_render.html level=LEVEL %}{% endcapture %}
 
