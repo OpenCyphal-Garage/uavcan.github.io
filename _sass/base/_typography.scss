@@ -142,6 +142,8 @@
 		font-size: 0.8em;
 		margin: 0 0.15em;
 		padding: 0.15em 0.15em;
+		position: relative;       /* This is required for z-index to work */
+		z-index: -1;              /* Puts the background behind the border of the <a> tag */
 	}
 
 	pre {
