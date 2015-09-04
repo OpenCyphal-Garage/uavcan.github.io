@@ -18,22 +18,24 @@ it is highly recommended to use the default build configuration
 (the defaults are smart enough to fit virtually any use case).
 For instance, the static library build for Linux uses (and will always use) only the default build configuration.
 
-## Library version code
+## Library version number
 
 The following definitions are guaranteed to be present in all future versions of the library:
 
-* `UAVCAN_VERSION_MAJOR` - major library version code
-* `UAVCAN_VERSION_MINOR` - minor library version code
+* `UAVCAN_VERSION_MAJOR` - major library version number
+* `UAVCAN_VERSION_MINOR` - minor library version number
+
+These values can be used to work-around the API differences in different versions of the library.
 
 ## Build configuration options
 
-Note that some configuration options are not supposed to be changed by the library user in any sensible use case,
-so they are not documented in this part.
+Note that this chapter doesn't list some of the advanced options that are unlikely to be needed
+in most use cases.
 If you want to see the full list of configuration options, please refer to the header file `build_config.hpp`.
 
 ### `UAVCAN_CPP_VERSION`
 
-This macro represents the version of the C++ standard used during compilation.
+This macro encodes whether the features that were introduced with newer versions of the C++ standard are supported.
 It expands to the year number after which the standard was named:
 
 * 2003 for C++03
@@ -75,7 +77,7 @@ Otherwise, this option  defaults to 0.
 
 ### `UAVCAN_EXPORT`
 
-This symbol is inserted before all symbols exported by the library. It is empty by default.
+This symbol is inserted before every symbol exported by the library. It is empty by default.
 
 Possible use case, e.g. for GCC:
 
@@ -85,7 +87,7 @@ Possible use case, e.g. for GCC:
 
 ### `UAVCAN_TINY`
 
-This option is intended for very resource-constrained microcontrollers (<64 KB ROM or <8 KB RAM).
+This option is intended for very resource-constrained microcontrollers (<32 KB ROM or <8 KB RAM).
 It removes some auxiliary library features in order to reduce memory footprint.
 
 The default value is always zero (disabled).
@@ -95,11 +97,15 @@ Some of the important features affected in tiny mode:
 * Static memory pools removed
 * Transport layer self-diagnostics removed
 * Logging removed
-* Server of the node restart request service is removed
+* The following services are not supported by default:
+  * `uavcan.protocol.RestartNode`
+  * `uavcan.protocol.GetDataTypeInfo`
+  * `uavcan.protocol.GetTransportStats`
 
 ### `UAVCAN_TOSTRING`
 
-If nonzero, this option adds a convenience string-conversion method, `toString()`, to some classes.
+If nonzero, this option adds a convenience string-conversion method, `std::string toString() const`,
+to most of the library classes.
 
 The default value is 0, unless any of the preprocessor symbols listed below is nonzero:
 
@@ -110,11 +116,11 @@ The default value is 0, unless any of the preprocessor symbols listed below is n
 * `_WIN32`
 * Possibly some else, refer to the implementation for the complete list
 
-Note that this option is guaranteed to be disabled by default on any deeply embedded systems.
+Note that this option is guaranteed to be disabled by default on deeply embedded systems.
 
 ### `UAVCAN_IMPLEMENT_PLACEMENT_NEW`
 
-Set this to nonzero if your C++ implementation does not implement the placement new operator.
+Set this option to nonzero if your C++ implementation does not implement the placement new operator.
 
 The default value is zero.
 
