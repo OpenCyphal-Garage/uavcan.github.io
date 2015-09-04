@@ -131,6 +131,18 @@ where the standard `snprintf()` implementation is too large to fit in the memory
 
 The default value is zero.
 
+### `UAVCAN_USE_EXTERNAL_FLOAT16_CONVERSION`
+
+If this macro is nonzero, libuavcan will not define the functions that perform conversions between
+the native `float` data type and the `float16` type used in DSDL,
+allowing the application to link custom conversion routines, possibly taking advantage of
+hardware support for floating point conversions (e.g. instructions `VCVTB` and `VCVTT` on ARM Cortex).
+For more info refer to the file `libuavcan/src/marshal/uc_float_spec.cpp` or grep the sources.
+
+If this macro is zero, the library will use generic conversion routines that are fully portable and hardware-agnostic.
+
+The default value is zero.
+
 ### `UAVCAN_ASSERT(x)`
 
 This function-like preprocessor macro is used to perform run-time checks in debug builds;
