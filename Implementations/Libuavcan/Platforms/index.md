@@ -1,8 +1,10 @@
 ---
+weight: 20
 ---
 
-This section is specific for a particular OS/platform.
-It contains subsections for all officially supported platforms and also provides a documentation
+# Libuavcan platforms
+
+These sections are dedicated to officially supported platforms and also provide documentation
 on how to add support for a new platform.
 
 Contributions adding support for new platforms are always welcome.
