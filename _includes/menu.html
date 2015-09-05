@@ -111,6 +111,10 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
 {% endfor %}
 {% endcapture %}
 
+{% if include.level == null %}  {% include traversed_items_drop.html level=0 %}
+{% else %}                      {% include traversed_items_drop.html level=include.level %}
+{% endif %}
+
 {% if inner contains "</li>" %}
 <ul{% if include.class != null %} class="{{include.class}}"{% endif %}>
 {% if include.level == null or include.level == 0 %}
