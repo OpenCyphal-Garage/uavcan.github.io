@@ -41,71 +41,75 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
 
 {% capture inner %}
 {% for node_url in SORTED_VALID_PAGE_URLS %}
-    {% if include.max_depth == null %}  {% assign MAX_DEPTH = 5 %}
-    {% else %}                          {% assign MAX_DEPTH = include.max_depth %}
-    {% endif %}
-
-    {% if include.level == null %}  {% assign LEVEL = 0 %}
-    {% else %}                      {% assign LEVEL = include.level %}
-    {% endif %}
-
     {% if include.prefix == null %} {% assign PREFIX = '' %}
     {% else %}                      {% assign PREFIX = include.prefix %}
     {% endif %}
 
-    {% assign node_level = node_url | split: '/' | size | minus: 2 %}
-    {% assign file_name  = node_url | split: '/' | last %}
-    {% assign url_parts  = node_url | split: '/' %}
-    {% assign next_level = LEVEL | plus: 1 %}
-    {% assign node_name = url_parts[next_level] %}
-
-    {% assign prefix = '' %}
-    {% for x in (0..next_level) %}
-        {% assign tmp1 = url_parts[x] %}
-        {% assign tmp2 = prefix | append: tmp1 | append: '/' %}
-        {% assign prefix = tmp2 %}
-    {% endfor %}
-
-    {% capture traversed_items %}{% include traversed_items_render.html level=LEVEL %}{% endcapture %}
-
-    {% if node_level >= LEVEL and node_url contains PREFIX %}
-    {% unless traversed_items contains node_name or node_name == 'index.html' %}
-        {% include traversed_items_append.html level=LEVEL value=node_name %}
-
-        {% assign active_item = false %}
-        {% if LEVEL == 0 and page.url contains node_name %}
-            {% assign active_item = true %}
-        {% endif %}
-        {% if page.url == node_url and file_name == node_name %}
-            {% assign active_item = true %}
-        {% endif %}
-        {% assign page_url_sans_index = page.url | remove: 'index.html' %}
-        {% assign page_url_file = page.url | split: '/' | last %}
-        {% if page_url_sans_index == prefix and page_url_file == 'index.html' %}
-            {% assign active_item = true %}
+    {% if node_url contains PREFIX %}
+        {% if include.level == null %}  {% assign LEVEL = 0 %}
+        {% else %}                      {% assign LEVEL = include.level %}
         {% endif %}
 
-        <li{% if active_item %} class="current"{% endif %}>
-            {% assign node_title = node_name | remove: '.html' | replace: '_', ' ' %}
+        {% assign url_parts  = node_url | split: '/' %}
+        {% assign node_level = url_parts | size | minus: 2 %}
 
-            {% if include.a_toplevel_opener_class != null and node_level > LEVEL and LEVEL == 0 %}
-                {% capture a_class %}class="{{ include.a_toplevel_opener_class }}"{% endcapture %}
-            {% else %}
-                {% assign a_class = '' %}
+        {% if node_level >= LEVEL %}
+            {% if include.max_depth == null %}  {% assign MAX_DEPTH = 5 %}
+            {% else %}                          {% assign MAX_DEPTH = include.max_depth %}
             {% endif %}
 
-            {% if node_name == file_name %}
-                <a {{a_class}} href="{{node_url}}">{{node_title}}</a>
-            {% else %}
-                <a {{a_class}} href="{{prefix}}">{{node_title}}</a>
-            {% endif %}
+            {% assign next_level = LEVEL | plus: 1 %}
+            {% assign node_name = url_parts[next_level] %}
 
-            {% if node_level > LEVEL and next_level < MAX_DEPTH %}
-                {% include menu.html level=next_level prefix=prefix class=include.class max_depth=MAX_DEPTH %}
-                {% include traversed_items_drop.html level=LEVEL %}
-            {% endif %}
-        </li>
-    {% endunless %}
+            {% capture traversed_items %}{% include traversed_items_render.html level=LEVEL %}{% endcapture %}
+
+            {% unless traversed_items contains node_name or node_name == 'index.html' %}
+                {% include traversed_items_append.html level=LEVEL value=node_name %}
+
+                {% assign prefix = '' %}
+                {% for x in (0..next_level) %}
+                    {% assign tmp1 = url_parts[x] %}
+                    {% assign tmp2 = prefix | append: tmp1 | append: '/' %}
+                    {% assign prefix = tmp2 %}
+                {% endfor %}
+
+                {% assign file_name  = url_parts | last %}
+
+                {% assign active_item = false %}
+                {% if LEVEL == 0 and page.url contains node_name %}
+                    {% assign active_item = true %}
+                {% endif %}
+                {% if page.url == node_url and file_name == node_name %}
+                    {% assign active_item = true %}
+                {% endif %}
+                {% assign page_url_sans_index = page.url | remove: 'index.html' %}
+                {% assign page_url_file = page.url | split: '/' | last %}
+                {% if page_url_sans_index == prefix and page_url_file == 'index.html' %}
+                    {% assign active_item = true %}
+                {% endif %}
+
+                <li{% if active_item %} class="current"{% endif %}>
+                    {% assign node_title = node_name | remove: '.html' | replace: '_', ' ' %}
+
+                    {% if include.a_toplevel_opener_class != null and node_level > LEVEL and LEVEL == 0 %}
+                        {% capture a_class %}class="{{ include.a_toplevel_opener_class }}"{% endcapture %}
+                    {% else %}
+                        {% assign a_class = '' %}
+                    {% endif %}
+
+                    {% if node_name == file_name %}
+                        <a {{a_class}} href="{{node_url}}">{{node_title}}</a>
+                    {% else %}
+                        <a {{a_class}} href="{{prefix}}">{{node_title}}</a>
+                    {% endif %}
+
+                    {% if node_level > LEVEL and next_level < MAX_DEPTH %}
+                        {% include menu.html level=next_level prefix=prefix class=include.class max_depth=MAX_DEPTH %}
+                        {% include traversed_items_drop.html level=LEVEL %}
+                    {% endif %}
+                </li>
+            {% endunless %}
+        {% endif %}
     {% endif %}
 {% endfor %}
 {% endcapture %}
