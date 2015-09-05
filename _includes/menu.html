@@ -27,10 +27,13 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
     {% endfor %}
 
     {% assign SORTED_VALID_PAGE_URLS = urls | split: ' ' %}
+
+    {% comment %}
     <!-- SORTED_VALID_PAGE_URLS: -->
     {% for node_url in SORTED_VALID_PAGE_URLS %}
         <!-- {{node_url}} -->
     {% endfor %}
+    {% endcomment %}
 {% endif %}
 
 {% capture inner %}
