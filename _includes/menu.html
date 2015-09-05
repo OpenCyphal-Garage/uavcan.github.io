@@ -12,7 +12,8 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% assign matching = sorted_pages | where:"weight",weight %}
         {% if matching != null %}
             {% for match in matching %}
-                {% assign tmp = urls | append: match.url | append: ' ' %}
+                {% assign tmp2 = match.url | remove: 'index.html' | append: ' ' | remove: '/ ' %}
+                {% assign tmp = urls | append: tmp2 | append: ' ' %}
                 {% assign urls = tmp %}
             {% endfor %}
         {% endif %}
@@ -21,19 +22,18 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
     {% assign matching = sorted_pages | where:"weight",null %}
     {% for match in matching %}
         {% unless match.url contains '.xml' or match.url contains '/assets/' %}
-            {% assign tmp = urls | append: match.url | append: ' ' %}
+            {% assign tmp2 = match.url | remove: 'index.html' | append: ' ' | remove: '/ ' %}
+            {% assign tmp = urls | append: tmp2 | append: ' ' %}
             {% assign urls = tmp %}
         {% endunless %}
     {% endfor %}
 
     {% assign SORTED_VALID_PAGE_URLS = urls | split: ' ' %}
 
-    {% comment %}
     <!-- SORTED_VALID_PAGE_URLS: -->
     {% for node_url in SORTED_VALID_PAGE_URLS %}
         <!-- {{node_url}} -->
     {% endfor %}
-    {% endcomment %}
 {% endif %}
 
 {% capture inner %}
@@ -60,7 +60,7 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
 
             {% capture traversed_items %}{% include traversed_items_render.html level=LEVEL %}{% endcapture %}
 
-            {% unless traversed_items contains node_name or node_name == 'index.html' %}
+            {% unless traversed_items contains node_name %}
                 {% include traversed_items_append.html level=LEVEL value=node_name %}
 
                 {% assign prefix = '' %}
