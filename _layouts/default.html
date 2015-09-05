@@ -56,9 +56,13 @@
                     <!-- prefix: {{prefix}} -->
                     {% capture rendered_menu_html %}{% include menu.html prefix=prefix class="actions" %}{% endcapture %}
                 {% endunless %}
+                {% assign side_menu_exists = false %}
+                {% if rendered_menu_html contains "</li>" %}
+                    {% assign side_menu_exists = true %}
+                {% endif %}
 
                 <div class="sidebar">
-                    {% if rendered_menu_html contains "</li>" %}
+                    {% if side_menu_exists %}
                     <section>
                         {% assign sidebar_node_title = sidebar_node_name | replace: '_',' ' %}
                         <h3>{{sidebar_node_title}}</h3>
@@ -79,7 +83,7 @@
 
         <script src="/assets/js/toc.js"></script>
         <script type="text/javascript">
-        $(document).ready(function() { $('#toc').toc({title: '<hr/><h4>Contents</h4>'}); });
+        $(document).ready(function() { $('#toc').toc({title: '{% if side_menu_exists %}<hr/>{% endif %}<h4>Contents</h4>'}); });
         </script>
     </body>
 </html>
