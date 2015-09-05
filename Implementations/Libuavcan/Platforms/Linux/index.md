@@ -3,9 +3,9 @@
 
 # Libuavcan for Linux
 
-This page describes the Libuavcan driver for Linux and shows how to use libuavcan on Linux.
+This page describes the libuavcan driver for Linux and shows how to use the library on Linux.
 The libuavcan driver for Linux is a header-only C++11 library that implements a fully functional platform interface
-for libuavcan and also adds some convenient wrappers on top of libuavcan.
+for libuavcan and also adds a few convenient wrappers.
 It's built on the following Linux components:
 
 * [SocketCAN](http://en.wikipedia.org/wiki/SocketCAN) -
@@ -44,20 +44,23 @@ Build steps:
 cd uavcan
 mkdir build
 cd build
-cmake .. # Optionally, set the build type: -DCMAKE_BUILD_TYPE=Release (default is RelWithDebInfo)
-make     # This  will invoke the DSDL compiler automatically
+cmake ..        # Optionally, set the build type: -DCMAKE_BUILD_TYPE=Release (default is RelWithDebInfo)
+make -j4        # This  will invoke the DSDL compiler automatically
 sudo make install
 ```
 
-The following components will be installed on the system:
+The following components will be installed into the system:
 
-* The libuavcan static library and headers.
+* Libuavcan headers and the static library.
 * The Linux driver for libuavcan (this is a header-only library, so only headers are installed).
-* All standard DSDL type definitions (path: `<installation-prefix>/share/uavcan/dsdl/`).
-* All generated headers for the standard DSDL types (installed into the same directory as the libuavcan headers).
-* The [[pyuavcan]] package (will be installed for the default Python version).
-* The libuavcan DSDL compiler - `libuavcan_dsdlc` (use `--help` to get usage info).
-* Simple network monitoring tools - see below.
+* The POSIX driver for libuavcan (this is a header-only library too).
+* Generated DSDL headers (installed into the same directory as the libuavcan headers).
+* Libuavcan DSDL compiler (Python script `libuavcan_dsdlc`, use `--help` to get usage info).
+* Libuavcan DSDL compiler's support library (Python package `libuavcan_dsdl_compiler`).
+* CLI tools (see below).
+
+Pyuavcan will not be installed into the system together with the library; you'll need to install it separately.
+The installed DSDL compiler will not function unless pyuavcan is installed.
 
 Installation prefix can be overridden via make variable `PREFIX`.
 Default installation prefix depends on the Linux distribution;
@@ -220,7 +223,7 @@ make
 ./pan_galactic_gargle_blaster 42 vcan0  # Args: <node-id>, <can-iface-name>
 ```
 
-Hint: Refer to the [[Libuavcan_tutorials:_Node_initialization_and_startup#Adding_a_virtual_CAN_interface|libuavcan tutorials to learn how to add a virtual CAN bus interface for testing on Linux]].
+Refer to the libuavcan tutorials to learn how to add a virtual CAN bus interface for testing on Linux.
 
 ### Note on SocketCAN
 
@@ -230,11 +233,10 @@ It is recommended to enable automatic bus-off recovery using the option `restart
 sudo ip link set can0 up type can bitrate 1000000 sample-point 0.875 restart-ms 100
 ```
 
-This will ensure reliable operation of the dynamic node ID allocation procedure.
+It will ensure reliable operation of the dynamic node ID allocation procedure.
+Learn more at <https://www.kernel.org/doc/Documentation/networking/can.txt>.
 
-Learn more at [https://www.kernel.org/doc/Documentation/networking/can.txt https://www.kernel.org/doc/Documentation/networking/can.txt].
-
-## Network monitoring tools
+## CLI tools
 
 Libuavcan driver for Linux also includes a couple of simple CLI applications for network monitoring and control.
 
