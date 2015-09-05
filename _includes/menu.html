@@ -50,25 +50,30 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% assign url_parts  = node_url | split: '/' %}
         {% assign node_level = url_parts | size | minus: 2 %}
 
+        <!-- {{node_url}} {{node_level}} -->
+
         {% if node_level >= LEVEL %}
             {% if include.max_depth == null %}  {% assign MAX_DEPTH = 5 %}
             {% else %}                          {% assign MAX_DEPTH = include.max_depth %}
             {% endif %}
 
-            {% assign next_level = LEVEL | plus: 1 %}
-            {% assign node_name = url_parts[next_level] %}
+            {% assign node_name = url_parts | last %}
 
             {% capture traversed_items %}{% include traversed_items_render.html level=LEVEL %}{% endcapture %}
 
             {% unless traversed_items contains node_name %}
                 {% include traversed_items_append.html level=LEVEL value=node_name %}
 
+                {% assign next_level = LEVEL | plus: 1 %}
+
                 {% assign prefix = '' %}
                 {% for x in (0..next_level) %}
                     {% assign tmp1 = url_parts[x] %}
                     {% assign tmp2 = prefix | append: tmp1 | append: '/' %}
-                    {% assign prefix = tmp2 %}
+                    {% assign prefix = tmp2 | replace: '//','/' %}
                 {% endfor %}
+
+                <!-- PREFIX {{node_url}} {{prefix}} -->
 
                 {% assign file_name  = url_parts | last %}
 
@@ -86,7 +91,7 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
                 {% endif %}
 
                 <li{% if active_item %} class="current"{% endif %}>
-                    {% assign node_title = node_name | remove: '.html' | replace: '_', ' ' %}
+                    {% assign node_title = node_name | replace: '_', ' ' %}
 
                     {% if include.a_toplevel_opener_class != null and node_level > LEVEL and LEVEL == 0 %}
                         {% capture a_class %}class="{{ include.a_toplevel_opener_class }}"{% endcapture %}
