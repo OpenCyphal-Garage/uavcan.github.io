@@ -106,107 +106,6 @@ The path is `uavcan/libuavcan_drivers/stm32/driver/include`.
 Alternatively, configure the build system to invoke the compiler automatically.
 * Add all the C++ source files of libuavcan core and STM32 driver to the project.
 
-## Using in the application
-
-This example demonstrates how to use libuavcan in an STM32 application.
-It assumes that the application is running on a ChibiOS environment,
-but it can be adapted to any other supported RTOS easily.
-
-```c++
-#include <unistd.h>
-#include <ch.hpp>
-#include <hal.h>
-#include <uavcan_stm32/uavcan_stm32.hpp>
-
-namespace app
-{
-namespace
-{
-
-constexpr unsigned CanBusBitrate = 1000000;
-
-constexpr unsigned NodeID = 42;
-
-constexpr unsigned NodeMemoryPoolSize = 4096 * (UAVCAN_STM32_NUM_IFACES + 1);
-
-typedef uavcan::Node<NodeMemoryPoolSize> Node;
-
-uavcan_stm32::CanInitHelper<> stm32_can_init_helper;
-
-Node& getNode()
-{
-    // For GCC users: please use the flag -fno-threadsafe-statics in order to avoid code bloat here.
-    // More info: http://stackoverflow.com/questions/22985570/g-using-singleton-in-an-embedded-application
-    static Node node(stm32_can_init_helper.driver, uavcan_stm32::SystemClock::instance());
-    return node;
-}
-
-int init()
-{
-    halInit();
-    chibios_rt::System::init();
-    sdStart(&STDOUT_SD, NULL);
-    return stm32_can_init_helper.init(CanBusBitrate);
-}
-
-class : public chibios_rt::BaseStaticThread<3000>
-{
-public:
-    msg_t main() override
-    {
-        Node& node = app::getNode();
-        node.setNodeID(NodeID);
-        node.setName("org.uavcan.kill_o_zap");
-        // TODO: initialize the hardware and software version info
-
-        while (true)
-        {
-            int res = node.start();
-            if (res < 0)
-            {
-                printf("Node initialization failure: %i, will try agin soon\n", res);
-            }
-            else
-            {
-                break;
-            }
-            ::sleep(1);
-        }
-
-        node.setStatusOk();
-        while (true)
-        {
-            const int spin_res = node.spin(uavcan::MonotonicDuration::getInfinite());
-            if (spin_res < 0)
-            {
-                printf("Transient failure: %i\n", spin_res);
-            }
-        }
-        return msg_t();
-    }
-} uavcan_node_thread;
-
-}
-}
-
-int main()
-{
-    const int init_res = app::init();
-    if (init_res != 0)
-    {
-        // Probably wrong configuration params, e.g. wrong CAN bitrate. Do something about it.
-    }
-
-    app::uavcan_node_thread.start(LOWPRIO);
-
-    while (true)
-    {
-        ::sleep(1);
-        // Doing something here
-    }
-}
-```
-
 ## Build configuration
 
 The driver is configurable via preprocessor definitions.
@@ -229,5 +128,5 @@ The following firmware projects can be used as a reference:
 
 * [Zubax GNSS](https://github.com/Zubax/zubax_gnss)
 * [PX4](https://github.com/PX4/Firmware)
-* [PX4ESC](https://github.com/pavel-kirienko/px4esc)
+* [PX4ESC](https://github.com/PX4/px4esc)
 * Also see test applications available with the driver sources.
