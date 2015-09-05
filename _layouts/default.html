@@ -46,11 +46,13 @@
                 {% assign rendered_menu_html = '' %}
                 {% if level > 2 %}
                     {% capture prefix %}/{{page_url_parts[1]}}/{{page_url_parts[2]}}/{% endcapture %}
+                    {% assign sidebar_node_name = page_url_parts[2] %}
                     <!-- prefix: {{prefix}} -->
                     {% capture rendered_menu_html %}{% include menu.html prefix=prefix class="actions" %}{% endcapture %}
                 {% endif %}
                 {% unless rendered_menu_html contains "</li>" %}
                     {% capture prefix %}/{{page_url_parts[1]}}/{% endcapture %}
+                    {% assign sidebar_node_name = page_url_parts[1] %}
                     <!-- prefix: {{prefix}} -->
                     {% capture rendered_menu_html %}{% include menu.html prefix=prefix class="actions" %}{% endcapture %}
                 {% endunless %}
@@ -58,7 +60,8 @@
                 <div class="sidebar">
                     {% if rendered_menu_html contains "</li>" %}
                     <section>
-                        <h3>Sections</h3>
+                        {% assign sidebar_node_title = sidebar_node_name | replace: '_',' ' %}
+                        <h3>{{sidebar_node_title}}</h3>
                         <footer>
                         {% include render_without_empty_lines.html content=rendered_menu_html %}
                         </footer>
