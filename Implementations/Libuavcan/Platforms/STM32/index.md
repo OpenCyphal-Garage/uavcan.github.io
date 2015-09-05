@@ -41,16 +41,16 @@ No extra dependencies are required. The library need not be installed on the hos
 
 The general approach is as follows:
 
-* Include the libuavcan core makefile (`include.mk`) to obtain the following:
-  * List of C++ source files - make variable `$(LIBUAVCAN_SRC)`
-  * C++ include directory path - make variable `$(LIBUAVCAN_INC)`
-  * DSDL compiler executable path (which is a Python script) - make variable `$(LIBUAVCAN_DSDLC)`
-* Include the libuavcan STM32 driver makefile (`include.mk`) to obtain the following:
-  * List of C++ source files - make variable `$(LIBUAVCAN_STM32_SRC)`
-  * C++ include directory path - make variable `$(LIBUAVCAN_STM32_INC)`
-* Invoke the DSDL compiler using the variable `$(LIBUAVCAN_DSDLC)`.
-* Add the output directory of the DSDL compiler to the list of include directories.
-* Add the obtained list of C++ source files and include directories to the application sources or
+1. Include the libuavcan core makefile (`include.mk`) to obtain the following:
+  1. List of C++ source files - make variable `$(LIBUAVCAN_SRC)`
+  2. C++ include directory path - make variable `$(LIBUAVCAN_INC)`
+  3. DSDL compiler executable path (which is a Python script) - make variable `$(LIBUAVCAN_DSDLC)`
+2. Include the libuavcan STM32 driver makefile (`include.mk`) to obtain the following:
+  1. List of C++ source files - make variable `$(LIBUAVCAN_STM32_SRC)`
+  2. C++ include directory path - make variable `$(LIBUAVCAN_STM32_INC)`
+3. Invoke the DSDL compiler using the variable `$(LIBUAVCAN_DSDLC)`.
+4. Add the output directory of the DSDL compiler to the list of include directories.
+5. Add the obtained list of C++ source files and include directories to the application sources or
 build an independent static library.
 
 The relevant part of the makefile implementing the steps above is provided below.
