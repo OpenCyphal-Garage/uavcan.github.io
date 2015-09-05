@@ -30,10 +30,12 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
 
     {% assign SORTED_VALID_PAGE_URLS = urls | split: ' ' %}
 
+    {% comment %}
     <!-- SORTED_VALID_PAGE_URLS: -->
     {% for node_url in SORTED_VALID_PAGE_URLS %}
         <!-- {{node_url}} -->
     {% endfor %}
+    {% endcomment %}
 {% endif %}
 
 {% capture inner %}
@@ -45,8 +47,6 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
     {% assign node_url_without_prefix = node_url | remove: PREFIX | prepend: '*' | remove: '*/' | remove: '*' %}
     {% assign node_name = node_url_without_prefix | split: '/' | first %}
     {% assign node_title = node_name | replace: '_', ' ' %}
-
-    <!-- {{node_url}} node_name:{{node_name}} correct_level:{{correct_level}} -->
 
     {% assign correct_level = true %}
     {% if node_url_without_prefix contains '/' %}
