@@ -1,8 +1,0 @@
-{% case include.level %}
-{% when 0 %}{% capture x %}{{traversed_items_0}} {{include.value}}{% endcapture %}{% assign traversed_items_0 = x %}
-{% when 1 %}{% capture x %}{{traversed_items_1}} {{include.value}}{% endcapture %}{% assign traversed_items_1 = x %}
-{% when 2 %}{% capture x %}{{traversed_items_2}} {{include.value}}{% endcapture %}{% assign traversed_items_2 = x %}
-{% when 3 %}{% capture x %}{{traversed_items_3}} {{include.value}}{% endcapture %}{% assign traversed_items_3 = x %}
-{% when 4 %}{% capture x %}{{traversed_items_4}} {{include.value}}{% endcapture %}{% assign traversed_items_4 = x %}
-{% else   %}{% capture x %}{{traversed_items_5}} {{include.value}}{% endcapture %}{% assign traversed_items_5 = x %}
-{% endcase %}
