@@ -63,7 +63,7 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% endif %}
 
         <li{% if active_item %} class="current"{% endif %}>
-            {% if include.a_toplevel_opener_class != null and node_level > LEVEL and LEVEL == 0 %}
+            {% if include.a_toplevel_opener_class != null and include.prefix == null %}
                 {% capture a_class %}class="{{ include.a_toplevel_opener_class }}"{% endcapture %}
             {% else %}
                 {% assign a_class = '' %}
