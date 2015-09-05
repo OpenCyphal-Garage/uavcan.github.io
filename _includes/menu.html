@@ -3,18 +3,15 @@ This pathetic disaster is nothing else but implementation of a stable sorting al
 needed to ensure that all menu and sub-menu entries are properly arranged with respect to each other.
 {% endcomment %}
 {% if SORTED_VALID_PAGE_URLS == null %}
-    {% assign urls = '' %}
+    {% comment %}Initialized with space!{% endcomment %}
+    {% assign urls = ' ' %}
 
     {% for weight in (0..100) %}
         {% assign matching_unsorted = site.pages | where:"weight",weight %}
         {% if matching_unsorted != null %}
             {% assign matching = matching_unsorted | sort:"url" %}
             {% for match in matching %}
-                {% if urls != '' %}
-                    {% assign tmp = urls | append: ' ' %}
-                    {% assign urls = tmp %}
-                {% endif %}
-                {% assign tmp = urls | append: match.url %}
+                {% assign tmp = urls | append: match.url | append: ' ' %}
                 {% assign urls = tmp %}
             {% endfor %}
         {% endif %}
@@ -23,11 +20,7 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
     {% assign matching = site.pages | where:"weight",null | sort:"url" %}
     {% for match in matching %}
         {% unless match.url contains '.xml' or match.url contains '/assets/' %}
-            {% if urls != '' %}
-                {% assign tmp = urls | append: ' ' %}
-                {% assign urls = tmp %}
-            {% endif %}
-            {% assign tmp = urls | append: match.url %}
+            {% assign tmp = urls | append: match.url | append: ' ' %}
             {% assign urls = tmp %}
         {% endunless %}
     {% endfor %}
