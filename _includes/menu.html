@@ -2,7 +2,7 @@
 This pathetic disaster is nothing else but implementation of a stable sorting algorithm,
 needed to ensure that all menu and sub-menu entries are properly arranged with respect to each other.
 {% endcomment %}
-{% if SORTED_PAGE_URLS == null %}
+{% if SORTED_VALID_PAGE_URLS == null %}
     {% assign urls = '' %}
 
     {% for weight in (0..100) %}
@@ -22,23 +22,25 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
 
     {% assign matching = site.pages | where:"weight",null | sort:"url" %}
     {% for match in matching %}
-        {% if urls != '' %}
-            {% assign tmp = urls | append: ' ' %}
+        {% unless match.url contains '.xml' or match.url contains '/assets/' %}
+            {% if urls != '' %}
+                {% assign tmp = urls | append: ' ' %}
+                {% assign urls = tmp %}
+            {% endif %}
+            {% assign tmp = urls | append: match.url %}
             {% assign urls = tmp %}
-        {% endif %}
-        {% assign tmp = urls | append: match.url %}
-        {% assign urls = tmp %}
+        {% endunless %}
     {% endfor %}
 
-    {% assign SORTED_PAGE_URLS = urls | split: ' ' %}
-    <!-- SORTED_PAGE_URLS: -->
-    {% for node_url in SORTED_PAGE_URLS %}
+    {% assign SORTED_VALID_PAGE_URLS = urls | split: ' ' %}
+    <!-- SORTED_VALID_PAGE_URLS: -->
+    {% for node_url in SORTED_VALID_PAGE_URLS %}
         <!-- {{node_url}} -->
     {% endfor %}
 {% endif %}
 
 {% capture inner %}
-{% for node_url in SORTED_PAGE_URLS %}
+{% for node_url in SORTED_VALID_PAGE_URLS %}
     {% if include.max_depth == null %}  {% assign MAX_DEPTH = 5 %}
     {% else %}                          {% assign MAX_DEPTH = include.max_depth %}
     {% endif %}
@@ -64,14 +66,9 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% assign prefix = tmp2 %}
     {% endfor %}
 
-    {% assign valid_page = true %}
-    {% if file_name contains '.xml' or node_url contains '/assets/' %}
-        {% assign valid_page = false %}
-    {% endif %}
-
     {% capture traversed_items %}{% include traversed_items_render.html level=LEVEL %}{% endcapture %}
 
-    {% if node_level >= LEVEL and valid_page and node_url contains PREFIX %}
+    {% if node_level >= LEVEL and node_url contains PREFIX %}
     {% unless traversed_items contains node_name or node_name == 'index.html' %}
         {% include traversed_items_append.html level=LEVEL value=node_name %}
 
