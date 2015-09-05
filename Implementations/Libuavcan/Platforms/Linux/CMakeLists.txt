@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project(pan_galactic_gargle_blaster)
+set(CMAKE_CXX_FLAGS "-std=c++11")
+find_library(UAVCAN_LIB uavcan REQUIRED)
+add_executable(pan_galactic_gargle_blaster node.cpp)
+target_link_libraries(pan_galactic_gargle_blaster ${UAVCAN_LIB} rt)

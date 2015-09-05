@@ -86,12 +86,7 @@ Also, take a look at the applications available at
 Place this into the file `CMakeLists.txt`:
 
 ```cmake
-cmake_minimum_required(VERSION 2.8)
-project(pan_galactic_gargle_blaster)
-set(CMAKE_CXX_FLAGS "-std=c++11")
-find_library(UAVCAN_LIB uavcan REQUIRED)
-add_executable(pan_galactic_gargle_blaster node.cpp)
-target_link_libraries(pan_galactic_gargle_blaster ${UAVCAN_LIB} rt)
+{% include_relative CMakeLists.txt %}
 ```
 
 #### C++ source file
@@ -99,116 +94,7 @@ target_link_libraries(pan_galactic_gargle_blaster ${UAVCAN_LIB} rt)
 Place this into the file `node.cpp`:
 
 ```c++
-#include <iostream>
-#include <vector>
-#include <string>
-#include <uavcan_linux/uavcan_linux.hpp>
-#include <uavcan/protocol/debug/KeyValue.hpp>
-#include <uavcan/protocol/param/ExecuteOpcode.hpp>
-
-static uavcan_linux::NodePtr initNode(const std::vector<std::string>& ifaces, uavcan::NodeID nid,
-                                      const std::string& name)
-{
-    auto node = uavcan_linux::makeNode(ifaces);
-
-    node->setNodeID(nid);
-    node->setName(name.c_str());
-
-    /*
-     * Starting the node
-     */
-    if (0 != node->start())
-    {
-        throw std::runtime_error("Bad luck");
-    }
-
-    /*
-     * Checking whether our node conflicts with other nodes. This may take a few seconds.
-     */
-    uavcan::NetworkCompatibilityCheckResult init_result;
-    if (0 != node->checkNetworkCompatibility(init_result))
-    {
-        throw std::runtime_error("Bad luck");
-    }
-    if (!init_result.isOk())
-    {
-        throw std::runtime_error("Network conflict with node " + std::to_string(init_result.conflicting_node.get()));
-    }
-
-    return node;
-}
-
-static void runForever(const uavcan_linux::NodePtr& node)
-{
-    /*
-     * Set the status to OK to inform other nodes that we're ready to work now
-     */
-    node->setStatusOk();
-
-    /*
-     * Subscribing to the logging message just for fun
-     */
-    auto log_sub = node->makeSubscriber<uavcan::protocol::debug::LogMessage>(
-        [](const uavcan::ReceivedDataStructure<uavcan::protocol::debug::LogMessage>& msg)
-        {
-            std::cout << msg << std::endl;
-        });
-
-    /*
-     * Key Value publisher
-     */
-    auto keyvalue_pub = node->makePublisher<uavcan::protocol::debug::KeyValue>();
-
-    /*
-     * Timer that uses the above publisher once a minute
-     */
-    auto timer = node->makeTimer(uavcan::MonotonicDuration::fromMSec(60000), [&](const uavcan::TimerEvent&)
-        {
-            uavcan::protocol::debug::KeyValue msg;
-            msg.key = "some_message";
-            uavcan::protocol::param::String str;
-            str.value = "Nothing continues to happen";
-            msg.value.value_string.push_back(str);
-            (void)keyvalue_pub->broadcast(msg);
-        });
-
-    /*
-     * A useless server that just prints the request and responds with a default-initialized response data structure
-     */
-    auto server = node->makeServiceServer<uavcan::protocol::param::ExecuteOpcode>(
-        [](const uavcan::protocol::param::ExecuteOpcode::Request& req,
-           uavcan::protocol::param::ExecuteOpcode::Response&)
-        {
-            std::cout << req << std::endl;
-        });
-
-    /*
-     * Spinning forever
-     */
-    while (true)
-    {
-        const int res = node->spin(uavcan::MonotonicDuration::getInfinite());
-        if (res < 0)
-        {
-            node->logError("spin", "Error %*", res);
-        }
-    }
-}
-
-int main(int argc, const char** argv)
-{
-    if (argc < 3)
-    {
-        std::cout << "Usage:\n\t" << argv[0] << " <node-id> <can-iface-name-1> [can-iface-name-N...]" << std::endl;
-        return 1;
-    }
-    const int self_node_id = std::stoi(argv[1]);
-    std::vector<std::string> iface_names(argv + 2, argv + argc);
-    auto node = initNode(iface_names, self_node_id, "org.uavcan.pan_galactic_gargle_blaster");
-    std::cout << "Initialized" << std::endl;
-    runForever(node);
-    return 0;
-}
+{% include_relative node.cpp %}
 ```
 
 #### Building and Running
@@ -216,11 +102,7 @@ int main(int argc, const char** argv)
 In the same directory, execute this:
 
 ```sh
-mkdir build
-cd build
-cmake ..
-make
-./pan_galactic_gargle_blaster 42 vcan0  # Args: <node-id>, <can-iface-name>
+{% include_relative build_and_run.sh %}
 ```
 
 Refer to the libuavcan tutorials to learn how to add a virtual CAN bus interface for testing on Linux.
