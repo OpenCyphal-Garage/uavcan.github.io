@@ -75,7 +75,7 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
             <a {{a_class}} href="{{node_url}}">{{node_title}}</a>
 
             {% assign prefix = node_url | append: '/' %}
-            {% include menu.html prefix=prefix class=include.class max_depth=MAX_DEPTH %}
+            {% include menu.html prefix=prefix class=include.class %}
         </li>
     {% endif %}
 {% endfor %}

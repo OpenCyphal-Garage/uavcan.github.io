@@ -14,8 +14,9 @@
                 {% assign breadcrumbs_level = CLEAN_PAGE_URL | split: '/' | size %}
                 {% if breadcrumbs_level > 1 %}
                 <div class="breadcrumbs">
+                {% assign page_url_parts = page.url | split: '/' %}
                 {% assign breadcrumb_url = '' %}
-                {% for x in PAGE_URL_PARTS %}{% if x != '' %}
+                {% for x in page_url_parts %}{% if x != '' %}
                     {% assign tmp1 = breadcrumb_url | append: '/' | append: x %}
                     {% assign breadcrumb_url = tmp1 %}
 
@@ -40,38 +41,34 @@
                 </div>
 
                 <!-- SIDEBAR -->
-                {% if PAGE_DEPTH > 0 %}
-
-                {% assign menu_root_level = PAGE_DEPTH %}
-                {% if menu_root_level > 2 %}
-                    {% assign menu_root_level = 2 %}
+                {% assign page_url_parts = page.url | remove: 'index.html' | split: '/' %}
+                {% assign level = page_url_parts | size %}
+                {% assign rendered_menu_html = '' %}
+                {% if level > 2 %}
+                    {% capture prefix %}/{{page_url_parts[1]}}/{{page_url_parts[2]}}/{% endcapture %}
+                    <!-- prefix: {{prefix}} -->
+                    {% capture rendered_menu_html %}{% include menu.html prefix=prefix class="actions" %}{% endcapture %}
                 {% endif %}
+                {% unless rendered_menu_html contains "</li>" %}
+                    {% capture prefix %}/{{page_url_parts[1]}}/{% endcapture %}
+                    <!-- prefix: {{prefix}} -->
+                    {% capture rendered_menu_html %}{% include menu.html prefix=prefix class="actions" %}{% endcapture %}
+                {% endunless %}
 
-                {% assign menu_prefix = '' %}
-                {% for x in (0..menu_root_level) %}
-                    {% assign tmp1 = PAGE_URL_PARTS[x] %}
-                    {% assign tmp2 = menu_prefix | append: tmp1 | append: '/' %}
-                    {% assign menu_prefix = tmp2 %}
-                {% endfor %}
-
-                {% capture rendered_menu_html %}{% include menu.html level=menu_root_level prefix=menu_prefix class="actions" %}{% endcapture %}
-
-                {% if rendered_menu_html contains "</li>" %}
                 <div class="sidebar">
+                    {% if rendered_menu_html contains "</li>" %}
                     <section>
                         <h3>Sections</h3>
                         <footer>
                         {% include render_without_empty_lines.html content=rendered_menu_html %}
                         </footer>
                     </section>
+                    {% endif %}
 
                     <section>
                         <div id="toc"></div>
                     </section>
                 </div>
-                {% endif %}
-                {% endif %}
-
             </div>
         </section>
 

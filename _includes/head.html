@@ -6,11 +6,6 @@
     {% assign PAGE_TITLE = CLEAN_PAGE_URL | split: '/' | last %}
 {% endif %}
 
-{% assign PAGE_URL_PARTS = page.url | split: '/' %}
-{% assign PAGE_FILE = PAGE_URL_PARTS | last %}
-{% assign PAGE_DIRECTORY = page.url | remove: PAGE_FILE %}
-{% assign PAGE_DEPTH = PAGE_URL_PARTS | size | minus: 2 %}
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
