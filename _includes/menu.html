@@ -6,10 +6,11 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
     {% comment %}Initialized with space!{% endcomment %}
     {% assign urls = ' ' %}
 
+    {% assign sorted_pages = site.pages | sort:"url" %}
+
     {% for weight in (0..100) %}
-        {% assign matching_unsorted = site.pages | where:"weight",weight %}
-        {% if matching_unsorted != null %}
-            {% assign matching = matching_unsorted | sort:"url" %}
+        {% assign matching = sorted_pages | where:"weight",weight %}
+        {% if matching != null %}
             {% for match in matching %}
                 {% assign tmp = urls | append: match.url | append: ' ' %}
                 {% assign urls = tmp %}
@@ -17,7 +18,7 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% endif %}
     {% endfor %}
 
-    {% assign matching = site.pages | where:"weight",null | sort:"url" %}
+    {% assign matching = sorted_pages | where:"weight",null %}
     {% for match in matching %}
         {% unless match.url contains '.xml' or match.url contains '/assets/' %}
             {% assign tmp = urls | append: match.url | append: ' ' %}
