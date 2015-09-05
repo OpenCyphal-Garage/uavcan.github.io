@@ -16,6 +16,7 @@ The following RTOS are supported:
 
 * [ChibiOS](http://chibios.org/)
 * [NuttX](http://nuttx.org/)
+* Bare metal (no OS)
 
 This driver should work with any STM32 series MCU. The following models were tested so far:
 
@@ -118,6 +119,7 @@ Name                            | RTOS    | Description
 --------------------------------|---------|--------------------------------------------------------------------------
 `UAVCAN_STM32_CHIBIOS`          | ChibiOS | Set to 1 if using ChibiOS.
 `UAVCAN_STM32_NUTTX`            | NuttX   | Set to 1 if using NuttX.
+`UAVCAN_STM32_BAREMETAL`        | N/A     | Set to 1 if not using any OS.
 `UAVCAN_STM32_IRQ_PRIORITY_MASK`| ChibiOS | This option defines IRQ priorities for the CAN controllers and the timer. Default priority level is one lower than the kernel priority level (i.e. max allowed level).
 `UAVCAN_STM32_TIMER_NUMBER`     | Any     | Hardware timer number reserved for clock functions. If this value is not set, the timer driver will not be compiled; this allows the application to implement a custom driver if needed. Valid timer numbers are 2, 3, 4, 5, 6, and 7.
 `UAVCAN_STM32_NUM_IFACES`       | Any     | Number of CAN interfaces to use. Valid values are 1 and 2.
