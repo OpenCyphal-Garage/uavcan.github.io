@@ -57,7 +57,7 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% assign active_item = false %}
         {% comment %}TODO index page highlighting{% endcomment %}
         {% assign node_url_noslash = node_url | remove: '/' %}
-        {% assign page_url_noslash = page.url | remove: '/' %}
+        {% assign page_url_noslash = page.url | remove: 'index.html' | remove: '/' %}
         {% if node_url_noslash == page_url_noslash %}
             {% assign active_item = true %}
         {% endif %}
