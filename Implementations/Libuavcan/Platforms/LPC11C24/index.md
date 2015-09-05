@@ -7,14 +7,13 @@ This page describes the libuavcan driver for the
 [NXP LPC11C24](http://www.nxp.com/products/microcontrollers/cortex_m0_m0/lpc1100/LPC11C24FBD48.html)
 MCU and shows how to use libuavcan on this platform.
 
-NXP LPC11C24 is a low-end ARM Cortex-M0 microcontroller that features an embedded CAN controller with a CAN driver,
+NXP LPC11C24 is a low-end ARM Cortex-M0 microcontroller that features an embedded CAN controller with a CAN transceiver,
 rendering it a true single-chip solution for CAN applications.
 Since the computational resources of this MCU are quite limited, a number of restrictions apply:
 
 * The driver is designed to run on bare metal - no RTOS supported.
-* The libuavcan library can be compiled only in tiny mode, which removes a number of auxiliary features
-(e.g., transport layer diagnostic support).
-* Core clock frequency must be an integer multiple of 1 MHz.
+* The libuavcan library can be compiled only in tiny mode, which removes a number of auxiliary features.
+* Core clock frequency must be strictly 48 MHz.
 * The driver supports time synchronization in slave mode only, i.e.,
 the device running libuavcan with this driver can't act as a clock synchronization master.
 
@@ -23,10 +22,11 @@ The following hardware modules are used by the driver:
 * CAN controller
 * SysTick timer for clock functions
 
-The driver is written in standard C++03 and is compatible with C++11.
+The driver is written in standard C++11.
 It leverages the [LPCOpen](http://www.lpcware.com/lpcopen) libraries for low-level hardware control.
 
-Users are encouraged to use the test project for this driver as a starting point in developing their own applications (see the next sections).
+Users are encouraged to use the test project for this driver
+as a starting point in developing their own applications (see the next sections).
 
 ## Build configuration
 
