@@ -61,9 +61,12 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% if node_url_noslash == page_url_noslash %}
             {% assign active_item = true %}
         {% endif %}
+        {% if PREFIX == '' and page_url_noslash contains node_url_noslash %}
+            {% assign active_item = true %}
+        {% endif %}
 
         <li{% if active_item %} class="current"{% endif %}>
-            {% if include.a_toplevel_opener_class != null and include.prefix == null %}
+            {% if include.a_toplevel_opener_class != null and PREFIX == '' %}
                 {% capture a_class %}class="{{ include.a_toplevel_opener_class }}"{% endcapture %}
             {% else %}
                 {% assign a_class = '' %}
