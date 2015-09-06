@@ -4,16 +4,34 @@
 # Node initialization and startup
 
 In this tutorial we'll create a simple node that doesn't do anything useful yet.
-It runs on any platform, provided that the platform-dependent functions declared in the beginning
-are properly implemented.
 
 ## Abstract
 
-**TODO:**
+In order to add UAVCAN functionality into an application, we'll have to create a node object of class `uavcan::Node`,
+which is the cornerstone of the library's API.
+The class requires access to the CAN driver and the system clock, which are platform-specific components,
+therefore they are isolated from the library through the following interfaces:
 
-* High-level objectives
-* Memory management
-* Control thread execution
+* `uavcan::ICanDriver`
+* `uavcan::ICanIface`
+* `uavcan::ISystemClock`
+
+Classes that implement above interfaces are provided by libuavcan platform drivers.
+Applications that are using libuavcan can be easily ported between platforms by means of swapping the implementations
+of these interfaces.
+
+### Memory management
+
+Libuavcan does not use heap.
+Dynamic memory allocations are managed by constant-time determenistic fragmentation-free block memory allocator.
+The size of the memory pool that is dedicated to block allocation should be defined compile-time through a template
+argument of the node class `uavcan::Node`.
+
+**TODO**
+
+### Threading
+
+**TODO**
 
 ## The code
 
@@ -25,7 +43,7 @@ Put the following code into `node.cpp`:
 
 ## Running on Linux
 
-We need to implement the platform-specific functions declared in the beginning of the example above,
+We need to implement the platform-specific functions declared in the beginning of the example code above,
 write a build script, and then build the application.
 For the sake of simplicity, it is assumed that there's a single CAN interface named `vcan0`.
 
