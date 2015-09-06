@@ -27,7 +27,8 @@ then the first two C++ interfaces can be implemented in the same C++ class.
 
 Some features can be left unimplemented:
 
-* IO flags and TX timestamping - needed for clock synchronization master.
+* IO flags - needed for dynamic node ID allocation and time synchronization master.
+* TX timestamping - needed for clock synchronization master.
 * Hardware CAN filters configuration -
 not necessary if there is enough computational power to delegate filtering to the library software.
 
