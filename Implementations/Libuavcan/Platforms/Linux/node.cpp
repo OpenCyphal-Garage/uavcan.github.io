@@ -13,6 +13,16 @@ static uavcan_linux::NodePtr initNode(const std::vector<std::string>& ifaces, ua
     node->setNodeID(nid);
     node->setName(name.c_str());
 
+    {
+        const auto app_id = uavcan_linux::makeApplicationID(uavcan_linux::MachineIDReader().read(), name, nid.get());
+
+        uavcan::protocol::HardwareVersion hwver;
+        std::copy(app_id.begin(), app_id.end(), hwver.unique_id.begin());
+        std::cout << hwver << std::endl;
+
+        node->setHardwareVersion(hwver);
+    }
+
     /*
      * Starting the node
      */
