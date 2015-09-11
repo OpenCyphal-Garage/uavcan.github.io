@@ -173,3 +173,68 @@ the preprocessor symbol `__BIGGEST_ALIGNMENT__` so that the library user doesn't
 In case automatic adjustment can't be performed, it defaults to a safe value, 64 bytes, which fits any platform.
 
 If the block size is set too small for the current platform, the library will intentionally fail to compile.
+
+## Debugging and troubleshooting
+
+The library facilitates debugging and troubleshooting through perfcounters and debug output.
+
+### Perfcounters
+
+#### `getFailureCount()`
+
+Objects of the following types provide a method that allows the application to query the number of transport
+layer failures detected by the protocol stack for the given service or message.
+
+* `uavcan::Subscriber`
+* `uavcan::ServiceServer`
+* `uavcan::ServiceClient`
+
+The signature of the method is `std::uint32_t getFailureCount() const`.
+
+Detectable error types include:
+
+* Transfer CRC failures
+* Data type signature mismatch
+* Data type layout mismatch
+* Framing errors
+
+#### `TransferPerfCounter`
+
+Libuavcan maintains a set of performance counters that indicate the number of transfers processed,
+as well as the number of common errors detected in the transport layer.
+The performance counters can be accessed as follows:
+
+```c++
+const TransferPerfCounter& perf = node.getDispatcher().getTransferPerfCounter();
+
+std::cout << perf.getErrorCount()      << std::endl;
+std::cout << perf.getTxTransferCount() << std::endl;
+std::cout << perf.getRxTransferCount() << std::endl;
+```
+
+The example above assumes that the node object is named `node`.
+
+#### `CanIfacePerfCounters`
+
+Libuavcan maintains the counters of CAN frames exchanged by the CAN controller and the number of
+bus errors detected by the CAN hardware.
+
+```c++
+const CanIOManager& canio = node.getDispatcher().getCanIOManager();
+for (std::uint8_t i = 0; i < canio.getNumIfaces(); i++)
+{
+    const CanIfacePerfCounters can_perf = canio.getIfacePerfCounters(i);
+    std::cout << can_perf.errors    << std::endl;
+    std::cout << can_perf.frames_tx << std::endl;
+    std::cout << can_perf.frames_rx << std::endl;
+}
+```
+
+The example above assumes that the node object is named `node`.
+
+### Debug output
+
+The library will print extensive debug information into stdout via `std::printf()`
+if the macro `UAVCAN_DEBUG` is assigned a non-zero value.
+Note that this feature requires C++ I/O streams and `UAVCAN_TOSTRING`.
+
