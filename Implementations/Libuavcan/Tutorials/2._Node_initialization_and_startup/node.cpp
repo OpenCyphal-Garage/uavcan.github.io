@@ -11,7 +11,7 @@ extern uavcan::ICanDriver& getCanDriver();
 extern uavcan::ISystemClock& getSystemClock();
 
 /**
- * Memory pool size largely depends on the number of CAN ifaces and on application behavior.
+ * Memory pool size largely depends on the number of CAN ifaces and on application's logic.
  * Please read the documentation for the class uavcan::Node to learn more.
  */
 constexpr unsigned NodeMemoryPoolSize = 16384;
