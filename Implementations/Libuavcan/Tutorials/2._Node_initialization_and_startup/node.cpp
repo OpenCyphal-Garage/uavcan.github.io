@@ -48,7 +48,7 @@ int main(int argc, const char** argv)
 
     node.setNodeID(self_node_id);
 
-    node.setName("org.uavcan.tutorials.1");
+    node.setName("org.uavcan.tutorial.init");
 
     uavcan::protocol::SoftwareVersion sw_version;  // Standard type uavcan.protocol.SoftwareVersion
     sw_version.major = 1;
