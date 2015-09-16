@@ -23,11 +23,78 @@ of these interfaces.
 ### Memory management
 
 Libuavcan does not use heap.
+
+#### Dynamic memory
+
 Dynamic memory allocations are managed by constant-time determenistic fragmentation-free block memory allocator.
 The size of the memory pool that is dedicated to block allocation should be defined compile-time through a template
 argument of the node class `uavcan::Node`.
 
-**TODO**
+The library uses dynamic memory for the following tasks:
+
+* Allocation of temporary buffers for reception of multi-frame transfers;
+* Keeping receiver states (refer to the transport layer specification for more info);
+* Keeping transfer ID map (refer to the transport layer specification for more info);
+* Prioritized TX queue;
+* Some high-level logic.
+
+Typically, the size of the memory pool will be between 4 KB (for a simple node) and 512 KB (for a very complex node).
+The minimum safe size of the memory pool can be evaluated as a double of the sum of the following values:
+
+* For every incoming data type, multiply its maximum serialized length to the number of nodes that may publish it and
+add up the results.
+* Sum the maximum serialized length of all outgoing data types and multiply to the number of CAN interfaces available
+to the node plus one.
+
+It is recommended to round the result up to 64-byte boundary.
+
+##### Memory pool sizing example
+
+Consider the following example:
+
+Property                                            | Value
+----------------------------------------------------|------------------------------------------------------------------
+Number of CAN interfaces                            | 2
+Number of publishers of the data type A             | 3
+Maximum serialized length of the data type A        | 100 bytes
+Number of publishers of the data type B             | 32
+Maximum serialized length of the data type B        | 24 bytes
+Maximum serialized length of the data type X        | 256 bytes
+Maximum serialized length of the data type Z        | 10 bytes
+
+A node that is interested in receiving data types A and B, and in publishing data types X and Y,
+will require at least the following amount of memory for the memory pool:
+
+    2 * ((3 * 100 + 32 * 24) + (2 + 1) * (256 + 10)) = 3732 bytes
+    Round up to 64: 3776 bytes.
+
+##### Memory gauge
+
+The library allows to query current memory use as well as peak (worst case) memory use with the following methods of
+the class `PoolAllocator<>`:
+
+* `uint16_t getNumUsedBlocks() const` - returns the number of blocks that are currently in use.
+* `uint16_t getNumFreeBlocks() const` - returns the number of blocks that are currently free.
+* `uint16_t getPeakNumUsedBlocks() const` - returns the peak number of blocks allocated, i.e. worst case pool usage.
+
+The methods above can be accessed as follows:
+
+```c++
+std::cout << node.getAllocator().getNumUsedBlocks()     << std::endl;
+std::cout << node.getAllocator().getNumFreeBlocks()     << std::endl;
+std::cout << node.getAllocator().getPeakNumUsedBlocks() << std::endl;
+```
+
+The example above assumes that the node object is named `node`.
+
+#### Stack allocation
+
+Deserialized message and service objects are allocated on the stack.
+Therefore, the size of the stack available to the thread must account for the largest used message or service object.
+This also implies that any reference to a message or service object passed to the application via a callback will be
+invalidated once the callback returns control back to the library.
+
+Typically, minimum safe size of the stack would be about 1.5 KB.
 
 ### Threading
 
