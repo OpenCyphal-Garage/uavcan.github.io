@@ -251,9 +251,21 @@ candump -caeta vcan0
 
 ## Running on STM32
 
-**TODO**
+The platform-specific functions can be implemented as follows:
+
+```c++
+{% include_relative platform_stm32.cpp %}
+```
+
+For the rest, please refer to the STM32 test application provided in the repository.
 
 ## Running on LPC11C24
 
-**TODO**
+The platform-specific functions can be implemented as follows:
+
+```c++
+{% include_relative platform_lpc11c24.cpp %}
+```
+
+For the rest, please refer to the LPC11C24 test application provided in the repository.
 
