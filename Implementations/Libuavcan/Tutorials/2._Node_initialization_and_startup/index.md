@@ -98,7 +98,79 @@ Typically, minimum safe size of the stack would be about 1.5 KB.
 
 ### Threading
 
-**TODO**
+From the standpoint of threading, the following configurations are available:
+
+* Single-threaded - the library runs entirely in a single thread.
+* Dual-threaded - the library runs in two threads:
+  * Primary thread, which is suitable for hard real time, low-latency communications;
+  * Secondary thread, which is suitable for blocking, I/O-intensive, or CPU-intensive tasks, but not for
+real-time tasks.
+
+#### Single-threaded configuration
+
+In a single-threaded configuration, the library's thread should either always block inside `Node<>::spin()`, or
+invoke `Node<>::spin()` or `Node<>::spinOnce()` periodically.
+
+##### Blocking inside `spin()`
+
+This is the most typical use-case:
+
+```c++
+for (;;)
+{
+    const int error = node.spin(uavcan::MonotonicDuration::fromMSec(100));
+    if (error < 0)
+    {
+        std::cerr << "Transient error: " << error << std::endl; // Handle the transient error...
+    }
+}
+```
+
+Some background processing can be performed between the calls to `spin()`:
+
+```c++
+for (;;)
+{
+    const int error = node.spin(uavcan::MonotonicDuration::fromMSec(100));
+    if (error < 0)
+    {
+        std::cerr << "Transient error: " << error << std::endl; // Handle the transient error...
+    }
+
+    performBackgroundProcessing();  // Will be invoked between spin() calls, at 10 Hz in this example
+}
+```
+
+In the latter example, the function `performBackgroundProcessing()` will be invoked at 10 Hz between calls to
+`Node<>::spin()`.
+The same effect can be achieved with libuavcan's timer objects, which will be covered in the following tutorials.
+
+##### Blocking outside of `spin()`
+
+This is a more involved use case.
+This approach can be useful if the application needs to poll various I/O operations in the same thread
+with libuavcan.
+
+In this case, the application will have to obtain the *file descriptor* from the UAVCAN's CAN driver object,
+and add it to the set of file descriptors it is polling on.
+Whenever the CAN driver's file descriptor reports an event, the application will call either
+`Node<>::spin()` or `Node<>::spinOnce()`.
+Also, the spin method must be invoked periodically; the recommended minimum period is 10 milliseconds.
+
+The difference between `Node<>::spin()` and `Node<>::spinOnce()` is as follows:
+
+* `spin()` - blocks until the timeout has expired, then returns, even if some of the CAN frames or timer events
+are still pending processing.
+* `spinOnce()` - instead of blocking,
+it returns immediately once all available CAN frames and timer events are processed.
+
+#### Dual-threaded configuration
+
+This configuration is covered later in a dedicated tutorial.
+In short, it splits the node into two node objects, where each node object is being maintained in a separate thread.
+The same concepts concerning the spin methods apply as for the single-threaded configuration (see above).
+
+The separated node objects communicate with each other by means of a *virtual CAN driver interface*.
 
 ## The code
 
