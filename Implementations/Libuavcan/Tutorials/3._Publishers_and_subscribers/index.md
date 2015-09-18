@@ -3,31 +3,34 @@
 
 # Publishers and subscribers
 
-The application presented in this tutorial performs the following:
+This tutorial presents two applications:
 
-* Subscribes to `uavcan.protocol.debug.LogMessage` and, for each received message, prints to stdout the following data:
-  * The message itself formatted as YAML.
-  * Transport layer data, such as Sender Node ID, timestamps, and active interface index.
-These are formatted as a YAML comment.
-* Subscribes to `uavcan.protocol.debug.KeyValue` and, for each received message,
-prints the message data to stdout formatted as YAML (no transport layer data).
-* Publishes a random float value via `uavcan.protocol.debug.KeyValue` once a second.
+* Publisher, which broadcasts messages of type `uavcan.protocol.debug.KeyValue` once a second with random values.
+* Subscriber, which subscribes to messages of types `uavcan.protocol.debug.KeyValue` and
+`uavcan.protocol.debug.LogMessage`, and prints them to stdout in the [YAML](https://en.wikipedia.org/wiki/YAML) format.
 
-This tutorial assumes that you have completed the previous tutorials.
+Note that the presented publisher will not publish messages of type `uavcan.protocol.debug.LogMessage`.
+The reader is advised to extend it with this functionality on their own.
 
-## The code
+## Publisher
 
 ```c++
-{% include_relative node.cpp %}
+{% include_relative publisher.cpp %}
+```
+
+## Subscriber
+
+```c++
+{% include_relative subscriber.cpp %}
 ```
 
 ## Running on Linux
 
-Build the application using the following CMake script:
+Build the applications using the following CMake script:
 
 ```cmake
 {% include_relative CMakeLists.txt %}
 ```
 
-This script assumes that the platform-specific functions are defined in
+This build script assumes that the platform-specific functions are defined in
 `../2._Node_initialization_and_startup/platform_linux.cpp`.
