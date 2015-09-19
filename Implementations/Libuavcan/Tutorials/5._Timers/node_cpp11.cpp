@@ -26,7 +26,7 @@ int main(int argc, const char** argv)
 
     auto& node = getNode();
     node.setNodeID(self_node_id);
-    node.setName("org.uavcan.tutorials");
+    node.setName("org.uavcan.tutorial.timers_cpp11");
 
     const int node_start_res = node.start();
     if (node_start_res < 0)
