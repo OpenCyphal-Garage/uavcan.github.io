@@ -74,6 +74,12 @@ int main(int argc, const char** argv)
                           << " has failed" << std::endl;
             }
         });
+    /*
+     * C++03 WARNING
+     * The code above will not compile in C++03, because it uses a lambda function.
+     * In order to compile the code in C++03, move the code from the lambda to a standalone static function.
+     * Use uavcan::MethodBinder<> to invoke member functions.
+     */
 
     /*
      * Service call timeout can be overridden if needed, though it's not recommended.
