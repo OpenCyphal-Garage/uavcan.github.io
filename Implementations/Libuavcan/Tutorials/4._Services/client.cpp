@@ -81,6 +81,13 @@ int main(int argc, const char** argv)
     client.setRequestTimeout(uavcan::MonotonicDuration::fromMSec(200));
 
     /*
+     * It is possible to adjust priority of the outgoing service request transfers.
+     * According to the specification, the services are supposed to use the same priority for response transfers.
+     * Default priority is medium, which is 16.
+     */
+    client.setPriority(uavcan::TransferPriority::OneHigherThanLowest);
+
+    /*
      * Calling the remote service.
      * Generated service data types have two nested types:
      *   T::Request  - request data structure
@@ -90,6 +97,32 @@ int main(int argc, const char** argv)
     BeginFirmwareUpdate::Request request;
     request.image_file_remote_path.path = "/foo/bar";
 
+    /*
+     * It is possible to perform multiple concurrent calls using the same client object.
+     * The class ServiceClient provides the following methods that allow to control execution of each call:
+     *
+     *  int call(NodeID server_node_id, const RequestType& request)
+     *      Initiate a new non-blocking call.
+     *
+     *  int call(NodeID server_node_id, const RequestType& request, ServiceCallID& out_call_id)
+     *      Initiate a new non-blocking call and return its ServiceCallID descriptor by reference.
+     *      The descriptor allows to query the progress of the call or cancel it later.
+     *
+     *  void cancelCall(ServiceCallID call_id)
+     *      Cancel a specific call using its descriptor.
+     *
+     *  void cancelAllCalls()
+     *      Cancel all calls.
+     *
+     *  bool hasPendingCallToServer(NodeID server_node_id) const
+     *      Whether the client object has pending calls to the given server at the moment.
+     *
+     *  unsigned getNumPendingCalls() const
+     *      Returns the total number of pending calls at the moment.
+     *
+     *  bool hasPendingCalls() const
+     *      Whether the client object has any pending calls at the moment.
+     */
     const int call_res = client.call(server_node_id, request);
     if (call_res < 0)
     {
