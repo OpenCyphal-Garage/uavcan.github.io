@@ -36,15 +36,10 @@ int main(int argc, const char** argv)
     node.setNodeID(self_node_id);
     node.setName("org.uavcan.tutorial.client");
 
-    while (true)
+    const int node_start_res = node.start();
+    if (node_start_res < 0)
     {
-        const int res = node.start();
-        if (res < 0)
-        {
-            std::printf("Node start failed: %d, will retry\n", res);
-            ::sleep(1);
-        }
-        else { break; }
+        throw std::runtime_error("Failed to start the node; error: " + std::to_string(node_start_res));
     }
 
     /*
