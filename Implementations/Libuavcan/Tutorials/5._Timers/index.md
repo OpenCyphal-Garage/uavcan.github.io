@@ -26,7 +26,7 @@ This example shows how to work-around the lack of lambdas and `std::function<>` 
 
 ## Running on Linux
 
-Build the application using the following CMake script:
+Both versions of the application can be built with the following CMake script:
 
 ```cmake
 {% include_relative CMakeLists.txt %}
