@@ -1,4 +1,4 @@
-#include <cstdio>
+#include <iostream>
 #include <cstdlib>
 #include <unistd.h>
 #include <uavcan/uavcan.hpp>
@@ -33,7 +33,7 @@ int main(int argc, const char** argv)
 {
     if (argc < 2)
     {
-        std::printf("Usage: %s <node-id>\n", argv[0]);
+        std::cerr << "Usage: " << argv[0] << " <node-id>" << std::endl;
         return 1;
     }
 
@@ -62,15 +62,10 @@ int main(int argc, const char** argv)
      * Start the node.
      * All returnable error codes are listed in the header file uavcan/error.hpp.
      */
-    while (true)
+    const int node_start_res = node.start();
+    if (node_start_res < 0)
     {
-        const int res = node.start();
-        if (res < 0)
-        {
-            std::printf("Node start failed: %d, will retry\n", res);
-            ::sleep(1);
-        }
-        else { break; }
+        throw std::runtime_error("Failed to start the node; error: " + std::to_string(node_start_res));
     }
 
     /*
@@ -87,7 +82,7 @@ int main(int argc, const char** argv)
     node.logInfo("main", "Hello world! My Node ID: %*",
                  static_cast<int>(node.getNodeID().get()));
 
-    std::puts("Hello world!");
+    std::cout << "Hello world!" << std::endl;
 
     /*
      * Node loop.
@@ -103,12 +98,12 @@ int main(int argc, const char** argv)
         const int res = node.spin(uavcan::MonotonicDuration::fromMSec(1000));
         if (res < 0)
         {
-            std::printf("Transient failure: %d\n", res);
+            std::cerr << "Transient failure: " << res << std::endl;
         }
 
         /*
          * Random status transitions.
-         * In real applications, the status code shall reflect node health; this feature is very important.
+         * In real applications, the status code shall reflect node's health.
          */
         const float random = std::rand() / float(RAND_MAX);
         if (random < 0.7)
@@ -121,7 +116,7 @@ int main(int argc, const char** argv)
         }
         else
         {
-            node.setHealthError();  // So bad.
+            node.setHealthError();
         }
     }
 }

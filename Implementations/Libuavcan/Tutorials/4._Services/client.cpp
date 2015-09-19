@@ -1,4 +1,3 @@
-#include <cstdio>
 #include <iostream>
 #include <unistd.h>
 #include <uavcan/uavcan.hpp>
@@ -25,7 +24,7 @@ int main(int argc, const char** argv)
 {
     if (argc < 3)
     {
-        std::printf("Usage: %s <self-node-id> <server-node-id>\n", argv[0]);
+        std::cerr << "Usage: " << argv[0] << " <node-id> <server-node-id>" << std::endl;
         return 1;
     }
 
@@ -52,7 +51,7 @@ int main(int argc, const char** argv)
     const int client_init_res = client.init();
     if (client_init_res < 0)
     {
-        std::exit(1);                   // TODO proper error handling
+        throw std::runtime_error("Failed to init the client; error: " + std::to_string(client_init_res));
     }
 
     /*
@@ -65,11 +64,12 @@ int main(int argc, const char** argv)
         {
             if (call_result.isSuccessful())  // Whether the call was successful, i.e. whether the response was received
             {
+                // The result can be directly streamed; the output will be formatted in human-readable YAML.
                 std::cout << call_result << std::endl;
             }
             else
             {
-                std::cout << "Service call to node "
+                std::cerr << "Service call to node "
                           << static_cast<int>(call_result.getCallID().server_node_id.get())
                           << " has failed" << std::endl;
             }
@@ -93,8 +93,7 @@ int main(int argc, const char** argv)
     const int call_res = client.call(server_node_id, request);
     if (call_res < 0)
     {
-        std::printf("Unable to perform service call: %d\n", call_res);
-        std::exit(1);
+        throw std::runtime_error("Unable to perform service call: " + std::to_string(call_res));
     }
 
     /*
@@ -106,10 +105,9 @@ int main(int argc, const char** argv)
         const int res = node.spin(uavcan::MonotonicDuration::fromMSec(10));
         if (res < 0)
         {
-            std::printf("Transient failure: %d\n", res);
+            std::cerr << "Transient failure: " << res << std::endl;
         }
     }
 
-    std::printf("Exit\n");
     return 0;
 }
