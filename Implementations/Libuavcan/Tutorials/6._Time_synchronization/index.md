@@ -3,7 +3,7 @@
 
 # Time synchronization
 
-This tutorial shows how to implement network-wide time synchronization with libuavcan.
+This advanced-level tutorial shows how to implement network-wide time synchronization with libuavcan.
 
 Two applications are implemented:
 
