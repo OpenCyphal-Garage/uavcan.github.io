@@ -24,7 +24,7 @@ Two applications are implemented in this tutorial:
 
 Once started, this node performs the following:
 
-* Reads all configuration parameters from a remote node (the user must enter the remote Node ID).
+* Reads all configuration parameters from a remote node (the user must enter the node ID of the remote node).
 * Sets all parameters to their maximum values.
 * Resets all parameters back to their default values.
 * Restarts the remote node.
