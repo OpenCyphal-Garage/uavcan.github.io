@@ -21,3 +21,5 @@ for cmake_script in */CMakeLists.txt ; do
     echo ">>> Tutorial '$d' built successfully"
     cd ../..
 done
+
+echo ">>> All builds succeeded"
