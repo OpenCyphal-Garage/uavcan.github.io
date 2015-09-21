@@ -3,6 +3,9 @@
 
 # Simple sensor node
 
+This example is not based on any existing UAVCAN implementation -
+it is completely standalone featuring zero third-party dependencies.
+
 ## Source code
 
 ```c
