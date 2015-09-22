@@ -21,6 +21,14 @@ Server's node ID is provided to the application as a command-line argument.
 {% include_relative client.cpp %}
 ```
 
+### Compatibility with older C++ standards
+
+The following code demonstrates how to work-around the lack of important features in older C++ standards (prior C++11).
+
+```c++
+{% include_relative client_cpp03.cpp %}
+```
+
 ## Running on Linux
 
 Build the applications using the following CMake script:

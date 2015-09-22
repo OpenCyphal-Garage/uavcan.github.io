@@ -12,3 +12,6 @@ target_link_libraries(server ${UAVCAN_LIB} rt)
 
 add_executable(client client.cpp ${CMAKE_SOURCE_DIR}/../2._Node_initialization_and_startup/platform_linux.cpp)
 target_link_libraries(client ${UAVCAN_LIB} rt)
+
+add_executable(client_cpp03 client_cpp03.cpp ${CMAKE_SOURCE_DIR}/../2._Node_initialization_and_startup/platform_linux.cpp)
+target_link_libraries(client_cpp03 ${UAVCAN_LIB} rt)
