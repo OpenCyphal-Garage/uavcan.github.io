@@ -35,6 +35,10 @@ real-world examples of network monitoring.
 {% include_relative active.cpp %}
 ```
 
+The output may look like this:
+
+![](/Implementations/Libuavcan/Tutorials/9._Node_discovery/output.png)
+
 ## Running on Linux
 
 Build the applications using the following CMake script:
@@ -42,7 +46,3 @@ Build the applications using the following CMake script:
 ```cmake
 {% include_relative CMakeLists.txt %}
 ```
-
-The output may look like this:
-
-![](/Implementations/Libuavcan/Tutorials/9._Node_discovery/output.png)
