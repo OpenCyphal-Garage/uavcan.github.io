@@ -1,4 +1,5 @@
 ---
+weight: 0
 ---
 
 # Node initialization and startup
