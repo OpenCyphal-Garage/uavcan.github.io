@@ -20,6 +20,9 @@ This allows the monitor to obtain the following information about each node:
   * Software version information
   * Hardware version information, including the globally unique ID and the certificate of authenticity
 
+Refer to the applications provided with the Linux platform drivers to see some
+real-world examples of network monitoring.
+
 ## Passive monitor
 
 ```c++
