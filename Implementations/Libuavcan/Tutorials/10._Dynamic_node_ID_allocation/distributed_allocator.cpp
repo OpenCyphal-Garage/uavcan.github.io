@@ -72,33 +72,20 @@ int main(int argc, const char** argv)
     }
 
     /*
-     * Event tracer is used to log events from the allocator class.
-     *
-     * Each event contains two attributes: event code and event argument (64-bit signed integer).
-     *
-     * If such logging is undesirable, an empty tracer can be implemented through the interface
-     * uavcan::dynamic_node_id_server::IEventTracer.
-     *
-     * The interface also provides a static method getEventName(), which maps event codes to human-readable names.
-     *
-     * The tracer used here just logs events to a text file.
+     * Initializing the event tracer - refer to the Centralized Allocator example for details.
      */
     uavcan_posix::dynamic_node_id_server::FileEventTracer event_tracer;
-    const int event_tracer_res = event_tracer.init("uavcan_db/event.log");      // Using a hard-coded path here.
+    const int event_tracer_res = event_tracer.init("uavcan_db_distributed/event.log");  // Using a hard-coded path here.
     if (event_tracer_res < 0)
     {
         throw std::runtime_error("Failed to start the event tracer; error: " + std::to_string(event_tracer_res));
     }
 
     /*
-     * Storage backend implements the interface uavcan::dynamic_node_id_server::IStorageBackend.
-     * It is used by the allocator to access and modify the persistent key/value storage, where it keeps data.
-     *
-     * The implementation used here uses the file system to keep the data, where file names are KEYS, and
-     * the contents of the files are VALUES. Note that the allocator only uses ASCII alphanumeric keys and values.
+     * Initializing the storage backend - refer to the Centralized Allocator example for details.
      */
     uavcan_posix::dynamic_node_id_server::FileStorageBackend storage_backend;
-    const int storage_res = storage_backend.init("uavcan_db");                  // Using a hard-coded path here.
+    const int storage_res = storage_backend.init("uavcan_db_distributed");              // Using a hard-coded path here.
     if (storage_res < 0)
     {
         throw std::runtime_error("Failed to start the storage backend; error: " + std::to_string(storage_res));
@@ -106,7 +93,6 @@ int main(int argc, const char** argv)
 
     /*
      * Starting the allocator itself.
-     * Its constructor accepts references to the node, to the event tracer, and to the storage backend.
      */
     uavcan::dynamic_node_id_server::DistributedServer server(node, storage_backend, event_tracer);
 
