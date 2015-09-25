@@ -46,6 +46,30 @@ Dynamic node ID 125 has been allocated by the allocator with node ID 1
 
 ## Distributed allocator
 
+The size of the cluster can be configured via a command line argument.
+Once a majority of the nodes participating in the cluster are up,
+the cluster can serve allocation requests.
+
+For example, a three-node cluster can be started as follows (execute each command in a different terminal):
+
+```
+# Terminal 1
+$ ./distributed_allocator 1 3
+# Terminal 2
+$ ./distributed_allocator 2 3
+# Terminal 3
+$ ./distributed_allocator 3 3
+```
+
+Also, a distributed allocator can work in a non-redundant configuration,
+in which case it behaves the same way as a centralized allocator:
+
+```
+$ ./distributed_allocator 1 1
+```
+
+The source code is provided below.
+
 ```c++
 {% include_relative distributed_allocator.cpp %}
 ```
