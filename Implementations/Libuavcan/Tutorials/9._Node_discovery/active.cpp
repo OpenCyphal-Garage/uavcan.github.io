@@ -11,7 +11,7 @@ extern uavcan::ISystemClock& getSystemClock();
  * This class will be collecting information from uavcan::NodeInfoRetriever via the interface uavcan::INodeInfoListener.
  * Please refer to the documentation for uavcan::NodeInfoRetriever to learn more.
  */
-class NodeInfoCollector : public uavcan::INodeInfoListener
+class NodeInfoCollector final : public uavcan::INodeInfoListener
 {
     struct NodeIDHash
     {
