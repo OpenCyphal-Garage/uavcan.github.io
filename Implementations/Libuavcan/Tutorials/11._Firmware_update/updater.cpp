@@ -36,7 +36,7 @@ extern uavcan::ISystemClock& getSystemClock();
  *
  * Refer to the source of uavcan::FirmwareUpdateTrigger to read more documentation.
  */
-class FirmwareVersionChecker : public uavcan::IFirmwareVersionChecker
+class ExampleFirmwareVersionChecker final : public uavcan::IFirmwareVersionChecker
 {
     /**
      * This method will be invoked when the class obtains a response to GetNodeInfo request.
@@ -52,10 +52,20 @@ class FirmwareVersionChecker : public uavcan::IFirmwareVersionChecker
      * @return                          True - the class will begin sending update requests.
      *                                  False - the node will be ignored, no request will be sent.
      */
-    bool shouldRequestFirmwareUpdate(NodeID node_id,
-                                     const protocol::GetNodeInfo::Response& node_info,
-                                     FirmwareFilePath& out_firmware_file_path) override
+    bool shouldRequestFirmwareUpdate(uavcan::NodeID node_id,
+                                     const uavcan::protocol::GetNodeInfo::Response& node_info,
+                                     FirmwareFilePath& out_firmware_file_path)
+    override
     {
+        /*
+         * We need to make the decision, given the inputs, whether the node requires an update.
+         * This part of the logic is deeply application-specific, so the solution provided here may not work
+         * for real-world applications.
+         */
+        (void)node_id;
+        (void)node_info;
+        (void)out_firmware_file_path;
+        return false;   // TODO
     }
 
     /**
@@ -77,10 +87,19 @@ class FirmwareVersionChecker : public uavcan::IFirmwareVersionChecker
      * @return                          True - the class will continue sending update requests with new firmware path.
      *                                  False - the node will be forgotten, new requests will not be sent.
      */
-    bool shouldRetryFirmwareUpdate(NodeID node_id,
-                                   const protocol::file::BeginFirmwareUpdate::Response& error_response,
-                                   FirmwareFilePath& out_firmware_file_path) override
+    bool shouldRetryFirmwareUpdate(uavcan::NodeID node_id,
+                                   const uavcan::protocol::file::BeginFirmwareUpdate::Response& error_response,
+                                   FirmwareFilePath& out_firmware_file_path)
+    override
     {
+        /*
+         * In this implementation we cancel the update request if the node responds with an error.
+         */
+        std::cout << "The node " << int(node_id.get()) << " has rejected the update request; file path was:\n"
+                  << "\t" << out_firmware_file_path.c_str()
+                  << "\nresponse was:\n"
+                  << error_response << std::endl;
+        return false;
     }
 
     /**
@@ -93,11 +112,12 @@ class FirmwareVersionChecker : public uavcan::IFirmwareVersionChecker
      *
      * @param response  Actual response.
      */
-    void handleFirmwareUpdateConfirmation(NodeID node_id,
-                                          const protocol::file::BeginFirmwareUpdate::Response& response) override
+    void handleFirmwareUpdateConfirmation(uavcan::NodeID node_id,
+                                          const uavcan::protocol::file::BeginFirmwareUpdate::Response& response)
+    override
     {
-        (void)node_id;
-        (void)response;
+        std::cout << "Node " << int(node_id.get()) << " has confirmed the update request; response was:\n"
+                  << response << std::endl;
     }
 };
 
@@ -129,24 +149,63 @@ int main(int argc, const char** argv)
     }
 
     /*
+     * Initializing the node info retriever.
+     *
+     * We don't need it, but it will be used by the firmware version checker, which will be initialized next.
+     */
+    uavcan::NodeInfoRetriever node_info_retriever(node);
+
+    const int retriever_res = node_info_retriever.start();
+    if (retriever_res < 0)
+    {
+        throw std::runtime_error("Failed to start the node info retriever: " + std::to_string(retriever_res));
+    }
+
+    /*
      * Initializing the firmware update trigger.
      *
      * This class monitors the output of uavcan::NodeInfoRetriever, and using this output decides which nodes need
      * to update their firmware. When a node that requires an update is detected, the class sends a service request
      * uavcan.protocol.file.BeginFirmwareUpdate to it.
      *
-     * The application-specific logic that
+     * The application-specific logic that performs the checks is implemented in the class
+     * ExampleFirmwareVersionChecker, defined above in this file.
      */
+    ExampleFirmwareVersionChecker checker;
+
+    uavcan::FirmwareUpdateTrigger trigger(node, checker);
+
+    const int trigger_res = trigger.start(node_info_retriever);
+    if (trigger_res < 0)
+    {
+        throw std::runtime_error("Failed to start the firmware update trigger: " + std::to_string(trigger_res));
+    }
 
     /*
-     * Running the node
+     * Initializing the file server.
+     *
+     * It is not necessary to run the file server on the same node with the firmware update trigger
+     * (this is explained in the specification), but this use case is the most common, so we'll demonstrate it here.
+     */
+    uavcan_posix::BasicFileServerBackend file_server_backend(node);
+    uavcan::FileServer file_server(node, file_server_backend);
+
+    const int file_server_res = file_server.start();
+    if (file_server_res < 0)
+    {
+        throw std::runtime_error("Failed to start the file server: " + std::to_string(file_server_res));
+    }
+
+    /*
+     * Running the node normally.
+     * All of the work will be done in background.
      */
     while (true)
     {
-        const int res = node->spin(uavcan::MonotonicDuration::getInfinite());
+        const int res = node.spin(uavcan::MonotonicDuration::getInfinite());
         if (res < 0)
         {
-            std::cerr << "Spin error: " << res << std::endl;
+            std::cerr << "Transient failure: " << res << std::endl;
         }
     }
 }
