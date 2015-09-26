@@ -10,11 +10,12 @@
 #include <uavcan/protocol/node_info_retriever.hpp>      // uavcan::NodeInfoRetriever (see tutorial "Node discovery")
 
 /*
- * We're using POSIX-dependent classes in this example.
+ * We're using POSIX-dependent classes and POSIX API in this example.
  * This means that the example will only work as-is on a POSIX-compliant system (e.g. Linux, NuttX),
  * otherwise the said classes will have to be re-implemented.
  */
 #include <uavcan_posix/basic_file_server_backend.hpp>
+#include <glob.h>                                       // POSIX glob() function
 
 extern uavcan::ICanDriver& getCanDriver();
 extern uavcan::ISystemClock& getSystemClock();
@@ -57,14 +58,49 @@ class ExampleFirmwareVersionChecker final : public uavcan::IFirmwareVersionCheck
                                      FirmwareFilePath& out_firmware_file_path)
     override
     {
+        (void)node_id;
+        (void)node_info;
+        (void)out_firmware_file_path;
+
         /*
          * We need to make the decision, given the inputs, whether the node requires an update.
          * This part of the logic is deeply application-specific, so the solution provided here may not work
          * for real-world applications.
+         *
+         * It is recommended to refer to the PX4 autopilot project or to the APM project for a real-world
+         * use case.
+         *
+         * Both PX4 and APM leverage a class provided by the libuavcan's POSIX platform driver -
+         * uavcan_posix::FirmwareVersionChecker - which implements a generic firmware version checking algorithm.
+         * The algorithm works as follows:
+         *   1. Check if the file system has a firmware file for the given node.
+         *      If not, exit - update will not be possible anyway.
+         *   2. Compare the CRC of the local firmware image for the given node with CRC of the firmware the node is
+         *      running at the moment (the latter is available via the node info argument).
+         *   3. Request an update if CRC don't match, otherwise do not request an update.
+         *
+         * In this example, we're using a simpler logic.
          */
-        (void)node_id;
-        (void)node_info;
-        (void)out_firmware_file_path;
+
+        /*
+         * Looking for matching firmware files.
+         */
+        const auto files = findAvailableFirmwareFiles(node_info);
+        std::cout << "Matching firmware files for node '" << node_info.name.c_str() << "':" << std::endl;
+        for (auto x: glob_matches)
+        {
+            std::cout << "\t" << x << std::endl;
+        }
+
+        /*
+         * If no matching files were found, we obviously can't perform the update.
+         */
+        if (glob_matches.empty())
+        {
+            std::cout << "No firmware files found for this node" << std::endl;
+            return false;
+        }
+
         return false;   // TODO
     }
 
@@ -118,6 +154,46 @@ class ExampleFirmwareVersionChecker final : public uavcan::IFirmwareVersionCheck
     {
         std::cout << "Node " << int(node_id.get()) << " has confirmed the update request; response was:\n"
                   << response << std::endl;
+    }
+
+    /*
+     * This function is specific for this example implementation.
+     * It returns the firmware files available for given node info struct.
+     */
+    static std::vector<std::string> findAvailableFirmwareFiles(const uavcan::protocol::GetNodeInfo::Response& info)
+    {
+        std::vector<std::string> glob_matches;
+
+        /*
+         * Firmware file name pattern:
+         *      <node-name>-<hw-major>.<hw-minor>-<sw-major>.<sw-minor>.<vcs-hash-hex>.uavcan.bin
+         */
+        const std::string glob_pattern =
+            std::string(info.name.c_str()) + "-" +
+            std::to_string(info.hardware_version.major) + "." + std::to_string(info.hardware_version.minor) +
+            "-*.uavcan.bin";
+
+        auto result = ::glob_t();
+
+        const int res = ::glob(glob_pattern.c_str(), 0, nullptr, &result);
+        if (res != 0)
+        {
+            ::globfree(&result);
+            if (res == GLOB_NOMATCH)
+            {
+                return glob_matches;
+            }
+            throw std::runtime_error("Can't glob()");
+        }
+
+        for(unsigned i = 0; i < result.gl_pathc; ++i)
+        {
+            glob_matches.emplace_back(result.gl_pathv[i]);
+        }
+
+        ::globfree(&result);
+
+        return glob_matches;
     }
 };
 
