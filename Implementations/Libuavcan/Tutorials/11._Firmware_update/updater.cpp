@@ -149,6 +149,8 @@ class ExampleFirmwareVersionChecker final : public uavcan::IFirmwareVersionCheck
          */
         out_firmware_file_path = makeFirmwareFileSymlinkName(best_file_name.c_str(), best_file_name.length());
 
+        (void)std::remove(out_firmware_file_path.c_str());
+
         const int symlink_res = ::symlink(best_file_name.c_str(), out_firmware_file_path.c_str());
         if (symlink_res < 0)
         {
@@ -224,12 +226,14 @@ class ExampleFirmwareVersionChecker final : public uavcan::IFirmwareVersionCheck
         hash.add(reinterpret_cast<const std::uint8_t*>(file_name), file_name_length);
         auto hash_val = hash.get();
 
-        static const char CHARSET[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+        static const char Charset[] = "0123456789abcdefghijklmnopqrstuvwxyz";
+        static const unsigned CharsetSize = sizeof(Charset) - 1;
+
         FirmwareFilePath out;
         while (hash_val > 0)
         {
-            out.push_back(CHARSET[hash_val % sizeof(CHARSET)]);
-            hash_val /= sizeof(CHARSET);
+            out.push_back(Charset[hash_val % CharsetSize]);
+            hash_val /= CharsetSize;
         }
 
         out += ".bin";
