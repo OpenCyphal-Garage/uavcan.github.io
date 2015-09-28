@@ -287,6 +287,8 @@ int main(int argc, const char** argv)
                 else
                 {
                     std::cout << "Firmware download failed" << std::endl;
+
+                    // TODO: handle the error, e.g. retry download, send a log message, etc.
                 }
 
                 fw_loader.destroy();
