@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <vector>
+#include <iomanip>
 #include <unistd.h>
 #include <uavcan/uavcan.hpp>
 
@@ -130,6 +131,68 @@ public:
     const std::vector<std::uint8_t>& getImage() const { return image_; }
 };
 
+/**
+ * This function is used to display the downloaded image.
+ */
+template <typename InputIterator>
+void printHexDump(InputIterator begin, const InputIterator end)
+{
+    struct RAIIFlagsSaver
+    {
+        const std::ios::fmtflags flags_ = std::cout.flags();
+        ~RAIIFlagsSaver() { std::cout.flags(flags_); }
+    } _flags_saver;
+
+    static constexpr unsigned BytesPerRow = 16;
+    unsigned offset = 0;
+
+    std::cout << std::hex << std::setfill('0');
+
+    do
+    {
+        std::cout << std::setw(8) << offset << "  ";
+        offset += BytesPerRow;
+
+        {
+            auto it = begin;
+            for (unsigned i = 0; i < BytesPerRow; ++i)
+            {
+                if (i == 8)
+                {
+                    std::cout << ' ';
+                }
+
+                if (it != end)
+                {
+                    std::cout << std::setw(2) << unsigned(*it) << ' ';
+                    ++it;
+                }
+                else
+                {
+                    std::cout << "   ";
+                }
+            }
+        }
+
+        std::cout << "  ";
+        for (unsigned i = 0; i < BytesPerRow; ++i)
+        {
+            if (begin != end)
+            {
+                std::cout << ((unsigned(*begin) >= 32U && unsigned(*begin) <= 126U) ? char(*begin) : '.');
+                ++begin;
+            }
+            else
+            {
+                std::cout << ' ';
+            }
+        }
+
+        std::cout << std::endl;
+    }
+    while (begin != end);
+}
+
 int main(int argc, const char** argv)
 {
     if (argc < 2)
@@ -215,7 +278,10 @@ int main(int argc, const char** argv)
                 if (fw_loader->getStatus() == FirmwareLoader::Status::Success)
                 {
                     auto image = fw_loader->getImage();
+
                     std::cout << "Firmware download succeeded [" << image.size() << " bytes]" << std::endl;
+                    printHexDump(std::begin(image), std::end(image));
+
                     // TODO: save the firmware image somewhere.
                 }
                 else
