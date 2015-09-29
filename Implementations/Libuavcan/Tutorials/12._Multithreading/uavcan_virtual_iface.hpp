@@ -1,13 +1,16 @@
-/*
+/**
  * This header implements a virtual interface for multi-threaded libuavcan nodes.
  *
  * @file uavcan_virtual_iface.hpp
+ * @author Pavel Kirienko <pavel.kirienko@zubax.com>
+ *
+ * The source code contained in this file is distributed under the terms of CC0 (public domain dedication).
  */
 
 #pragma once
 
-#include <iostream>             // For std::cout and std::cerr
-#include <thread>               // For std::thread and std::mutex
+#include <iostream>             // For std::cout
+#include <thread>               // For std::mutex
 #include <condition_variable>   // For std::condition_variable
 #include <uavcan/uavcan.hpp>    // Main libuavcan header
 
