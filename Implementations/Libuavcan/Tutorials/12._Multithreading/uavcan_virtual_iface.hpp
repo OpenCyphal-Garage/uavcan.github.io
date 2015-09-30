@@ -250,8 +250,8 @@ public:
 
         while (auto e = prioritized_tx_queue_.peek())
         {
-#ifndef NDEBUG && UAVCAN_TOSTRING
-            std::cout << "uavcan_virtual_iface::Iface: TX injection [iface_index=" << iface_index << "]: "
+#if !NDEBUG && UAVCAN_TOSTRING
+            std::cout << "uavcan_virtual_iface::Iface: TX injection [iface_index=" << int(iface_index) << "]: "
                       << e->toString() << std::endl;
 #endif
             const int res = main_node.injectTxFrame(e->frame, e->deadline, iface_mask,
@@ -338,7 +338,7 @@ class Driver final : public uavcan::ICanDriver,
     uavcan::PoolAllocator<SharedMemoryPoolSize, uavcan::MemPoolBlockSize> allocator_;   ///< Shared across all ifaces
     uavcan::LazyConstructor<Iface> ifaces_[uavcan::MaxCanIfaces];
     const unsigned num_ifaces_;
-     uavcan::ISystemClock clock_;
+    uavcan::ISystemClock& clock_;
 
     /**
      * Implements uavcan::ICanDriver. Will be invoked by the sub-node.
@@ -395,8 +395,9 @@ class Driver final : public uavcan::ICanDriver,
     void handleRxFrame(const uavcan::CanRxFrame& frame,
                        uavcan::CanIOFlags flags) override
     {
-#ifndef NDEBUG && UAVCAN_TOSTRING
-            std::cout << "uavcan_virtual_iface::Driver: RX [flags=" << flags << "]: " << frame.toString() << std::endl;
+#if !NDEBUG && UAVCAN_TOSTRING
+            std::cout << "uavcan_virtual_iface::Driver: RX [flags=" << flags << "]: "
+                      << frame.toString(uavcan::CanFrame::StrAligned) << std::endl;
 #endif
         if (frame.iface_index < num_ifaces_)
         {
@@ -444,12 +445,10 @@ public:
 
         const unsigned quota_per_iface = allocator_.getNumBlocks() / num_ifaces_;
         const unsigned quota_per_queue = quota_per_iface;             // 2x overcommit
-
-#ifndef NDEBUG && UAVCAN_TOSTRING
+#if !NDEBUG
             std::cout << "uavcan_virtual_iface::Driver: Total memory blocks: " << allocator_.getNumBlocks()
                       << ", blocks per queue: " << quota_per_queue << std::endl;
 #endif
-
         for (unsigned i = 0; i < num_ifaces_; i++)
         {
             ifaces_[i].template construct<uavcan::IPoolAllocator&, uavcan::ISystemClock&,
