@@ -25,13 +25,13 @@ blocking processes in lower-priority threads.
 ## Architecture
 
 Libuavcan allows to add low-priority threads by means of adding *sub-nodes*,
-decoupled from the *main node* via a *virtual CAN bus driver*.
-In this tutorial we'll be reviewing a use case with exactly one sub-node,
+decoupled from the *main node* via a *virtual CAN driver*.
+In this tutorial we'll be reviewing a use case with just one sub-node,
 but the approach can be scaled to more sub-nodes if necessary by means of daisy-chaining them together
 with extra virtual drivers.
 
 A virtual CAN driver is a class that implements `uavcan::ICanDriver` (see libuavcan porting guide for details).
-An object of this class is fed into the sub-node in place of a real CAN driver.
+An object of this class is fed to the sub-node in place of a real CAN driver.
 
 ### Transmission
 
@@ -58,15 +58,14 @@ This diagram puts the above together (click to enlarge):
 
 ## Multiprocessing
 
-A node may be implemented not only in multiple threads, but in multiple processes as well (with non-shared memory).
+A node may be implemented not only in multiple threads, but in multiple processes as well
+(with isolated address spaces).
 
 In this case, every sub-node will be accessing the CAN hardware as an independent node,
 but it will be using the same node ID in all communications, therefore all sub-nodes and the main node
 will appear on the bus as the same network participant.
 
-We introduce a new term here - *compund node* - which referes to either a multithreaded or a multiprocessed node.
-
-This is demonstrated on the following diagram:
+We introduce a new term here - *compound node* - which referes to either a multithreaded or a multiprocessed node.
 
 <a  href="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg">
 <img src="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg" style="max-width: 75%" />
@@ -83,7 +82,7 @@ which is mandatory in order to assign proper transfer ID values to outgoing tran
 The main node and its sub-nodes cannot use a shared transfer ID map, therefore
 *multiple sub-nodes must not simultaneously publish transfers with identical descriptors*.
 
-This limitation can be expressed in higher-level rules:
+This point can be expressed in higher-level terms:
 
 * Every sub-node of a compound node may receive any incoming transfers without limitations.
 * Only one sub-node can implement a certain publisher or service server.
