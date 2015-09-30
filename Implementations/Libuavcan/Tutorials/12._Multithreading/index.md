@@ -11,12 +11,12 @@ The reader must be familiar with the specification, particularly with the specif
 ## Motivation
 
 An application that runs a UAVCAN node is often required to run hard real-time UAVCAN-related processes
-together with less time-critical ones.
+side by side with less time-critical ones.
 Making both co-exist in the same execution thread can be challenging because of radically different requirements
 and constraints.
 For example, part of the application that controls actuators over UAVCAN may require very low latency,
 whereas a non-realtime component (e.g. a firmware update trigger) does not require real-time priority,
-but in turn may have to perform long blocking I/O operations, such as filesystem access, etc.
+but in turn may have to perform long blocking I/O operations, such as file system access, etc.
 
 A radical solution to this problem is to run the node in two (or more) execution threads or processes.
 This enables the designer to put hard real-time tasks in a dedicated thread, while running all low-priority and/or
@@ -25,19 +25,19 @@ blocking processes in lower-priority threads.
 ## Architecture
 
 Libuavcan allows to add low-priority threads by means of adding *sub-nodes*,
-decoupled from the *main node* via a *virtual CAN bus interface*.
+decoupled from the *main node* via a *virtual CAN bus driver*.
 In this tutorial we'll be reviewing a use case with exactly one sub-node,
 but the approach can be scaled to more sub-nodes if necessary by means of daisy-chaining them together
-with extra virtual interfaces.
+with extra virtual drivers.
 
-A virtual CAN interface is a class that implements `uavcan::ICanDriver` (see libuavcan porting guide for details).
+A virtual CAN driver is a class that implements `uavcan::ICanDriver` (see libuavcan porting guide for details).
 An object of this class is fed into the sub-node in place of a real CAN driver.
 
 ### Transmission
 
 The sub-node emits its outgoing (TX) CAN frames into the virtual driver,
 where they get enqueued in a synchronized prioritized queue.
-The main node periodically unloads the enqueued TX frames from the virtual interface into its own
+The main node periodically unloads the enqueued TX frames from the virtual driver into its own
 prioritized TX queue, which then gets flushed into the CAN driver, thus completing the pipeline.
 
 Injection of TX frames from sub-node to the main node's queue is done via `uavcan::INode::injectTxFrame(..)`.
@@ -97,7 +97,7 @@ publishers or servers or such at all), because this functionality is already pro
 ### Virtual CAN driver
 
 ```c++
-{% include_relative uavcan_virtual_iface.hpp %}
+{% include_relative uavcan_virtual_driver.hpp %}
 ```
 
 ### Demo application

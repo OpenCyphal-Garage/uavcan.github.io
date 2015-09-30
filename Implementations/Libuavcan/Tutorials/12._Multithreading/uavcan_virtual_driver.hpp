@@ -1,11 +1,11 @@
 /**
- * This header implements a virtual interface for multi-threaded libuavcan nodes.
- * It is supposed to be connected to the secondary node (aka sub-node) in place of a real CAN interface.
- * Once connected, the virtual interface will be redirecting outgoing CAN frames to the main node, and
+ * This header implements a virtual CAN driver for multi-threaded libuavcan nodes.
+ * It is supposed to be connected to the secondary node (aka sub-node) in place of a real CAN driver.
+ * Once connected, the virtual driver will be redirecting outgoing CAN frames to the main node, and
  * it will be copying RX frames received by the main node to the secondary node (i.e. every RX frame will
  * go into the main node AND the secondary node).
  *
- * @file uavcan_virtual_iface.hpp
+ * @file uavcan_virtual_driver.hpp
  * @author Pavel Kirienko <pavel.kirienko@zubax.com>
  *
  * The source code contained in this file is distributed under the terms of CC0 (public domain dedication).
@@ -18,7 +18,7 @@
 #include <condition_variable>   // For std::condition_variable
 #include <uavcan/uavcan.hpp>    // Main libuavcan header
 
-namespace uavcan_virtual_iface
+namespace uavcan_virtual_driver
 {
 /**
  * Generic queue based on the linked list class defined in libuavcan.
@@ -255,7 +255,7 @@ public:
         while (auto e = prioritized_tx_queue_.peek())
         {
 #if !NDEBUG && UAVCAN_TOSTRING
-            std::cout << "uavcan_virtual_iface::Iface: TX injection [iface_index=" << int(iface_index) << "]: "
+            std::cout << "uavcan_virtual_driver::Iface: TX injection [iface_index=" << int(iface_index) << "]: "
                       << e->toString() << std::endl;
 #endif
             const int res = main_node.injectTxFrame(e->frame, e->deadline, iface_mask,
@@ -401,7 +401,7 @@ class Driver final : public uavcan::ICanDriver,
                        uavcan::CanIOFlags flags) override
     {
 #if !NDEBUG && UAVCAN_TOSTRING
-            std::cout << "uavcan_virtual_iface::Driver: RX [flags=" << flags << "]: "
+            std::cout << "uavcan_virtual_driver::Driver: RX [flags=" << flags << "]: "
                       << frame.toString(uavcan::CanFrame::StrAligned) << std::endl;
 #endif
         if (frame.iface_index < num_ifaces_)
@@ -447,7 +447,7 @@ public:
         const unsigned quota_per_iface = allocator_.getNumBlocks() / num_ifaces_;
         const unsigned quota_per_queue = quota_per_iface;             // 2x overcommit
 #if !NDEBUG
-            std::cout << "uavcan_virtual_iface::Driver: Total memory blocks: " << allocator_.getNumBlocks()
+            std::cout << "uavcan_virtual_driver::Driver: Total memory blocks: " << allocator_.getNumBlocks()
                       << ", blocks per queue: " << quota_per_queue << std::endl;
 #endif
         for (unsigned i = 0; i < num_ifaces_; i++)

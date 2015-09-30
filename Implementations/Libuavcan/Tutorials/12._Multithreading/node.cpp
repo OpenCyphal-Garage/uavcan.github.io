@@ -27,9 +27,9 @@
 #include <uavcan/protocol/node_info_retriever.hpp>
 
 /*
- * Demo implementation of a virtual interface.
+ * Demo implementation of a virtual CAN driver.
  */
-#include "uavcan_virtual_iface.hpp"
+#include "uavcan_virtual_driver.hpp"
 
 /*
  * These functions are explained in one of the first tutorials.
@@ -80,11 +80,11 @@ public:
             });
 
         /*
-         * We know that in this implementation the class uavcan_virtual_iface::Driver inherits uavcan::IRxFrameListener,
-         * so we can simply restore the reference to uavcan_virtual_iface::ITxQueueInjector using dynamic_cast<>.
+         * We know that in this implementation the class uavcan_virtual_driver::Driver inherits uavcan::IRxFrameListener,
+         * so we can simply restore the reference to uavcan_virtual_driver::ITxQueueInjector using dynamic_cast<>.
          *
          * In other implementations this approach may be unacceptable (e.g. RTTI, which is required for dynamic_cast<>,
-         * is often unavailable on deeply embedded systems), so a reference to uavcan_virtual_iface::ITxQueueInjector
+         * is often unavailable on deeply embedded systems), so a reference to uavcan_virtual_driver::ITxQueueInjector
          * will have to be passed here using some other means (e.g. as a reference to the constructor).
          */
         while (node_.getDispatcher().getRxFrameListener() == nullptr)
@@ -93,7 +93,7 @@ public:
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
         auto& tx_injector =
-            dynamic_cast<uavcan_virtual_iface::ITxQueueInjector&>(*node_.getDispatcher().getRxFrameListener());
+            dynamic_cast<uavcan_virtual_driver::ITxQueueInjector&>(*node_.getDispatcher().getRxFrameListener());
 
         /*
          * Running the node ALMOST normally.
@@ -155,7 +155,7 @@ class SubNodeDemo
 {
     static constexpr unsigned VirtualDriverQueuePoolSize = 20000;
 
-    uavcan_virtual_iface::Driver<VirtualDriverQueuePoolSize> driver_;
+    uavcan_virtual_driver::Driver<VirtualDriverQueuePoolSize> driver_;
     uavcan::SubNode<16384> node_;
 
     uavcan::NodeInfoRetriever retriever_;
