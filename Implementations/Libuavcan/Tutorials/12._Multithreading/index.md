@@ -3,15 +3,104 @@
 
 # Multithreading
 
-Come back later.
+This advanced-level tutorial explains the concept of multithreaded node in the context of libuavcan,
+and shows an example application that runs a multithreaded node.
 
-## Virtual CAN driver
+The reader must be familiar with the specification, particularly with the specification of the transport layer.
+
+## Motivation
+
+An application that runs a UAVCAN node is often required to run hard real-time UAVCAN-related processes
+together with less time-critical ones.
+Making both co-exist in the same execution thread can be challenging because of radically different requirements
+and constraints.
+For example, part of the application that controls actuators over UAVCAN may require very low latency,
+whereas a non-realtime component (e.g. a firmware update trigger) does not require real-time priority,
+but in turn may have to perform long blocking I/O operations, such as filesystem access, etc.
+
+A radical solution to this problem is to run the node in two (or more) execution threads or processes.
+This enables the designer to put hard real-time tasks in a dedicated thread, while running all low-priority and/or
+blocking processes in lower-priority threads.
+
+## Architecture
+
+Libuavcan allows to add low-priority threads by means of adding *sub-nodes*,
+decoupled from the *main node* via a *virtual CAN bus interface*.
+In this tutorial we'll be reviewing a use case with exactly one sub-node,
+but the approach can be scaled to more sub-nodes if necessary by means of daisy-chaining them together
+with extra virtual interfaces.
+
+A virtual CAN interface is a class that implements `uavcan::ICanDriver` (see libuavcan porting guide for details).
+An object of this class is fed into the sub-node in place of a real CAN driver.
+
+### Transmission
+
+The sub-node emits its outgoing (TX) CAN frames into the virtual driver,
+where they get enqueued in a synchronized prioritized queue.
+The main node periodically unloads the enqueued TX frames from the virtual interface into its own
+prioritized TX queue, which then gets flushed into the CAN driver, thus completing the pipeline.
+
+Injection of TX frames from sub-node to the main node's queue is done via `uavcan::INode::injectTxFrame(..)`.
+
+### Reception
+
+The main node simply duplicates all incoming (RX) CAN frames to the virtual CAN driver.
+This is done via the interface `uavcan::IRxFrameListener`,
+which is installed via the method `uavcan::INode::installRxFrameListener(uavcan::IRxFrameListener*)`.
+
+### Diagram
+
+This diagram puts the above together (click to enlarge):
+
+<a  href="/Implementations/Libuavcan/Tutorials/12._Multithreading/multithreading.svg">
+<img src="/Implementations/Libuavcan/Tutorials/12._Multithreading/multithreading.svg" style="max-width: 75%" />
+</a>
+
+## Multiprocessing
+
+A node may be implemented not only in multiple threads, but in multiple processes as well (with non-shared memory).
+
+In this case, every sub-node will be accessing the CAN hardware as an independent node,
+but it will be using the same node ID in all communications, therefore all sub-nodes and the main node
+will appear on the bus as the same network participant.
+
+We introduce a new term here - *compund node* - which referes to either a multithreaded or a multiprocessed node.
+
+This is demonstrated on the following diagram:
+
+<a  href="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg">
+<img src="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg" style="max-width: 75%" />
+</a>
+
+## Limitations
+
+A curious reader could have noticed that the above proposed approaches are in conflict
+with requirements of the transport layer specification.
+Indeed, there is one corner case that has to be kept in mind when working with compound nodes.
+
+The transport layer specification introduces the concept of *transfer ID map*,
+which is mandatory in order to assign proper transfer ID values to outgoing transfers.
+The main node and its sub-nodes cannot use a shared transfer ID map, therefore
+*multiple sub-nodes must not simultaneously publish transfers with identical descriptors*.
+
+This limitation can be expressed in higher-level rules:
+
+* Every sub-node of a compound node may receive any incoming transfers without limitations.
+* Only one sub-node can implement a certain publisher or service server.
+
+Note that the class `uavcan::SubNode` does not publish `uavcan.protocol.NodeStatus` and
+does not provide service `uavcan.protocol.GetNodeInfo` and such (actually it doesn't implement any
+publishers or servers or such at all), because this functionality is already provided by the main node class.
+
+## Example
+
+### Virtual CAN driver
 
 ```c++
 {% include_relative uavcan_virtual_iface.hpp %}
 ```
 
-## Demo application
+### Demo application
 
 ```c++
 {% include_relative node.cpp %}
@@ -61,7 +150,7 @@ uavcan_virtual_iface::Driver: RX [flags=0]: 0x1001557f   0a 00 00 00 00 00 00 ca
 Node 127 went offline
 ```
 
-## Running on Linux
+### Running on Linux
 
 Build the application using the following CMake script:
 
