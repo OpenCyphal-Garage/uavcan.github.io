@@ -409,10 +409,6 @@ class Driver final : public uavcan::ICanDriver,
             ifaces_[frame.iface_index]->addRxFrame(frame, flags);
             event_.signal();
         }
-        else
-        {
-            assert(false);
-        }
     }
 
     /**
