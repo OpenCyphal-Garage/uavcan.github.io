@@ -153,7 +153,7 @@ class FileBasedNodeInfoCollector final : public uavcan::INodeInfoListener
  */
 class SubNodeDemo
 {
-    static constexpr unsigned VirtualDriverQueuePoolSize = 30000;
+    static constexpr unsigned VirtualDriverQueuePoolSize = 20000;
 
     uavcan_virtual_iface::Driver<VirtualDriverQueuePoolSize> driver_;
     uavcan::SubNode<16384> node_;

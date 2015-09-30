@@ -1,5 +1,9 @@
 /**
  * This header implements a virtual interface for multi-threaded libuavcan nodes.
+ * It is supposed to be connected to the secondary node (aka sub-node) in place of a real CAN interface.
+ * Once connected, the virtual interface will be redirecting outgoing CAN frames to the main node, and
+ * it will be copying RX frames received by the main node to the secondary node (i.e. every RX frame will
+ * go into the main node AND the secondary node).
  *
  * @file uavcan_virtual_iface.hpp
  * @author Pavel Kirienko <pavel.kirienko@zubax.com>
@@ -121,7 +125,7 @@ public:
  * This class implements one virtual interface.
  *
  * Objects of this class are owned by the secondary thread.
- * This class does not use heap memory, instead it uses block allocators provided by reference to the constructor.
+ * This class does not use heap memory, instead it uses a block allocator provided by reference to the constructor.
  */
 class Iface final : public uavcan::ICanIface,
                     uavcan::Noncopyable
@@ -302,9 +306,10 @@ public:
  *
  * @tparam SharedMemoryPoolSize         Amount of memory, in bytes, that will be statically allocated for the
  *                                      memory pool that will be shared across all interfaces for RX/TX queues.
- *                                      Larger pool enables deeper queues; one memory block can keep one CAN frame.
+ *                                      Larger pool enables deeper queues; one memory block can keep one CAN frame;
+ *                                      i.e. (pool size) / (block size) = (total depth of all queues combined).
  *                                      Block size is the same as for libuavcan - see @ref uavcan::MemPoolBlockSize.
- *                                      Typically, this value should be no less than 4K per interface.
+ *                                      Typically, this value should be no less than 2K per interface.
  */
 template <unsigned SharedMemoryPoolSize>
 class Driver final : public uavcan::ICanDriver,
