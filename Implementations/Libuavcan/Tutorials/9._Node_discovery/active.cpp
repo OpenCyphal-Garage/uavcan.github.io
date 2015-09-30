@@ -123,7 +123,11 @@ int main(int argc, const char** argv)
      */
     uavcan::NodeInfoRetriever retriever(node);
 
-    retriever.start();
+    const int retriever_res = retriever.start();
+    if (retriever_res < 0)
+    {
+        throw std::runtime_error("Failed to start the retriever; error: " + std::to_string(retriever_res));
+    }
 
     /*
      * This class is defined above in this file.
