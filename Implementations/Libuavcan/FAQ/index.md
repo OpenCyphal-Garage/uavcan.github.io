@@ -45,12 +45,9 @@ Possible reasons for DSDL compilation failure are listed below.
 
 Make sure you have Python installed.
 
-Make sure that all git sobmodules are checked out and updated - use `git submodule update --init --recursive --force`.
+Make sure that all git submodules are checked out and updated - use `git submodule update --init --recursive --force`.
 
 #### DSDL compiler is failing
 
 Inspect the build logs for error messages from the DSDL compiler.
 They should be descriptive enough to help you understand the nature of the problem.
-
-
-

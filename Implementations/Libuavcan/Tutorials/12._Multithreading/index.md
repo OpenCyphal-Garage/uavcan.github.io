@@ -65,7 +65,7 @@ In this case, every sub-node will be accessing the CAN hardware as an independen
 but it will be using the same node ID in all communications, therefore all sub-nodes and the main node
 will appear on the bus as the same network participant.
 
-We introduce a new term here - *compound node* - which referes to either a multithreaded or a multiprocessed node.
+We introduce a new term here - *compound node* - which refers to either a multithreaded or a multiprocessed node.
 
 <a  href="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg">
 <img src="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg" style="max-width: 75%" />

@@ -17,7 +17,7 @@ and how to download a file using the service `uavcan.protocol.file.Read`.
 
 Launch instructions are provided after the source code below.
 
-It is adviced to refer to a real production-used cross-platform UAVCAN bootloader implemented by
+It is advised to refer to a real production-used cross-platform UAVCAN bootloader implemented by
 [PX4 development team](http://px4.io).
 
 ## Updater
