@@ -206,7 +206,7 @@ as well as the number of common errors detected in the transport layer.
 The performance counters can be accessed as follows:
 
 ```c++
-const TransferPerfCounter& perf = node.getDispatcher().getTransferPerfCounter();
+const uavcan::TransferPerfCounter& perf = node.getDispatcher().getTransferPerfCounter();
 
 std::cout << perf.getErrorCount()      << std::endl;
 std::cout << perf.getTxTransferCount() << std::endl;
@@ -221,10 +221,10 @@ Libuavcan maintains the counters of CAN frames exchanged by the CAN controller a
 bus errors detected by the CAN hardware.
 
 ```c++
-const CanIOManager& canio = node.getDispatcher().getCanIOManager();
+const uavcan::CanIOManager& canio = node.getDispatcher().getCanIOManager();
 for (std::uint8_t i = 0; i < canio.getNumIfaces(); i++)
 {
-    const CanIfacePerfCounters can_perf = canio.getIfacePerfCounters(i);
+    const uavcan::CanIfacePerfCounters can_perf = canio.getIfacePerfCounters(i);
     std::cout << can_perf.errors    << std::endl;
     std::cout << can_perf.frames_tx << std::endl;
     std::cout << can_perf.frames_rx << std::endl;
