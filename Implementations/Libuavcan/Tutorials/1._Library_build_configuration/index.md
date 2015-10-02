@@ -233,6 +233,18 @@ for (std::uint8_t i = 0; i < canio.getNumIfaces(); i++)
 
 The example above assumes that the node object is named `node`.
 
+### Memory pool usage statistics
+
+Use the following methods to check whether the memory pool is getting exhausted:
+
+```c++
+std::cout << node.getAllocator().getNumBlocks() << std::endl;           // Capacity
+std::cout << node.getAllocator().getNumUsedBlocks() << std::endl;       // Currently used
+std::cout << node.getAllocator().getPeakNumUsedBlocks() << std::endl;   // Peak usage
+```
+
+The example above assumes that the node object is named `node`.
+
 ### Debug output
 
 The library will print extensive debug information into stdout via `std::printf()`
