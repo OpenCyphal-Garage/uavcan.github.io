@@ -12,7 +12,7 @@
 
                 <!-- BREADCRUMBS -->
                 {% assign breadcrumbs_level = CLEAN_PAGE_URL | split: '/' | size %}
-                {% if breadcrumbs_level > 1 %}
+                {% if breadcrumbs_level > 2 %}
                 <div class="breadcrumbs">
                 {% assign page_url_parts = page.url | split: '/' %}
                 {% assign breadcrumb_url = '' %}
