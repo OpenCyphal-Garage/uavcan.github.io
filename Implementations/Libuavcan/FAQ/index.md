@@ -38,16 +38,23 @@ This issue typically manifests itself with a message like that:
 libuavcan/include/uavcan/time.hpp:12:32: fatal error: uavcan/Timestamp.hpp: No such file or directory
 ```
 
-This could be caused by failing DSDL compilation.
-Possible reasons for DSDL compilation failure are listed below.
+This could be caused by failing DSDL compilation - see below.
 
-#### Build system is unable to invoke the DSDL compiler
+### DSDL compiler is failing
 
 Make sure you have Python installed.
 
-Make sure that all git submodules are checked out and updated - use `git submodule update --init --recursive --force`.
-
-#### DSDL compiler is failing
-
 Inspect the build logs for error messages from the DSDL compiler.
 They should be descriptive enough to help you understand the nature of the problem.
+
+If you're facing the following error message:
+
+```
+  File "dsdl_compiler/libuavcan_dsdlc", line 59, in <module>
+    from libuavcan_dsdl_compiler import run as dsdlc_run
+  File "/home/jgoppert/git/libuavcan/libuavcan/dsdl_compiler/libuavcan_dsdl_compiler/__init__.py", line 17, in <module>
+    from uavcan import dsdl
+ImportError: No module named uavcan
+```
+
+Make sure that all git submodules are checked out and updated - use `git submodule update --init --recursive --force`.
