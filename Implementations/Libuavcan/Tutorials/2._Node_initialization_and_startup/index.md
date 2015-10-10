@@ -102,9 +102,9 @@ Typically, minimum safe size of the stack would be about 1.5 KB.
 From the standpoint of threading, the following configurations are available:
 
 * Single-threaded - the library runs entirely in a single thread.
-* Dual-threaded - the library runs in two threads:
+* Multi-threaded - the library runs in two threads:
   * Primary thread, which is suitable for hard real time, low-latency communications;
-  * Secondary thread, which is suitable for blocking, I/O-intensive, or CPU-intensive tasks, but not for
+  * Secondary threads, which are suitable for blocking, I/O-intensive, or CPU-intensive tasks, but not for
 real-time tasks.
 
 #### Single-threaded configuration
@@ -165,13 +165,14 @@ are still pending processing.
 * `spinOnce()` - instead of blocking,
 it returns immediately once all available CAN frames and timer events are processed.
 
-#### Dual-threaded configuration
+#### Multi-threaded configuration
 
 This configuration is covered later in a dedicated tutorial.
-In short, it splits the node into two node objects, where each node object is being maintained in a separate thread.
+In short, it splits the node into multiple node objects,
+where each node object is being maintained in a separate thread.
 The same concepts concerning the spin methods apply as for the single-threaded configuration (see above).
 
-The separated node objects communicate with each other by means of a *virtual CAN driver interface*.
+Typically, the separated node objects communicate with each other by means of a *virtual CAN driver interface*.
 
 ## The code
 
