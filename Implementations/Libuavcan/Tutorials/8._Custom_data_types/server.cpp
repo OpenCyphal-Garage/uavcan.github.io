@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <uavcan/uavcan.hpp>
 
+#include <uavcan/protocol/debug/LogMessage.hpp>      // For purposes of example; not actually necessary.
+
 /*
  * The custom data types.
  * If a data type has a default Data Type ID, it will be registered automatically once included

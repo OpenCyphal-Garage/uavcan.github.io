@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <uavcan/uavcan.hpp>
 #include <uavcan/protocol/debug/KeyValue.hpp>
+#include <uavcan/protocol/debug/LogMessage.hpp>
 
 extern uavcan::ICanDriver& getCanDriver();
 extern uavcan::ISystemClock& getSystemClock();

@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <uavcan/uavcan.hpp>
 #include <uavcan/protocol/debug/KeyValue.hpp>
-
+#include <uavcan/protocol/debug/LogMessage.hpp>
 
 extern uavcan::ICanDriver& getCanDriver();
 extern uavcan::ISystemClock& getSystemClock();
@@ -44,7 +44,6 @@ int main(int argc, const char** argv)
 
     /*
      * Subscribing to standard log messages of type uavcan.protocol.debug.LogMessage.
-     * Note that the appropriate header is already included in the library headers.
      *
      * Received messages will be passed to the application via a callback, the type of which can be set via the second
      * template argument.
