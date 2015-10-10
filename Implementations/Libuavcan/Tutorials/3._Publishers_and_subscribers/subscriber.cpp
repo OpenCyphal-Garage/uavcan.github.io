@@ -51,6 +51,10 @@ int main(int argc, const char** argv)
      * In C++03 mode, callback type defaults to a plain function pointer; use a binder object to call member
      * functions as callbacks (refer to uavcan::MethodBinder<>).
      *
+     * N.B.: Some libuavcan users report that C++ lambda functions when used with GCC may actually break the code
+     *       on some embedded targets, particularly ARM Cortex M0. These reports still remain unconfirmed though;
+     *       please refer to the UAVCAN mailing list to learn more.
+     *
      * The type of the argument of the callback can be either of these two:
      *  - T&
      *  - uavcan::ReceivedDataStructure<T>&
