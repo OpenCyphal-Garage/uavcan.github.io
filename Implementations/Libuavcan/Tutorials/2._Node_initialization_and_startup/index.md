@@ -30,6 +30,8 @@ Libuavcan does not use heap.
 Dynamic memory allocations are managed by constant-time determenistic fragmentation-free block memory allocator.
 The size of the memory pool that is dedicated to block allocation should be defined compile-time through a template
 argument of the node class `uavcan::Node`.
+If the template argument is not provided, the node will expect the application to provide a reference to a custom
+allocator to the constructor (custom allocators are explained below).
 
 The library uses dynamic memory for the following tasks:
 
@@ -87,6 +89,18 @@ std::cout << node.getAllocator().getPeakNumUsedBlocks() << std::endl;
 ```
 
 The example above assumes that the node object is named `node`.
+
+##### Custom allocators
+
+The node classes can accept a custom allocator provided by the application instead of using a default one.
+In order to use a custom allocator, omit the template argument to the node class, and provide a reference to
+`uavcan::IPoolAllocator` to the node class constructor.
+
+The library implements an alternative allocator that uses heap memory instead of a statically allocated pool.
+It can be found under `uavcan/helpers/heap_based_pool_allocator.hpp`.
+Please read the class documentation for more info.
+
+The tutorial dedicated to multithreading also covers the topic of custom allocators.
 
 #### Stack allocation
 
