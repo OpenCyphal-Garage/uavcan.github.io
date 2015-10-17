@@ -101,6 +101,9 @@ publishers or servers or such at all), because this functionality is already pro
 
 ### Demo application
 
+This demo also shows how to use a thread-safe heap-based shared block memory allocator.
+This allocator enables lower memory footprint for compound nodes than the default one.
+
 ```c++
 {% include_relative node.cpp %}
 ```

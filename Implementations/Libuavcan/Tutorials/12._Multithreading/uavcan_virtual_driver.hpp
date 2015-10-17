@@ -303,15 +303,7 @@ public:
  * Objects of this class are owned by the secondary thread.
  * This class does not use heap memory; instead, it creates its own deterministic block allocator and uses it
  * to keep RX and TX queues of all virtual interfaces.
- *
- * @tparam SharedMemoryPoolSize         Amount of memory, in bytes, that will be statically allocated for the
- *                                      memory pool that will be shared across all interfaces for RX/TX queues.
- *                                      Larger pool enables deeper queues; one memory block can keep one CAN frame;
- *                                      i.e. (pool size) / (block size) = (total depth of all queues combined).
- *                                      Block size is the same as for libuavcan - see @ref uavcan::MemPoolBlockSize.
- *                                      Typically, this value should be no less than 2K per interface.
  */
-template <unsigned SharedMemoryPoolSize>
 class Driver final : public uavcan::ICanDriver,
                      public uavcan::IRxFrameListener,
                      public ITxQueueInjector,
@@ -338,9 +330,8 @@ class Driver final : public uavcan::ICanDriver,
         void signal() { cv_.notify_all(); }
     };
 
-    Event event_;               ///< Used to unblock the sub-node's select() call when IO happens.
-    std::mutex mutex_;                                                                  ///< Shared across all ifaces
-    uavcan::PoolAllocator<SharedMemoryPoolSize, uavcan::MemPoolBlockSize> allocator_;   ///< Shared across all ifaces
+    Event event_;                                   ///< Used to unblock the sub-node's select() call when IO happens.
+    std::mutex mutex_;                              ///< Shared across all ifaces
     uavcan::LazyConstructor<Iface> ifaces_[uavcan::MaxCanIfaces];
     const unsigned num_ifaces_;
     uavcan::ISystemClock& clock_;
@@ -436,24 +427,34 @@ public:
      *                          the sub-node will only have access to interfaces 0 and 1.
      *
      * @param clock             Needed by the virtual iface class, and for select() timing.
+     *
+     * @param shared_allocator  This allocator will be used to keep inter-thread queues.
+     *
+     * @param block_allocation_quota_per_virtual_iface  Maximum number of blocks that can be allocated per virtual
+     *                                                  iface. Ifaces use dynamic memory to keep RX/TX queues, so
+     *                                                  higher quota enables deeper queues. Note that ifaces DO NOT
+     *                                                  allocate memory unless they need it, i.e. the memory will not
+     *                                                  be taken unless there is data to enqueue; once a queue is
+     *                                                  flushed, the memory will be immediately freed.
+     *                                                  One block fits exactly one CAN frame, i.e. a quota of 64
+     *                                                  blocks allows the interface to keep up to 64 RX+TX CAN frames.
      */
     Driver(unsigned arg_num_ifaces,
-           uavcan::ISystemClock& clock) :
+           uavcan::ISystemClock& clock,
+           uavcan::IPoolAllocator& shared_allocator,
+           unsigned block_allocation_quota_per_virtual_iface) :
         num_ifaces_(arg_num_ifaces),
         clock_(clock)
     {
         assert(num_ifaces_ > 0 && num_ifaces_ <= uavcan::MaxCanIfaces);
 
-        const unsigned quota_per_iface = allocator_.getNumBlocks() / num_ifaces_;
-        const unsigned quota_per_queue = quota_per_iface;             // 2x overcommit
-#if !NDEBUG
-            std::cout << "uavcan_virtual_driver::Driver: Total memory blocks: " << allocator_.getNumBlocks()
-                      << ", blocks per queue: " << quota_per_queue << std::endl;
-#endif
+        const unsigned quota_per_queue = block_allocation_quota_per_virtual_iface; // 2x overcommit
+
         for (unsigned i = 0; i < num_ifaces_; i++)
         {
-            ifaces_[i].template construct<uavcan::IPoolAllocator&, uavcan::ISystemClock&,
-                                          std::mutex&, unsigned>(allocator_, clock_, mutex_, quota_per_queue);
+            ifaces_[i].template
+                construct<uavcan::IPoolAllocator&, uavcan::ISystemClock&, std::mutex&, unsigned>
+                    (shared_allocator, clock_, mutex_, quota_per_queue);
         }
     }
 };
