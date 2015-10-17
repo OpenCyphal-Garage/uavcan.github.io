@@ -301,8 +301,7 @@ public:
  * This class will be instantiated by the application and passed into the sub-node as its CAN interface.
  *
  * Objects of this class are owned by the secondary thread.
- * This class does not use heap memory; instead, it creates its own deterministic block allocator and uses it
- * to keep RX and TX queues of all virtual interfaces.
+ * This class does not use heap memory, instead it uses a block allocator provided by reference to the constructor.
  */
 class Driver final : public uavcan::ICanDriver,
                      public uavcan::IRxFrameListener,
