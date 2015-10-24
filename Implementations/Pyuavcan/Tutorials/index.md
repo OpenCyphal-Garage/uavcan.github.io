@@ -10,6 +10,14 @@ Tutorials are arranged in ascending order of difficulty and descending order of 
 * Familiarity with UAVCAN specification
 * Intermediate Python skills
 
+## Installation
+
+Install pyuavcan via pip:
+
+```sh
+pip install uavcan
+```
+
 ## License
 
 Unless expressly stated otherwise,
