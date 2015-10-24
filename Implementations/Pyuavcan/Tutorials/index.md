@@ -5,10 +5,19 @@
 
 Tutorials are arranged in ascending order of difficulty and descending order of importance.
 
-## Prerequisite skills and knowledge
+## Prerequisites
 
 * Familiarity with UAVCAN specification
 * Intermediate Python skills
+* A USB to CAN adapter supporting SLCAN or SocketCAN interfaces
+
+## Installation
+
+Install pyuavcan via pip:
+
+```sh
+pip install uavcan
+```
 
 ## License
 
