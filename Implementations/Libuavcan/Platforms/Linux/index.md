@@ -171,3 +171,15 @@ Example for `can0` and Node ID 127:
     uavcan_nodetool 127 can0
 
 To exit the application, press **Ctrl**+**C**.
+
+### `uavcan_add_vcan`
+
+Adds a new virtual CAN interface. Useful for testing.
+Execute with `--help` to see usage info.
+
+### `uavcan_add_slcan`
+
+Creates a new CAN interface connected to a specified SLCAN adapter.
+SLCAN is a commonly used protocol for tunneling CAN data over a serial port, including USB virtual serial ports.
+Execute with `--help` to see usage info.
+
