@@ -265,6 +265,17 @@ If this package is not available for your Linux distribution, you can
 candump -caeta vcan0
 ```
 
+### Notes on SLCAN (tunneling CAN over serial port)
+
+In certain cases SLCAN adapters may be losing TX frames due to insufficient capacity of the interface TX queue.
+This can be easily solved by means of providing larger TX queue for the interface:
+
+```sh
+sudo ifconfig slcan0 txqueuelen 100     # Set TX queue size to 100
+```
+
+Where `slcan0` if the name of the interface.
+
 ## Running on STM32
 
 The platform-specific functions can be implemented as follows:
