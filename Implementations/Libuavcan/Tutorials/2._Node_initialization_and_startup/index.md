@@ -275,6 +275,11 @@ uavcan_add_slcan /dev/ttyACM0
 
 Execute `uavcan_add_slcan --help` to get full usage info.
 
+Note that SLCAN support requires that the package `can-utils` is installed on the system.
+On a Debian/Ubuntu-based system the package can be installed from APT: `apt-get install can-utils`.
+If this package is not available for your Linux distribution, you can
+[build it from sources](http://elinux.org/Can-utils).
+
 In certain cases SLCAN adapters may be losing TX frames due to insufficient capacity of the interface's TX queue.
 This can be easily solved by means of providing larger TX queue for the interface:
 
@@ -285,12 +290,24 @@ ifconfig slcan0 txqueuelen 100     # Where 'slcan0' is the interface and '100' i
 ### Using `candump`
 
 `candump` is a tool from the package `can-utils` that can be used to monitor CAN bus traffic.
-If this package is not available for your Linux distribution, you can
-[build it from sources](http://elinux.org/Can-utils).
 
 ```sh
 candump -caeta vcan0
 ```
+
+You can always combine it with `grep` and other standard tools for advanced data processing, for example:
+
+```sh
+# Ignore status messages of node 121:
+candump -caetz slcan0 | grep -v '\S\S015579'
+# Print only messages from node 10 except its status messages:
+candump -caetz slcan0 | grep '\S\S\S\S\S\S0A' | grep -v '\S\S01550A'
+# Dump exchange to a file for later analysis:
+candump -caetz slcan0 > can_`date -Iseconds`.dump
+```
+
+Learn how to grep from the
+[grep manual](https://www.gnu.org/software/findutils/manual/html_node/find_html/grep-regular-expression-syntax.html).
 
 ## Running on STM32
 
