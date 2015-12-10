@@ -4,7 +4,7 @@ weight: 100
 
 # Frequently asked questions
 
-### Node is emitting incomplete transfers or missing frames
+### Node is emitting incomplete transfers or losing frames
 
 Possible causes are listed below.
 Also
@@ -58,3 +58,14 @@ ImportError: No module named uavcan
 ```
 
 Make sure that all git submodules are checked out and updated - use `git submodule update --init --recursive --force`.
+
+### SocketCAN does not work reliably with an SLCAN adapter
+
+Sometimes `slcand` may be losing outgoing frames because TX queue is not large enough.
+TX queue of an interface can be resized as follows:
+
+```bash
+ifconfig slcan0 txqueuelen 1000
+```
+
+The example above makes TX queue of `slcan0` 1000 frames deep.

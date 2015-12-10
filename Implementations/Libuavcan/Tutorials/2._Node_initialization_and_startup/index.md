@@ -236,7 +236,7 @@ make -j4
 
 When these steps are executed, the application can be launched.
 
-### Adding a virtual CAN interface
+### Using virtual CAN interface
 
 It is convenient to test CAN applications against virtual CAN interfaces.
 In order to add a virtual CAN interface, execute the following:
@@ -255,7 +255,34 @@ ip link set up $IFACE
 ifconfig $IFACE up
 ```
 
-#### Using `candump`
+Libuavcan also includes utility `uavcan_add_vcan` that automates the procedure.
+For example:
+
+```bash
+uavcan_add_vcan vcan0
+```
+
+Execute `uavcan_add_vcan --help` to get usage info.
+
+### Using SLCAN (tunneling CAN over serial port)
+
+Libuavcan includes an utility named `uavcan_add_slcan` that allows to easily configure an SLCAN interface.
+For example:
+
+```bash
+uavcan_add_slcan /dev/ttyACM0
+```
+
+Execute `uavcan_add_slcan --help` to get full usage info.
+
+In certain cases SLCAN adapters may be losing TX frames due to insufficient capacity of the interface's TX queue.
+This can be easily solved by means of providing larger TX queue for the interface:
+
+```sh
+ifconfig slcan0 txqueuelen 100     # Where 'slcan0' is the interface and '100' is queue depth
+```
+
+### Using `candump`
 
 `candump` is a tool from the package `can-utils` that can be used to monitor CAN bus traffic.
 If this package is not available for your Linux distribution, you can
@@ -264,17 +291,6 @@ If this package is not available for your Linux distribution, you can
 ```sh
 candump -caeta vcan0
 ```
-
-### Notes on SLCAN (tunneling CAN over serial port)
-
-In certain cases SLCAN adapters may be losing TX frames due to insufficient capacity of the interface TX queue.
-This can be easily solved by means of providing larger TX queue for the interface:
-
-```sh
-sudo ifconfig slcan0 txqueuelen 100     # Set TX queue size to 100
-```
-
-Where `slcan0` if the name of the interface.
 
 ## Running on STM32
 
