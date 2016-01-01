@@ -1,3 +1,6 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,500,300italic&subset=latin,greek);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Mono);
+
 // Misc.
 	$misc: (
 		z-index-base:		10000
@@ -18,15 +21,15 @@
 
 // Font.
 	$font: (
-		family:						('Arial', sans-serif),
-		family-heading:				('Open Sans', Helvetica, sans-serif),
-		family-fixed:				('Monospace', 'Courier New', monospace),
+		family:						('Roboto', sans-serif),
+		family-heading:				('Roboto', sans-serif),
+		family-fixed:				('Roboto Mono', monospace),
 		weight:						300,
-		weight-menu-current:		600,
-		weight-bold:				600,
-		weight-heading:				500,
-		weight-heading-bold:		700,
-		weight-heading-extrabold:	800
+		weight-menu-current:		500,
+		weight-bold:				500,
+		weight-heading:				300,
+		weight-heading-bold:		500,
+		weight-heading-extrabold:	500  /* Was 800, made 500 too in order to reduce the font set (see imports above) */
 	);
 
 // Palette.
