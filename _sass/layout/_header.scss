@@ -19,6 +19,14 @@
 		100% { top: 0; opacity: 1; }
 	}
 
+	/* https://www.itsupportguides.com/tech-tips-tricks/how-to-offset-anchor-tag-link-using-css/ */
+	:target:before {
+		content: "";
+		display: block;
+		height: 3.6em;
+		margin: -3.6em 0 0;
+	}
+
 	#header {
 		background-color: _palette(bg-header);
 		box-shadow: 0 3px 6px #ddd;

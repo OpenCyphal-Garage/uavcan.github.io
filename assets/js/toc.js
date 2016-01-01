@@ -5,7 +5,7 @@
       noBackToTopLinks: false,
       title: '<h3>Contents</h3>',
       minimumHeaders: 3,
-      headers: 'h1, h2, h3, h4',
+      headers: 'h1, h2, h3',
       listType: 'ul', // values: [ol|ul]
       showEffect: 'none', // values: [show|slideDown|fadeIn|none]
       showSpeed: 'slow' // set to 0 to deactivate effect
