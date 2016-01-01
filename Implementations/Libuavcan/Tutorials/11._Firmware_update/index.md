@@ -54,7 +54,7 @@ While firmware is being loaded, updatee will set its operating mode to `SOFTWARE
 as can be seen using UAVCAN monitor application for Linux
 (refer to the Linux platform driver documentation to learn more about available applications):
 
-![](/Implementations/Libuavcan/Tutorials/11._Firmware_update/monitor_software_update.png)
+{% include lightbox.html url="/Implementations/Libuavcan/Tutorials/11._Firmware_update/monitor_software_update.png" title="Sample" %}
 
 Possible output of updater:
 

@@ -24,6 +24,8 @@ blocking processes in lower-priority threads.
 
 ## Architecture
 
+{% include lightbox.html url="/Implementations/Libuavcan/Tutorials/12._Multithreading/multithreading.svg" title="Multithreading with Libuavcan" thumbnail=true %}
+
 Libuavcan allows to add low-priority threads by means of adding *sub-nodes*,
 decoupled from the *main node* via a *virtual CAN driver*.
 In this tutorial we'll be reviewing a use case with just one sub-node,
@@ -48,15 +50,9 @@ The main node simply duplicates all incoming (RX) CAN frames to the virtual CAN 
 This is done via the interface `uavcan::IRxFrameListener`,
 which is installed via the method `uavcan::INode::installRxFrameListener(uavcan::IRxFrameListener*)`.
 
-### Diagram
-
-This diagram puts the above together (click to enlarge):
-
-<a  href="/Implementations/Libuavcan/Tutorials/12._Multithreading/multithreading.svg">
-<img src="/Implementations/Libuavcan/Tutorials/12._Multithreading/multithreading.svg" style="max-width: 75%" />
-</a>
-
 ## Multiprocessing
+
+{% include lightbox.html url="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg" title="Multiprocessing with Libuavcan" thumbnail=true %}
 
 A node may be implemented not only in multiple threads, but in multiple processes as well
 (with isolated address spaces).
@@ -66,10 +62,6 @@ but it will be using the same node ID in all communications, therefore all sub-n
 will appear on the bus as the same network participant.
 
 We introduce a new term here - *compound node* - which refers to either a multithreaded or a multiprocessed node.
-
-<a  href="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg">
-<img src="/Implementations/Libuavcan/Tutorials/12._Multithreading/multiprocessing.svg" style="max-width: 75%" />
-</a>
 
 ## Limitations
 

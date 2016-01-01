@@ -3,9 +3,7 @@
 
 # Adding support for a new platform
 
-<a  href="/Implementations/Libuavcan/figures/libuavcan_data_flow.png">
-<img src="/Implementations/Libuavcan/figures/libuavcan_data_flow.png" style="float: right; max-width: 30%"/>
-</a>
+{% include lightbox.html url="/Implementations/Libuavcan/figures/libuavcan_data_flow.png" title="Libuavcan data flow" thumbnail=true %}
 
 Implementing a platform driver for libuavcan is generally a quite straightforward task,
 especially if the driver is targeted for a certain application and need not to be generic.

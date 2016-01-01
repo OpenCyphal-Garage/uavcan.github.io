@@ -38,7 +38,7 @@ real-world examples of network monitoring.
 
 The output may look like this:
 
-![](/Implementations/Libuavcan/Tutorials/9._Node_discovery/output.png)
+{% include lightbox.html url="/Implementations/Libuavcan/Tutorials/9._Node_discovery/output.png" title="Sample output" %}
 
 ## Running on Linux
 

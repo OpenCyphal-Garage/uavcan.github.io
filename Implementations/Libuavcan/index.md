@@ -4,9 +4,7 @@ weight: 0
 
 # Libuavcan
 
-<a  href="figures/libuavcan_data_flow.png">
-<img src="figures/libuavcan_data_flow.png" style="float: right; max-width: 30%"/>
-</a>
+{% include lightbox.html url="figures/libuavcan_data_flow.png" title="Libuavcan data flow" thumbnail=true %}
 
 Libuavcan is a portable, cross-platform library written in C++ with minimal dependency on the C++ standard library.
 It can be compiled by virtually any standard-compliant C++ compiler and can be used on virtually any architecture/OS.
