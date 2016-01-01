@@ -35,6 +35,9 @@
 			border-bottom-color: transparent;
 		}
 	}
+	a.imagelink, a.lb-next, a.lb-prev, a.lb-close {
+		border-bottom: none !important;
+	}
 
 	strong, b {
 		font-weight: _font(weight-bold);

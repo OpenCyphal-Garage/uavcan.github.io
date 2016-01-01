@@ -60,3 +60,12 @@
 			}
 		}
 	}
+
+	.wrapper img {
+			max-width: 100%;
+	}
+
+	.wrapper img.thumbnail {
+		float: right;
+		max-width: 30%;
+	}

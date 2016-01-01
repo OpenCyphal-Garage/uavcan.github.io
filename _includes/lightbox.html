@@ -1,0 +1,30 @@
+{% comment %}
+Use this to insert Lightbox images.
+Arguments:
+    url         (required)
+    title       (default: deduced from the URL)
+    thumbnail   (default: false)
+    maxwidth    (default: none)
+{% endcomment %}
+
+{% if include.group == null %} {% assign lightbox_group = include.url %}
+{% else %}                     {% assign lightbox_group = include.group %}
+{% endif %}
+
+{% if include.title == null %}
+    {% assign lightbox_title = include.url | split: '/' | last | split: '.' | first | replace: '_', ' ' %}
+{% else %}
+    {% assign lightbox_title = include.title %}
+{% endif %}
+
+{% if include.thumbnail %} {% assign lightbox_img_class = "thumbnail" %}
+{% else %}                 {% assign lightbox_img_class = "" %}
+{% endif %}
+
+{% if include.maxwidth %}  {% assign lightbox_img_style = "max-width: " | append: include.maxwidth %}
+{% else %}                 {% assign lightbox_img_style = "" %}
+{% endif %}
+
+<a class="imagelink" href="{{ include.url }}" data-lightbox="{{ lightbox_group }}" data-title="{{ lightbox_title }}">
+<img src="{{ include.url }}" class="{{ lightbox_img_class }}" style="{{ lightbox_img_style }}" />
+</a>
