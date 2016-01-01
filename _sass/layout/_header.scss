@@ -240,17 +240,5 @@
 
 		&.level-0 {
 			margin-top: 0;
-
-			&:before {
-				content: '';
-				border-left: solid 0.5em transparent;
-				border-right: solid 0.5em transparent;
-				border-bottom: solid 0.5em _palette(bg);
-				display: block;
-				position: absolute;
-				top: -0.45em;
-				left: 50%;
-				margin-left: -0.25em;
-			}
 		}
 	}
