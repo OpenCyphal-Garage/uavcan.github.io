@@ -12,9 +12,7 @@ You can read more about CAN hardware acceptance filters in [this article](http:/
 ## Operation principle
 
 Diagram below shows how the hardware acceptance filters work within CAN protocol:
-<a  href="/Implementations/Libuavcan/Tutorials/13._CAN_acceptance_filters/acceptance_filters_scheme.png">
-<img src="/Implementations/Libuavcan/Tutorials/13._CAN_acceptance_filters/acceptance_filters_scheme.png" style="max-width: 75%" />
-</a>
+{% include lightbox.html url="/Implementations/Libuavcan/Tutorials/13._CAN_acceptance_filters/acceptance_filters_scheme.png" title="CAN acceptance filtering" maxwidth="60%" %}
 
 ## Example
 
