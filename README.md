@@ -27,6 +27,3 @@ while running `bundle exec jekyll serve`, add the following lines to the **Gemfi
 *gem 'execjs'*  
 *gem 'therubyracer'*  
 then open the terminal and run `bundle update && bundle install`
-
-
-
