@@ -32,12 +32,12 @@ static const std::string NodeName = "org.uavcan.tutorial.allocatee";
  * - LPC11C24:
  *      The 128-bit unique ID can be read using the IAP command ReadUID.
  *      For example:
- *      void readUniqueID(uint8_t out_uid[16])
+ *      void readUniqueID(std::uint8_t out_uid[UniqueIDSize])
  *      {
- *          unsigned aligned_array[4] = {};  // out_uid may be unaligned, so we need to use temp array
+ *          unsigned aligned_array[5] = {};  // out_uid may be unaligned, so we need to use temp array
  *          unsigned iap_command = 58;
  *          reinterpret_cast<void(*)(void*, void*)>(0x1FFF1FF1)(&iap_command, aligned_array);
- *          std::memcpy(out_uid, aligned_array, 16);
+ *          std::memcpy(out_uid, &aligned_array[1], 16);
  *      }
  *
  * - Linux:
