@@ -89,7 +89,7 @@ int main(int argc, const char** argv)
     while (true)
     {
         /*
-         * Constantly publishing messages and sending requests to a server.
+         * Constantly publishing messages and sending requests to the server.
          */
         const int spin_res = node.spin(uavcan::MonotonicDuration::fromMSec(1000));
         if (spin_res < 0)
