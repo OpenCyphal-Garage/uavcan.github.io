@@ -61,18 +61,20 @@ int main(int argc, const char** argv)
      */
     uavcan::Subscriber<uavcan::equipment::air_data::Sideslip> sideslip_sub(node);
     int sideslip_sub_start_res = sideslip_sub.start([&](const uavcan::equipment::air_data::Sideslip& msg)
-            { std::cout << msg << std::endl; });
+    {
+        std::cout << msg << std::endl;
+    });
     if (sideslip_sub_start_res < 0)
     {
         throw std::runtime_error("Failed to start the key/value subscriber; error: " +
-                std::to_string(sideslip_sub_start_res));
+                                 std::to_string(sideslip_sub_start_res));
     }
 
     /**
-    * Will not receive air_data::Sideslip messages for another 3 seconds until we reconfigure acceptance filters and
-    * and include another configuration for the message. As soon as filters will be reconfigured the node will start to
-    * receive the air_data::Sideslip messages.
-    */
+     * Will not receive air_data::Sideslip messages for another 3 seconds until we reconfigure acceptance filters and
+     * and include another configuration for the message. As soon as filters will be reconfigured the node will start to
+     * receive the air_data::Sideslip messages.
+     */
     node.spin(uavcan::MonotonicDuration::fromMSec(3000)); // Wait 3 seconds
     std::cout << std::endl << "Reconfiguring acceptance filters ..." << std::endl;
     configureCanAcceptanceFilters(node);
@@ -94,19 +96,21 @@ int main(int argc, const char** argv)
      * This object haven't configured anything yet, in order to make the configuration proceed to the
      * next step.
      */
-    uavcan::CanAcceptanceFilterConfigurator anon_test_configuration(node, 6); //!!! There is no second argument in any
-    //case, but this tutorial.
+    uavcan::CanAcceptanceFilterConfigurator anon_test_configuration(node, 6); // !!! There is no second argument in any
+    // case, but this tutorial.
 
     /*
      * Initializing another subscriber uavcan::equipment::air_data::TrueAirspeed.
      */
     uavcan::Subscriber<uavcan::equipment::air_data::TrueAirspeed> airspd_sub(node);
     int airspd_sub_sub_start_res = airspd_sub.start([&](const uavcan::equipment::air_data::TrueAirspeed& msg)
-            { std::cout << msg << std::endl; });
+    {
+        std::cout << msg << std::endl;
+    });
     if (airspd_sub_sub_start_res < 0)
     {
         throw std::runtime_error("Failed to start the key/value subscriber; error: "
-                + std::to_string(airspd_sub_sub_start_res));
+                                 + std::to_string(airspd_sub_sub_start_res));
     }
 
     /*
@@ -116,11 +120,11 @@ int main(int argc, const char** argv)
     uavcan::ServiceServer<BeginFirmwareUpdate> srv(node);
     int srv_start_res = srv.start(
         [&](const uavcan::ReceivedDataStructure<BeginFirmwareUpdate::Request>& req, BeginFirmwareUpdate::Response& rsp)
-        {
-           std::cout << req << std::endl;
-           rsp.error = rsp.ERROR_UNKNOWN;
-           rsp.optional_error_message = "I am filtered";
-        });
+    {
+        std::cout << req << std::endl;
+        rsp.error = rsp.ERROR_UNKNOWN;
+        rsp.optional_error_message = "I am filtered";
+    });
     if (srv_start_res < 0)
     {
         throw std::runtime_error("Failed to start the server; error: " + std::to_string(srv_start_res));
@@ -150,7 +154,7 @@ int main(int argc, const char** argv)
     uint16_t configure_array_size = configure_array.getSize();
 
     std::cout << std::endl << "Configuration with AcceptAnonymousMessages input and two subscribers:" << std::endl;
-    for (uint16_t i = 0; i<configure_array_size; i++)
+    for (uint16_t i = 0; i < configure_array_size; i++)
     {
         std::cout << "config.ID [" << i << "]= " << configure_array.getByIndex(i)->id << std::endl;
         std::cout << "config.MK [" << i << "]= " << configure_array.getByIndex(i)->mask << std::endl;
@@ -184,9 +188,9 @@ int main(int argc, const char** argv)
         anon_test_configuration.addFilterConfig(new_filter);
     }
 
-    std::cout<< std::endl << "Container after adding new custom configurations:" << std::endl;
+    std::cout << std::endl << "Container after adding new custom configurations:" << std::endl;
     configure_array_size = configure_array.getSize();
-    for (uint16_t i = 0; i<configure_array_size; i++)
+    for (uint16_t i = 0; i < configure_array_size; i++)
     {
         std::cout << "config.ID [" << i << "]= " << configure_array.getByIndex(i)->id << std::endl;
         std::cout << "config.MK [" << i << "]= " << configure_array.getByIndex(i)->mask << std::endl;
@@ -200,7 +204,7 @@ int main(int argc, const char** argv)
      */
     anon_test_configuration.applyConfiguration();
 
-    std::cout<< std::endl << "Container after adding new custom configurations and applyConfiguration():" << std::endl;
+    std::cout << std::endl << "Container after adding new custom configurations and applyConfiguration():" << std::endl;
     configure_array_size = configure_array.getSize();
     for (uint16_t i = 0; i<configure_array_size; i++)
     {

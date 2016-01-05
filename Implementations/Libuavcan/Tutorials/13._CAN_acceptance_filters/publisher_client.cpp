@@ -70,18 +70,18 @@ int main(int argc, const char** argv)
         throw std::runtime_error("Failed to init the client; error: " + std::to_string(client_init_res));
     }
     client.setCallback([](const uavcan::ServiceCallResult<BeginFirmwareUpdate>& call_result)
+    {
+        if (call_result.isSuccessful())
         {
-            if (call_result.isSuccessful())
-            {
-                std::cout << call_result << std::endl;
-            }
-            else
-            {
-                std::cerr << "Service call to node "
-                          << static_cast<int>(call_result.getCallID().server_node_id.get())
-                          << " has failed" << std::endl;
-            }
-        });
+            std::cout << call_result << std::endl;
+        }
+        else
+        {
+            std::cerr << "Service call to node "
+                      << static_cast<int>(call_result.getCallID().server_node_id.get())
+                      << " has failed" << std::endl;
+        }
+    });
     client.setRequestTimeout(uavcan::MonotonicDuration::fromMSec(200));
 
     node.setModeOperational();
@@ -122,6 +122,5 @@ int main(int argc, const char** argv)
         {
             throw std::runtime_error("Unable to perform service call: " + std::to_string(call_res));
         }
-
     }
 }
