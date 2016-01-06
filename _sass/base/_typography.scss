@@ -30,7 +30,7 @@
 		@include vendor('transition', 'border-bottom-color #{_duration(transition)} ease-in-out');
 		border-bottom: dotted 1px;
 		text-decoration: none;
-		padding-bottom: 0.02em;
+		padding-bottom: 0.05em;
 
 		&:hover {
 			border-bottom-color: transparent;
