@@ -7,18 +7,17 @@ This repository contains sources of the UAVCAN website.
 ## Cloning the repository
 `git clone https://github.com/UAVCAN/uavcan.github.io.git`
 ## Dependencies
-- [Ruby](https://www.ruby-lang.org/en/) version 2.0.0 +  
-Download the [archive](https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz) and unpack it.  
-Enter the derictory where you unpacked the archive and execute: `./configure && sudo make install` 
+- [Ruby](https://www.ruby-lang.org/en/)  
+Install the latest version of Ruby and activate it using [RVM](https://rvm.io/).
 - [Bundler](http://bundler.io/)  
-Execute from the terminal `sudo gem install bundler` 
+Follow the instructions on [repository page](https://github.com/bundler/bundler) to install Bunler.
 - [Jekyll](http://jekyllrb.com/)  
 Enter your local clone derictory (make sure you have Gemfile there).  
 Execute from the termianl `bundle install`
 
 ## Running the website locally
 Enter your local clone derictory (where the Gemfile is located).  
-Execute from the terminal `bundle exec jekyll serve` and wait until the page is generated. Open your internet browser and navigate to `http://localhost:4000` to see your local website.  
+Execute from the terminal `bundle exec jekyll serve` and wait until the page is generated. Open your internet browser and navigate to <http://localhost:4000> to see your local website.  
 
 ## Troubleshooting 
 In case you have an error like:  
