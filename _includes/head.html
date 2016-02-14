@@ -1,7 +1,7 @@
 {% assign CLEAN_PAGE_URL = page.url | remove: '/index.html' | remove: '.html' | replace: '_', ' ' %}
 
 {% if page.url == '/index.html' %}
-    {% assign PAGE_TITLE = '' %}
+    {% assign PAGE_TITLE = "" %}
 {% else %}
     {% assign PAGE_TITLE = CLEAN_PAGE_URL | split: '/' | last %}
 {% endif %}
@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>{% if PAGE_TITLE != '' %}{{ PAGE_TITLE }} - {% endif %}{{ site.title }}</title>
+    <title>{% if PAGE_TITLE != "" %}{{ PAGE_TITLE }} - {% endif %}{{ site.title }}</title>
     <meta name="description" content="{{ site.description }}">
 
     <!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
