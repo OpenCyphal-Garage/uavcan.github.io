@@ -16,6 +16,6 @@ it is completely standalone featuring zero third-party dependencies.
 
 The following code can be used to test the node against the reference implementation of the UAVCAN stack.
 
-```c++
+```cpp
 {% include_relative libuavcan_airspeed_subscriber.cpp %}
 ```

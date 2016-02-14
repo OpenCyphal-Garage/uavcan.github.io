@@ -82,7 +82,7 @@ This symbol is inserted before every symbol exported by the library. It is empty
 
 Possible use case, e.g. for GCC:
 
-```c++
+```cpp
 #define UAVCAN_EXPORT    __attribute__((visibility ("default")))
 ```
 
@@ -205,7 +205,7 @@ Libuavcan maintains a set of performance counters that indicate the number of tr
 as well as the number of common errors detected in the transport layer.
 The performance counters can be accessed as follows:
 
-```c++
+```cpp
 const uavcan::TransferPerfCounter& perf = node.getDispatcher().getTransferPerfCounter();
 
 std::cout << perf.getErrorCount()      << std::endl;
@@ -220,7 +220,7 @@ The example above assumes that the node object is named `node`.
 Libuavcan maintains the counters of CAN frames exchanged by the CAN controller and the number of
 bus errors detected by the CAN hardware.
 
-```c++
+```cpp
 const uavcan::CanIOManager& canio = node.getDispatcher().getCanIOManager();
 for (std::uint8_t i = 0; i < canio.getNumIfaces(); i++)
 {
@@ -237,7 +237,7 @@ The example above assumes that the node object is named `node`.
 
 Use the following methods to check whether the memory pool is getting exhausted:
 
-```c++
+```cpp
 std::cout << node.getAllocator().getNumBlocks() << std::endl;           // Capacity
 std::cout << node.getAllocator().getNumUsedBlocks() << std::endl;       // Currently used
 std::cout << node.getAllocator().getPeakNumUsedBlocks() << std::endl;   // Peak usage

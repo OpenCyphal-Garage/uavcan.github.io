@@ -26,13 +26,13 @@ real-world examples of network monitoring.
 
 ## Passive monitor
 
-```c++
+```cpp
 {% include_relative passive.cpp %}
 ```
 
 ## Active monitor
 
-```c++
+```cpp
 {% include_relative active.cpp %}
 ```
 

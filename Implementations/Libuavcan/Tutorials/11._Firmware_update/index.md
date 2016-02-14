@@ -22,13 +22,13 @@ It is advised to refer to a real production-used cross-platform UAVCAN bootloade
 
 ## Updater
 
-```c++
+```cpp
 {% include_relative updater.cpp %}
 ```
 
 ## Updatee
 
-```c++
+```cpp
 {% include_relative updatee.cpp %}
 ```
 

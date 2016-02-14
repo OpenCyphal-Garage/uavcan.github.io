@@ -87,7 +87,7 @@ publishers or servers or such at all), because this functionality is already pro
 
 ### Virtual CAN driver
 
-```c++
+```cpp
 {% include_relative uavcan_virtual_driver.hpp %}
 ```
 
@@ -96,7 +96,7 @@ publishers or servers or such at all), because this functionality is already pro
 This demo also shows how to use a thread-safe heap-based shared block memory allocator.
 This allocator enables lower memory footprint for compound nodes than the default one.
 
-```c++
+```cpp
 {% include_relative node.cpp %}
 ```
 

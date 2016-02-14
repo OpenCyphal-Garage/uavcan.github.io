@@ -100,13 +100,13 @@ e.g. for git, add `dsdlc_generated` to the `.gitignore` config file.
 
 ### Server
 
-```c++
+```cpp
 {% include_relative server.cpp %}
 ```
 
 ### Client
 
-```c++
+```cpp
 {% include_relative client.cpp %}
 ```
 

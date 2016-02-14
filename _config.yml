@@ -9,10 +9,10 @@ url: "http://uavcan.org"
 github_username: UAVCAN
 
 # Build settings
-highlighter: pygments
-markdown: redcarpet
-redcarpet:
-  extensions: [fenced_code_blocks, autolink, tables, with_toc_data]
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
 
 defaults:
   -

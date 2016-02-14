@@ -93,7 +93,7 @@ Place this into the file `CMakeLists.txt`:
 
 Place this into the file `node.cpp`:
 
-```c++
+```cpp
 {% include_relative node.cpp %}
 ```
 

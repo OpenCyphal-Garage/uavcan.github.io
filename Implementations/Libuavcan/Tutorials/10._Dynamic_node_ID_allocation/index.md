@@ -20,7 +20,7 @@ learn more on the chapter dedicated to the Linux platform driver.
 
 Use this example as a guideline when implementing dynamic node ID allocation feature in your application.
 
-```c++
+```cpp
 {% include_relative allocatee.cpp %}
 ```
 
@@ -40,7 +40,7 @@ Dynamic node ID 125 has been allocated by the allocator with node ID 1
 
 ## Centralized allocator
 
-```c++
+```cpp
 {% include_relative centralized_allocator.cpp %}
 ```
 
@@ -70,7 +70,7 @@ $ ./distributed_allocator 1 1
 
 The source code is provided below.
 
-```c++
+```cpp
 {% include_relative distributed_allocator.cpp %}
 ```
 

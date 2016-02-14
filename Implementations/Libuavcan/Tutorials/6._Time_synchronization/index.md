@@ -31,7 +31,7 @@ of the time synchronization algorithm defined in the relevant part of the UAVCAN
 
 This application implements a time synchronization slave.
 
-```c++
+```cpp
 {% include_relative slave.cpp %}
 ```
 
@@ -39,7 +39,7 @@ This application implements a time synchronization slave.
 
 This application implements a time synchronization master.
 
-```c++
+```cpp
 {% include_relative master.cpp %}
 ```
 

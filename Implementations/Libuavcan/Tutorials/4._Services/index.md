@@ -12,13 +12,13 @@ Server's node ID is provided to the application as a command-line argument.
 
 ## Server
 
-```c++
+```cpp
 {% include_relative server.cpp %}
 ```
 
 ## Client
 
-```c++
+```cpp
 {% include_relative client.cpp %}
 ```
 
@@ -26,7 +26,7 @@ Server's node ID is provided to the application as a command-line argument.
 
 The following code demonstrates how to work-around the lack of important features in older C++ standards (prior C++11).
 
-```c++
+```cpp
 {% include_relative client_cpp03.cpp %}
 ```
 

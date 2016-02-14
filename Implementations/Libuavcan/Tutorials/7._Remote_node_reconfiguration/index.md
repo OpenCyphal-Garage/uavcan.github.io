@@ -31,7 +31,7 @@ Once started, this node performs the following:
 * Restarts the remote node.
 * Exits.
 
-```c++
+```cpp
 {% include_relative configurator.cpp %}
 ```
 
@@ -39,7 +39,7 @@ Once started, this node performs the following:
 
 This node doesn't do anything on its own; it merely provides the standard configuration services.
 
-```c++
+```cpp
 {% include_relative remote_node.cpp %}
 ```
 

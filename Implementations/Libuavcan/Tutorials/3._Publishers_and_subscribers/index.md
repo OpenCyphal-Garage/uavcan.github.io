@@ -15,13 +15,13 @@ The reader is advised to extend it with this functionality on their own.
 
 ## Publisher
 
-```c++
+```cpp
 {% include_relative publisher.cpp %}
 ```
 
 ## Subscriber
 
-```c++
+```cpp
 {% include_relative subscriber.cpp %}
 ```
 
@@ -29,7 +29,7 @@ The reader is advised to extend it with this functionality on their own.
 
 The following code demonstrates how to work-around the lack of important features in older C++ standards (prior C++11).
 
-```c++
+```cpp
 {% include_relative subscriber_cpp03.cpp %}
 ```
 

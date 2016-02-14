@@ -13,7 +13,7 @@ This application demonstrates how to use software timers.
 This is the recommended example.
 It requires C++11 or a newer version of the C++ standard.
 
-```c++
+```cpp
 {% include_relative node_cpp11.cpp %}
 ```
 
@@ -21,7 +21,7 @@ It requires C++11 or a newer version of the C++ standard.
 
 This example shows how to work-around the lack of lambdas and `std::function<>` in C++03.
 
-```c++
+```cpp
 {% include_relative node_cpp03.cpp %}
 ```
 

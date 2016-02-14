@@ -26,7 +26,7 @@ libuavcan.
 
 Put the following code into `publisher_client.cpp`:
 
-```c++
+```cpp
 {% include_relative publisher_client.cpp %}
 ```
 
@@ -36,7 +36,7 @@ This application demonstrates how to configure hardware acceptance filters with 
 
 Put the following code into `subscriber_server.cpp`:
 
-```c++
+```cpp
 {% include_relative subscriber_server.cpp %}
 ```
 

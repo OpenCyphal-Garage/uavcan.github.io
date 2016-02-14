@@ -82,7 +82,7 @@ the class `PoolAllocator<>`:
 
 The methods above can be accessed as follows:
 
-```c++
+```cpp
 std::cout << node.getAllocator().getNumUsedBlocks()     << std::endl;
 std::cout << node.getAllocator().getNumFreeBlocks()     << std::endl;
 std::cout << node.getAllocator().getPeakNumUsedBlocks() << std::endl;
@@ -130,7 +130,7 @@ invoke `Node<>::spin()` or `Node<>::spinOnce()` periodically.
 
 This is the most typical use-case:
 
-```c++
+```cpp
 for (;;)
 {
     const int error = node.spin(uavcan::MonotonicDuration::fromMSec(100));
@@ -143,7 +143,7 @@ for (;;)
 
 Some background processing can be performed between the calls to `spin()`:
 
-```c++
+```cpp
 for (;;)
 {
     const int error = node.spin(uavcan::MonotonicDuration::fromMSec(100));
@@ -192,7 +192,7 @@ Typically, the separated node objects communicate with each other by means of a 
 
 Put the following code into `node.cpp`:
 
-```c++
+```cpp
 {% include_relative node.cpp %}
 ```
 
@@ -210,7 +210,7 @@ they will be helpful when learning from the tutorials.
 
 Put the following code into `platform_linux.cpp`:
 
-```c++
+```cpp
 {% include_relative platform_linux.cpp %}
 ```
 
@@ -313,7 +313,7 @@ Learn how to grep from the
 
 The platform-specific functions can be implemented as follows:
 
-```c++
+```cpp
 {% include_relative platform_stm32.cpp %}
 ```
 
@@ -323,7 +323,7 @@ For the rest, please refer to the STM32 test application provided in the reposit
 
 The platform-specific functions can be implemented as follows:
 
-```c++
+```cpp
 {% include_relative platform_lpc11c24.cpp %}
 ```
 
