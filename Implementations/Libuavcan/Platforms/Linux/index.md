@@ -38,10 +38,14 @@ Suggested packages (optional):
 
 * can-utils
 
+Before building, make sure that the libuavcan git repository is cloned properly and all submodules are checked out
+correctly.
+The git submodules can be checked out with the following command: `git submodule update --init --recursive`.
+
 Build steps:
 
 ```sh
-cd uavcan
+cd libuavcan
 mkdir build
 cd build
 cmake ..        # Optionally, set the build type: -DCMAKE_BUILD_TYPE=Release (default is RelWithDebInfo)
