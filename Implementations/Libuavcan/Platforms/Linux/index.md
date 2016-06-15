@@ -70,6 +70,32 @@ Installation prefix can be overridden via make variable `PREFIX`.
 Default installation prefix depends on the Linux distribution;
 for example, on Ubuntu the default prefix is `/usr/local/`.
 
+## Using without installation
+
+It is possible to include Libuavcan into another CMake project as a CMake subproject.
+In order to do so, extend your `CMakeLists.txt` with the following lines:
+
+```cmake
+# Include the Libuavcan CMake subproject
+add_subdirectory(
+    libuavcan                                       # Path to the Libuavcan repository, modify accordingly
+    ${CMAKE_BINARY_DIR}/libuavcan                   # This path can be changed arbitrarily
+)
+
+# Add Libuavcan include directories
+include_directories(                                # Or use target_include_directories() instead
+    libuavcan/libuavcan/include
+    libuavcan/libuavcan_drivers/linux/include
+    libuavcan/libuavcan/include/dsdlc_generated
+)
+
+# Link your targets with Libuavcan
+target_link_libraries(
+    your_target                                     # This is the name of your target
+    uavcan
+)
+```
+
 ## Usage
 
 Documentation for each feature is provided in the Doxygen comments in the header files.
