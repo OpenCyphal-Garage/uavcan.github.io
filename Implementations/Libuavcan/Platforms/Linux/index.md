@@ -202,6 +202,10 @@ Example for `can0` and Node ID 127:
 
 To exit the application, press **Ctrl**+**C**.
 
+*Consider using the UAVCAN GUI Tool instead -
+UAVCAN GUI Tool is a much more feature-complete alternative with graphical user interface.
+Besides Linux it also runs on Windows and OSX.*
+
 ### `uavcan_add_vcan`
 
 Adds a new virtual CAN interface. Useful for testing.
