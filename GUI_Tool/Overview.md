@@ -46,6 +46,8 @@ Please refer to the README file in the source repository: <https://github.com/UA
 
 Please refer to the README file in the source repository: <https://github.com/UAVCAN/gui_tool>.
 
-## Contribution
+## Feedback
 
-Pull requests are welcome at the GitHub repository at <https://github.com/UAVCAN/gui_tool>.
+Direct your questions and feedback to the [mailing list or the chat room](/Contact).
+
+Pull requests and bug reports are welcome at the GitHub repository at <https://github.com/UAVCAN/gui_tool>.
