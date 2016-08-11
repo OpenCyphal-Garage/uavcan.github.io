@@ -5,11 +5,14 @@
 
 Tutorials are arranged in ascending order of difficulty and descending order of importance.
 
+Besides these tutorials, it is also recommended to refer to the sources of the
+[UAVCAN GUI Tool](/GUI_Tool), which is based on Pyuavcan.
+
 ## Prerequisites
 
-* Familiarity with UAVCAN specification
-* Intermediate Python skills
-* A USB to CAN adapter supporting SLCAN or SocketCAN interfaces
+* Familiarity with UAVCAN specification.
+* Intermediate Python skills.
+* A supported USB to CAN adapter.
 
 ## Installation
 
