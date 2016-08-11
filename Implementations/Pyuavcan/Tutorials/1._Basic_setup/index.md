@@ -3,69 +3,95 @@
 
 # Basic setup
 
-## SLCAN adapters
+This tutorial covers the basic setup of Pyuavcan.
 
-If your CAN adapter supports SLCAN, the device will typically be available at
-one of the following paths:
+Pyuavcan is designed to be as platform-independent as possible.
+It has been successfully tested under Linux, Windows, and OSX,
+but its portability should not be restricted only to these platforms.
 
-* `/dev/tty.usbmodem<x>`
-* `/dev/ttyACM<x>`
-* `/dev/ttyUSB<x>`
+## Installation
 
-The value of `<x>` will depend on your operating system and installed
-hardware; if uncertain, try un-plugging the adapter, listing the `/dev`
-directory, plugging it back in, and checking `/dev` for extra devices.
+It is recommended to use PIP to install Pyuavcan:
 
-Install PySerial before continuing:
+```bash
+pip install uavcan
+```
 
-```sh
+If your operating system has both Python 2.7 and Python 3,
+you probably should use `pip3` instead of `pip` in the example above.
+Sometimes the PIP executable is not available at all,
+in which case you should resort to the below command:
+
+```bash
+python -m pip install uavcan
+```
+
+Pyuavcan requires no external dependencies, except for PySerial if SLCAN support is required (more on this below).
+
+## CAN hardware backends
+
+Supported hardware backends are documented in this section.
+
+### SLCAN (aka LAWICEL)
+
+This backend is available under all supported operating systems.
+In order to use it, you should also install PySerial:
+
+```bash
 pip install pyserial
 ```
 
-## SocketCAN adapters
+SLCAN is a simple quasi-standard protocol that allows to transfer CAN frames and
+CAN adapter commands and status information via a serial port link
+(most often it's USB CDC ACM virtual serial port).
+Many different vendors manufacture SLCAN-compatible CAN adapters.
+Pyuavcan has been successfully tested at least with the following models:
+
+* [Zubax Babel](https://docs.zubax.com/zubax_babel)
+* Thiemar muCAN
+* VSCOM USB-CAN
+
+Since SLCAN works over a serial port link, USB SLCAN adapters will be detected on the host
+<abbr title="Operating System">OS</abbr> as a virtual serial port device.
+Depending on your OS, serial ports can be accessed as follows:
+
+* On Linux, all devices are represented as files; serial ports can be referred to using the following files:
+    * `/dev/serial/by-id/*`, where `*` is a string descriptor of the connected device, e.g.
+`/dev/serial/by-id/usb-Zubax_Robotics_Zubax_Babel_380032000D5732413336392000000000-if00`;
+this is the recommended way of accessing serial ports on Linux,
+because each connected device has a persistent name with <abbr title="Unique ID">UID</abbr>
+that is invariant to the order in which devices are connected.
+    * `/dev/ttyACM*` or `/dev/ttyUSB*`, where `*` is a number.
+Files in this directory are symlinked to from `/dev/serial/` described above.
+* On OSX, look for the following files:
+    * `/dev/tty.usbmodem*`, where `*` is a number.
+* On Windows, connected serial devices will be detected as COM ports.
+
+### SocketCAN
+
+The SocketCAN backend is available only under Linux.
 
 For SocketCAN adapter configuration, please refer to the documentation that
 came with your adapter. Once you have configured the adapter, it will be
 available via a specific network interface name, e.g. `can0`.
 
-## Running pyuavcan
+It is also possible to use Pyuavcan with virtual CAN interfaces.
+A virtual SocketCAN interface can be brought up using the following commands as root:
 
-Install pyuavcan, and open the Python interpreter:
-
-```sh
-pip install uavcan
-python
+```bash
+modprobe can
+modprobe can_raw
+modprobe can_bcm
+modprobe vcan
+ip link add dev vcan0 type vcan
+ip link set up vcan0
+ifconfig vcan0 up
 ```
 
-Import the `uavcan` module, and load the built-in DSDL definitions:
+The following devices have been tested successfully with the SocketCAN backend:
 
-```python
-import uavcan
-uavcan.load_dsdl()
-```
+* 8devices USB2CAN
+* PEAK-System PCAN-USB
+* SLCAN adapters via the SLCAN bridge
 
-Configure Python's built-in `logging` module to show messages in the
-interactive shell:
 
-```python
-import logging
-logging.root.setLevel(logging.DEBUG)
-```
-
-Now, import `uavcan.node`, instantiate a new `Node` object, and start
-listening to bus traffic:
-
-```python
-import uavcan.node
-node = uavcan.node.Node([])
-node.listen('/your/device/name')
-```
-
-For SLCAN devices, the value of `/your/device/name` will be the `/dev/ttyX`
-path you determined earlier. For SocketCAN devices, the value will be the
-name of your SocketCAN network interface.
-
-Once you call `node.listen`, you'll see a log line for each UAVCAN transfer
-sent and received on the bus. The `Node` object will send a
-`uavcan.protocol.NodeStatus` message at least once per second, and any other
-devices on the network will do the same.
