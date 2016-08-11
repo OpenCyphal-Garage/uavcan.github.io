@@ -1,7 +1,7 @@
 ---
 ---
 
-# Basic setup
+# Setup
 
 This tutorial covers the basic setup of Pyuavcan.
 
