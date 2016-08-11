@@ -10,7 +10,7 @@ uavcan.Timestamp timestamp
 uint8 MY_FAVORITE_CHAR = '\x42'
 ```
 
-Create a file named `namespace_b/Bar.uavcan` with the following content:
+Create another file named `namespace_b/Bar.uavcan` with the following content:
 
 ```python
 float16 x
@@ -21,8 +21,8 @@ float64 answer
 namespace_a.Foo foo
 ```
 
-Place the standard DSDL definitions into the directory `uavcan/dsdl/`
-(just clone or symlink the repository into the current directory).
+Place the standard DSDL definitions into the directory `dsdl/`
+(just clone or symlink the DSDL repository into the current directory).
 
 The resulting directory structure should look like this:
 
@@ -31,11 +31,10 @@ namespace_a/
     Foo.uavcan
 namespace_b/
     Bar.uavcan
-uavcan/
-    dsdl/
-        uavcan/
-            ...
-    ...
+dsdl/
+    uavcan/
+        ...
+...
 ```
 
 Put this code into a file in the current directory:
@@ -46,7 +45,7 @@ Put this code into a file in the current directory:
 # Read the package docstrings for details.
 #
 
-# pyuavcan supports Python 2.7 and Python 3
+# pyuavcan supports Python 2.7 and Python 3.x
 from __future__ import print_function
 from pyuavcan import dsdl
 
@@ -54,7 +53,7 @@ from pyuavcan import dsdl
 NAMESPACE_DIRS = ['namespace_a/', 'namespace_b/']
 
 # Where to look for the referenced types (standard UAVCAN types):
-SEARCH_DIRS = ['uavcan/dsdl/uavcan']
+SEARCH_DIRS = ['dsdl/uavcan']
 
 # Run the DSDL parser:
 types = dsdl.parse_namespaces(NAMESPACE_DIRS, SEARCH_DIRS)
@@ -85,11 +84,7 @@ for t in types:
         print_attributes(t.response_fields, t.response_constants)
 ```
 
-Now, we're assuming that the Pyuavcan package is installed.
-If it is not, put it into the same directory too so it can be imported relatively.
-
-Run the script.
-
+Make sure the Pyuavcan package is installed, then run the script.
 The output should look like this:
 
 ```
@@ -105,5 +100,5 @@ namespace_b.Bar
     saturated uint6 JUST_ENOUGH = 42 # 42
 ```
 
-For a real world usage example it's recommended to refer to libuavcan,
-which implements a DSDL compiler based on the DSDL parsing module from pyuavcan.
+For a real world usage example it's recommended to refer to Libuavcan,
+which implements a DSDL compiler based on the DSDL parsing module from Pyuavcan.
