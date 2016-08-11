@@ -1,14 +1,15 @@
 ---
-weight: 25
+weight: 0
+permalink: /GUI_Tool/Overview/
 ---
 
 # UAVCAN GUI Tool
 
-{% include lightbox.html url="screenshot.png" title="UAVCAN GUI Tool" thumbnail="true" %}
+{% include lightbox.html url="/GUI_Tool/figures/screenshot.png" title="UAVCAN GUI Tool" thumbnail="true" %}
 
-{% include lightbox.html url="demo_sin_cos_setpoint.png" title="Using the embedded IPython console" thumbnail="true" %}
+{% include lightbox.html url="/GUI_Tool/figures/demo_sin_cos_setpoint.png" title="Using the embedded IPython console" thumbnail="true" %}
 
-{% include lightbox.html url="demo_node_configuration.png" title="Remote node reconfiguration" thumbnail="true" %}
+{% include lightbox.html url="/GUI_Tool/figures/demo_node_configuration.png" title="Remote node reconfiguration" thumbnail="true" %}
 
 UAVCAN GUI Tool is a cross-platform free open source application for UAVCAN bus management and diagnostics.
 It runs on Windows, Linux, and OSX.
