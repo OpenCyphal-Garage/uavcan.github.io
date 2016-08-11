@@ -58,7 +58,7 @@ Wrong:
 i = 470
 t = -1
 
-while (i > 20):
+while i > 20:
     i *= 0.99
     c = int(i) + (1000 if t < 0 else 0)
     t = -t
