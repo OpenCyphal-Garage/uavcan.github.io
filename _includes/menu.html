@@ -19,7 +19,7 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% endif %}
     {% endfor %}
 
-    {% assign matching = sorted_pages | where:"weight",null %}
+    {% assign matching = sorted_pages | where_exp:"item","item.weight == nil" %}
     {% for match in matching %}
         {% unless match.url contains '.xml' or match.url contains '/assets/' %}
             {% assign tmp2 = match.url | remove: 'index.html' | append: ' ' | remove: '/ ' %}
