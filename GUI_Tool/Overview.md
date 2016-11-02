@@ -34,7 +34,7 @@ Download and install the latest MSI package from <https://files.zubax.com/produc
 #### Ubuntu, Mint, and other Debian-based distros
 
 ```bash
-sudo apt-get install -y python3-pip python3-numpy python3-pyqt5 python3-pyqt5.qtsvg git-core
+sudo apt-get install -y python3-pip python3-setuptools python3-numpy python3-pyqt5 python3-pyqt5.qtsvg git-core
 sudo pip3 install git+https://github.com/UAVCAN/gui_tool@master
 ```
 
