@@ -31,6 +31,9 @@ Download and install the latest MSI package from <https://files.zubax.com/produc
 
 ### Linux
 
+Note that if you're using a USB SLCAN adapter, it may be necessary to
+[configure serial port access permissions](https://docs.zubax.com/usb#Configuring_permissions_on_Linux).
+
 #### Ubuntu, Mint, and other Debian-based distros
 
 ```bash
