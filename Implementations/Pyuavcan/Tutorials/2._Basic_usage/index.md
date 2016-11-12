@@ -157,7 +157,7 @@ Refer to the function documentation for more info.
 Standard definitions can be reached directly from the module namespace, e.g.
 `uavcan.protocol.NodeStatus`.
 Vendor-specific definitions can be accessed via the pseudo-module `uavcan.thirdparty`.
-Both standard and vendor-specific types are also accessible via the global dictionaties
+Both standard and vendor-specific types are also accessible via the global dictionaries
 `uavcan.DATATYPES` and `uavcan.TYPENAMES`.
 
 When instantiating a message type, its type name should be treated as a class name,
