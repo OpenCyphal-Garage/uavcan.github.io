@@ -130,7 +130,8 @@ Name                            | RTOS              | Description
 
 The following firmware projects can be used as a reference:
 
-* [Zubax GNSS](https://github.com/Zubax/zubax_gnss)
+* [PX4ESC](https://github.com/Zubax/px4esc)
+* [Sapog](https://github.com/PX4/sapog)
 * [PX4](https://github.com/PX4/Firmware)
-* [PX4ESC](https://github.com/PX4/px4esc)
+* [Zubax GNSS](https://github.com/Zubax/zubax_gnss)
 * Also see test applications available with the driver sources.
