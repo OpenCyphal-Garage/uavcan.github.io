@@ -7,11 +7,11 @@ This advanced-level tutorial shows how to implement firmware update over UAVCAN 
 The reader must be familiar with the corresponding section of the specification.
 Two applications will be implemented:
 
-* Updater - this application runs active node monitor (this topic has been covered in one of the previous tutorials),
-and when a node responds to `uavcan.protocol.GetNodeInfo` request, the application checks if it has a newer firmware
-image than the node is currently running. If this is the case, the application sends a request of type
+* Updater - this application runs an active node monitor (this topic has been covered in one of the previous tutorials),
+and when a remote node responds to `uavcan.protocol.GetNodeInfo` request, the application checks if it has a newer
+firmware image than the node is currently running. If this is the case, the application sends a request of type
 `uavcan.protocol.file.BeginFirmwareUpdate` to the node. This application also implements a file server, which is
-another mandatory component of firmware update process.
+another mandatory component of the firmware update process.
 * Updatee - this application demonstrates how to handle requests of type `uavcan.protocol.file.BeginFirmwareUpdate`,
 and how to download a file using the service `uavcan.protocol.file.Read`.
 
