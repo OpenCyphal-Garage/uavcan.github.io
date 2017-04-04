@@ -97,7 +97,7 @@ When you're finished with the node, don't forget to call `close()` on it; better
 
 ```python
 from contextlib import closing
-with closing(uavcan.driver.make_driver('/dev/ttyACM0')) as node:
+with closing(uavcan.driver.make_node('/dev/ttyACM0', bitrate=1000000)) as node:
     # Do some work here...
 # When control reaches the end of the with block, the node will be properly finalized
 ```
