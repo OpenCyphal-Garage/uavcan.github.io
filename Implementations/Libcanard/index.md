@@ -8,6 +8,6 @@ Libcanard is a minimal implementation of UAVCAN in C, suitable for deeply embedd
 resource constrained applications.
 It is primarily targeted for low-end microcontrollers, starting from 8 KB ROM and 6 KB RAM.
 
-At the moment, Libcanard is under development and doesn't have much documentation.
-Please visit the [Github page](https://github.com/UAVCAN/libcanard) for more info,
-and check back later to see the documentation and tutorials.
+The documentation and the usage examples are contained right in the
+[source repository on Github](https://github.com/UAVCAN/libcanard).
+Please proceed to read it there.
