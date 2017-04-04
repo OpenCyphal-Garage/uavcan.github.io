@@ -25,6 +25,7 @@ This driver should work with any STM32 series MCU. The following models were tes
 * STM32F105
 * STM32F107
 * STM32F205
+* STM32F303
 * STM32F427
 * STM32F446
 
@@ -125,6 +126,35 @@ Name                            | RTOS              | Description
 `UAVCAN_STM32_IRQ_PRIORITY_MASK`| ChibiOS, FreeRTOS | This option defines IRQ priorities for the CAN controllers and the timer. Default priority level is one lower than the kernel priority level (i.e. max allowed level).
 `UAVCAN_STM32_TIMER_NUMBER`     | Any               | Hardware timer number reserved for clock functions. If this value is not set, the timer driver will not be compiled; this allows the application to implement a custom driver if needed. Valid timer numbers are 2, 3, 4, 5, 6, and 7.
 `UAVCAN_STM32_NUM_IFACES`       | Any               | Number of CAN interfaces to use. Valid values are 1 and 2.
+
+## Bare metal driver
+
+If you are not using any OS, you must supply your own `chip.h` header file to configure the STM32 driver for your particular MCU.
+
+A `chip.h` file includes the HAL header file for your MCU (e.g. `#include "stm32f3xx.h"`) and sets the preprocessor definitions in the table below. Some of the preprocessor definitions may already be defined in the HAL header files for your MCU or by libuavcan.
+
+Name                   | Description
+-----------------------|-------------------------------------------------------------------------------------------------------
+`STM32?XX`             | The STM32 family of the MCU (e.g. `#define STM32F2XX` for F2 family MCUs).
+`STM32_PCLK1`          | PCLK1 frequency in Hertz. Calling `HAL_RCC_GetPCLK1Freq()` returns this value.
+`STM32_TIMCLK1`        | TIMCLK1 frequency in Hertz.
+`CAN1_TX_IRQHandler`, `CAN1_RX0_IRQHandler`, `CAN1_RX1_IRQHandler` | Name of the TX, RX0 and RX1 interrupt handlers for the first CAN interface.
+`CAN2_TX_IRQHandler`, `CAN2_RX0_IRQHandler`, `CAN2_RX1_IRQHandler` | Name of the TX, RX0 and RX1 interrupt handlers for the second CAN interface. Only applicable if `UAVCAN_STM32_NUM_IFACES` is 2.
+
+### Example
+
+This example is for an STM32F446 MCU.
+
+```
+#include "stm32f4xx.h"  // HAL header file
+
+#define STM32F4XX
+#define STM32_PCLK1           (42000000ul)          // 42 MHz
+#define STM32_TIMCLK1         (84000000ul)          // 84 MHz
+#define CAN1_TX_IRQHandler    CAN1_TX_IRQHandler
+#define CAN1_RX0_IRQHandler   CAN1_RX0_IRQHandler
+#define CAN1_RX1_IRQHandler   CAN1_RX1_IRQHandler
+```
 
 ## Examples
 
