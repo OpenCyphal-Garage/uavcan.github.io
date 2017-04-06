@@ -276,3 +276,23 @@ def handle_node_restart_request(event):
 node.add_handler(uavcan.protocol.RestartNode, handle_node_restart_request)
 ```
 
+## Using Vendor-Specific DSDL Definitions
+
+Pyuavcan will automatically scan the directory `~/uavcan_vendor_specific_types` for vendor-specific data types,
+where `~` stands for the home directory of the current user, e.g. `/home/joe` or `C:\Users\Joe`.
+Consider the following directory layout:
+
+```
+~
+└── uavcan_vendor_specific_types
+    └── root_ns_a
+        ├── 100.Foo.uavcan
+        ├── 42.Bar.uavcan
+        └── Baz.uavcan
+```
+
+The above layout defines the following custom data types:
+
+* `sirius_cybernetics_corporation.Foo` with the default data type ID 100.
+* `sirius_cybernetics_corporation.Bar` with the default data type ID 42.
+* `sirius_cybernetics_corporation.Baz` where the default data type ID is not set.
