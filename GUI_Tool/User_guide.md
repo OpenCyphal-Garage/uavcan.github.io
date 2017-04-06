@@ -34,6 +34,28 @@ It has been tested with the following adapters:
 
 Any other adapter supported by SocketCAN should also work with UAVCAN GUI Tool without issues.
 
+## Using Vendor-Specific DSDL Definitions
+
+The UAVCAN GUI Tool is based on PyUAVCAN,
+which will automatically scan the directory `~/uavcan_vendor_specific_types` for vendor-specific data types,
+where `~` stands for the home directory of the current user, e.g. `/home/joe` or `C:\Users\Joe`.
+Consider the following directory layout:
+
+```
+~
+└── uavcan_vendor_specific_types
+    └── root_ns_a
+        ├── 100.Foo.uavcan
+        ├── 42.Bar.uavcan
+        └── Baz.uavcan
+```
+
+The above layout defines the following custom data types:
+
+* `sirius_cybernetics_corporation.Foo` with the default data type ID 100.
+* `sirius_cybernetics_corporation.Bar` with the default data type ID 42.
+* `sirius_cybernetics_corporation.Baz` where the default data type ID is not set.
+
 ## Interactive Console
 
 The application embeds an IPython console (running Python 3.4 or newer)
