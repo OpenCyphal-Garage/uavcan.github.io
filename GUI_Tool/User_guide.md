@@ -44,7 +44,7 @@ Consider the following directory layout:
 ```
 ~
 └── uavcan_vendor_specific_types
-    └── root_ns_a
+    └── sirius_cybernetics_corporation
         ├── 100.Foo.uavcan
         ├── 42.Bar.uavcan
         └── Baz.uavcan
