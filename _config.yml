@@ -15,6 +15,8 @@ kramdown:
   input: GFM
   hard_wrap: false
 
+exclude: ["Specification/dsdl/"]
+
 defaults:
   -
     scope:
