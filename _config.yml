@@ -15,7 +15,9 @@ kramdown:
   input: GFM
   hard_wrap: false
 
-exclude: ["Specification/dsdl/"]
+exclude:
+  - "Specification/dsdl/*.md"
+  - "Specification/dsdl/uavcan/*.md"
 
 defaults:
   -
