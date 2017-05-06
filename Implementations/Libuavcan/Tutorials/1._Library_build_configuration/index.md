@@ -175,6 +175,26 @@ In case automatic adjustment can't be performed, it defaults to a safe value, 64
 
 If the block size is set too small for the current platform, the library will intentionally fail to compile.
 
+### `UAVCAN_NO_GLOBAL_DATA_TYPE_REGISTRY`
+
+This option will disable the global data type registry maintained by the library.
+*Use of this feature is strongly discouraged*, unless you have a deep understanding of the library,
+your application is extremely ROM and RAM limited, and you really know what you're doing.
+
+If this option is enabled, the library will not be able to maintain the set of used DSDL data type
+definitions automatically, so the developer will have to register every used data type manually
+(this procedure is covered in one of the later tutorials).
+
+Pros:
+
+* Slightly lower ROM and RAM footprints of the library.
+* The library will contain no singletons, and no static initialization will take place at start up.
+* Inclusion of the data type definition headers will not affect the ROM footprint.
+
+Cons:
+
+* The developer will be responsible for registration of the DSDL data types needed by the application.
+
 ## Debugging and troubleshooting
 
 The library facilitates debugging and troubleshooting through perfcounters and debug output.
