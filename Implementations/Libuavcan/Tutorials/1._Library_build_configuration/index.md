@@ -95,7 +95,6 @@ The default value is always zero (disabled).
 
 Some of the important features affected in tiny mode:
 
-* Static memory pools removed
 * Transport layer self-diagnostics removed
 * Logging removed
 * The following services are not supported by default:
