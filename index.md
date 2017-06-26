@@ -10,9 +10,9 @@ Lightweight protocol designed for reliable communication in aerospace and roboti
 
 - Democratic network - no single point of failure.
 - Publish/subscribe or request/response exchange semantics.
-- Allows to efficiently exchange large data structures.
+- Allows efficient exchange of large data structures.
 - Lightweight, easy to implement protocol.
 - Supports network-wide time synchronization with microsecond precision.
-- Doubly-redundant or triply-redundant CAN bus.
+- Doubly- or triply- redundant CAN bus.
 - Can be used in deeply embedded, resource constrained, hard real-time systems.
-- The specification and the reference implementation are open and free to use ([MIT License](http://opensource.org/licenses/MIT)).
+- The specification and reference implementation are open and free to use ([MIT License](http://opensource.org/licenses/MIT)).
