@@ -1,9 +1,13 @@
 <footer id="footer">
     <div class="inner">
         <ul class="menu">
-            <li><a href="https://groups.google.com/forum/#!forum/uavcan">Mailing list</a></li>
-            <li><a href="https://github.com/UAVCAN">Github profile</a></li>
-            <li><a href="https://github.com/UAVCAN/uavcan.github.io/issues/new">Report a problem with this website</a></li>
+            <li><a href="https://groups.google.com/forum/#!forum/uavcan" target="_blank">Mailing list</a></li>
+            <li><a href="https://github.com/UAVCAN" target="_blank">Github profile</a></li>
+            <li>
+                <a href="https://github.com/UAVCAN/uavcan.github.io/issues/new?title=Problem+with+the+website&body=Reported+from+page+{{ page.url | cgi_escape }}." target="_blank">
+                    Report a problem with this website
+                </a>
+            </li>
         </ul>
         <p class="copyright">Generated {{ site.time | date_to_rfc822 }} &copy; UAVCAN development team</p>
     </div>
