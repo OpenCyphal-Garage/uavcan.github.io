@@ -61,7 +61,15 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
         {% if node_url_noslash == page_url_noslash %}
             {% assign active_item = true %}
         {% endif %}
-        {% if PREFIX == '' and page_url_noslash contains node_url_noslash %}
+        {% comment %}
+        Emulating the startswith() behavior here using two temporaries prepended with the same character.
+        For example: Foobarbaz contains bar --> true,
+        however: *Foobarbaz contains *bar --> false,
+        and *barbaz contains *bar --> true.
+        {% endcomment %}
+        {% assign tmp1 = node_url_noslash | prepend: '*' %}
+        {% assign tmp2 = page_url_noslash | prepend: '*' %}
+        {% if PREFIX == '' and tmp2 contains tmp1 %}
             {% assign active_item = true %}
         {% endif %}
 
