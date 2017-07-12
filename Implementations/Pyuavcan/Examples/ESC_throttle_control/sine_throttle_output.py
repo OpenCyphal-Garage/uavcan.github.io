@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import uavcan, time, math
 
 # Initializing a UAVCAN node instance.
@@ -15,6 +17,7 @@ while len(dynamic_node_id_allocator.get_allocation_table()) <= 1:
     print('Waiting for other nodes to become online...')
     node.spin(timeout=1)
 
+
 # Publishing setpoint values from this function; it is invoked periodically from the node thread.
 def publish_throttle_setpoint():
     # Generating a sine wave
@@ -23,6 +26,7 @@ def publish_throttle_setpoint():
     commands = [setpoint, setpoint, setpoint, setpoint]
     message = uavcan.equipment.esc.RawCommand(cmd=commands)
     node.broadcast(message)
+
 
 # This is how we invoke the publishing function periodically.
 node.periodic(0.05, publish_throttle_setpoint)
