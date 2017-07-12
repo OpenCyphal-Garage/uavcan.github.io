@@ -60,8 +60,10 @@ The above layout defines the following custom data types:
 
 The application embeds an IPython console (running Python 3.4 or newer)
 that provides the user with access to the application's own UAVCAN node.
+
 As the application is built on [PyUAVCAN](/Implementations/Pyuavcan),
 all features of the library are avaiable to the user via the interactive shell.
+
 The application exposes a few convenience functions and objects, which are listed at the top of the console
 when it is started.
 In order to get more information about any function or object, execute `help(object_name)`.
