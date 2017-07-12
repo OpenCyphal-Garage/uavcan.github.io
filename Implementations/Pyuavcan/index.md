@@ -14,4 +14,4 @@ The latest version of pyuavcan can be installed using pip:
 pip install uavcan
 ```
 
-Please visit the [GitHub page](https://github.com/UAVCAN/pyuavcan) for more information about contributing to pyuavcan, or view the [tutorials](http://uavcan.org/Implementations/Pyuavcan/Tutorials) for user-level documentation.
+Please visit the [GitHub page](https://github.com/UAVCAN/pyuavcan) for more information about contributing to pyuavcan, or view the [tutorials](/Implementations/Pyuavcan/Tutorials) for user-level documentation.

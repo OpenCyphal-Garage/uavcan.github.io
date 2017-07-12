@@ -25,4 +25,5 @@ pip install uavcan
 ## License
 
 Unless expressly stated otherwise,
-all code samples contained in the tutorials are distributed under the terms of CC0 (public domain dedication).
+all code samples contained in the tutorials are distributed under the terms of
+[CC0](https://creativecommons.org/publicdomain/zero/1.0/) (public domain dedication).
