@@ -83,11 +83,6 @@ needed to ensure that all menu and sub-menu entries are properly arranged with r
 
 {% if inner contains "</li>" %}
 <ul{% if include.class != null %} class="{{include.class}}"{% endif %}>
-{% if include.prefix == null %}
-    <li{% if page.url == '/index.html' %} class="current"{% endif %}>
-        <a href="/">Home</a>
-    </li>
-{% endif %}
 {{ inner }}
 </ul>
 {% endif %}
