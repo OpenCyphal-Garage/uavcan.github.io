@@ -20,7 +20,7 @@ It runs on Windows, Linux, and OSX.
 * Firmware update on remote nodes.
 * Python scripting from the embedded IPython console.
 * Different CAN adapter backends supported:
-  * SLCAN (aka LAWICEL) adapters, e.g. [Zubax Babel](https://docs.zubax.com/zubax_babel).
+  * SLCAN (aka LAWICEL) adapters, e.g. [Zubax Babel](https://zubax.com/products/babel).
   * Linux [SocketCAN](https://en.wikipedia.org/wiki/SocketCAN).
 
 ## Installation
@@ -32,7 +32,7 @@ Download and install the latest MSI package from <https://files.zubax.com/produc
 ### Linux
 
 Note that if you're using a USB SLCAN adapter, it may be necessary to
-[configure serial port access permissions](https://docs.zubax.com/usb#Configuring_permissions_on_Linux).
+[configure serial port access permissions](https://kb.zubax.com/x/N4Ah).
 
 #### Ubuntu, Mint, and other Debian-based distros
 

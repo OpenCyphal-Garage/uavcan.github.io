@@ -16,7 +16,7 @@ This backend is available on all systems.
 All adapters that implement the SLCAN (aka LAWICEL) protocol are supported.
 The following adapters have been tested so far and are guaranteed to work:
 
-* [Zubax Babel](https://docs.zubax.com/zubax_babel) (recommended)
+* [Zubax Babel](https://zubax.com/products/babel) (recommended)
 * Thiemar muCAN
 * VSCOM USB-CAN
 
@@ -29,7 +29,7 @@ It has been tested with the following adapters:
 
 * 8devices USB2CAN
 * PEAK System PCAN-USB
-* [Zubax Babel](https://docs.zubax.com/zubax_babel) (via SLCAN bridge)
+* [Zubax Babel](https://zubax.com/products/babel) (via SLCAN bridge)
 * Virtual CAN interface
 
 Any other adapter supported by SocketCAN should also work with UAVCAN GUI Tool without issues.

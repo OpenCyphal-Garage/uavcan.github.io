@@ -47,7 +47,7 @@ CAN adapter commands and status information via a serial port link
 Many different vendors manufacture SLCAN-compatible CAN adapters.
 Pyuavcan has been successfully tested at least with the following models:
 
-* [Zubax Babel](https://docs.zubax.com/zubax_babel)
+* [Zubax Babel](https://zubax.com/products/babel)
 * Thiemar muCAN
 * VSCOM USB-CAN
 
