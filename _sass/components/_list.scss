@@ -17,6 +17,10 @@
 
 		li {
 			padding-left: 0.25em;
+
+			ul, ol {
+				margin-bottom: 0;
+			}
 		}
 	}
 
@@ -27,6 +31,10 @@
 
 		li {
 			padding-left: 0.5em;
+
+			ul, ol {
+				margin-bottom: 0;
+			}
 		}
 
 		&.alt {
