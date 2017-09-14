@@ -23,6 +23,7 @@ Enter your local clone derictory (make sure you have Gemfile there). Execute fro
 ## Running the website locally
 
 1. Enter your local clone derictory (where the Gemfile is located).
+Make sure that all git submodules are initialized by running `git submodule update --init --recursive`.
 2. Execute from the terminal `bundle exec jekyll serve` and wait until the page is generated.
 3. Open your internet browser and navigate to <http://localhost:4000> to see your local website.
 
