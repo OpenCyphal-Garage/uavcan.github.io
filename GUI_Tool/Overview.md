@@ -37,7 +37,8 @@ Note that if you're using a USB SLCAN adapter, it may be necessary to
 #### Ubuntu, Mint, and other Debian-based distros
 
 ```bash
-sudo apt-get install -y python3-pip python3-setuptools python3-numpy python3-pyqt5 python3-pyqt5.qtsvg git-core
+sudo apt-get install -y python3-pip python3-setuptools python3-wheel
+sudo apt-get install -y python3-numpy python3-pyqt5 python3-pyqt5.qtsvg git-core
 sudo pip3 install git+https://github.com/UAVCAN/gui_tool@master
 ```
 
