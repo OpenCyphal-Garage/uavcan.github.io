@@ -170,7 +170,7 @@ In this case, the application will have to obtain the *file descriptor* from the
 and add it to the set of file descriptors it is polling on.
 Whenever the CAN driver's file descriptor reports an event, the application will call either
 `Node<>::spin()` or `Node<>::spinOnce()`.
-Also, the spin method must be invoked periodically; the recommended minimum period is 10 milliseconds.
+Also, the spin method must be invoked periodically; the recommended maximum period is 10 milliseconds.
 
 The difference between `Node<>::spin()` and `Node<>::spinOnce()` is as follows:
 
