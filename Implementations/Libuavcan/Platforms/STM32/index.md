@@ -160,7 +160,6 @@ This example is for an STM32F446 MCU.
 
 The following firmware projects can be used as a reference:
 
-* [PX4ESC](https://github.com/Zubax/px4esc)
 * [Sapog](https://github.com/PX4/sapog)
 * [PX4](https://github.com/PX4/Firmware)
 * [Zubax GNSS](https://github.com/Zubax/zubax_gnss)
