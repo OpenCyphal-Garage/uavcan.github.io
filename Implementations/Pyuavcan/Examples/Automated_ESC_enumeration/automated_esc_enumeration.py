@@ -2,16 +2,6 @@
 
 import uavcan, time
 
-# Initializing a UAVCAN node instance.
-# In this example we're using an SLCAN adapter on the port '/dev/ttyACM0'.
-# PyUAVCAN also supports other types of adapters, refer to its docs to learn more.
-node = uavcan.make_node('/dev/ttyACM0', node_id=10, bitrate=1000000)
-
-# Initializing a dynamic node ID allocator.
-# This would not be necessary if the nodes were configured to use static node ID.
-node_monitor = uavcan.app.node_monitor.NodeMonitor(node)
-dynamic_node_id_allocator = uavcan.app.dynamic_node_id.CentralizedServer(node, node_monitor)
-
 
 # Waiting until new nodes stop appearing online.
 # That would mean that all nodes that are connected to the bus are now online and ready to work.
@@ -24,11 +14,6 @@ def wait_for_all_nodes_to_become_online():
             break
 
         num_nodes = new_num_nodes
-
-
-print('Waiting for all nodes to appear online, this should take less than a minute...')
-wait_for_all_nodes_to_become_online()
-print('Online nodes:', [node_id for _, node_id in dynamic_node_id_allocator.get_allocation_table()])
 
 
 # Determining how many ESC nodes are present.
@@ -44,11 +29,6 @@ def detect_esc_nodes():
         handle.remove()
 
     return esc_nodes
-
-
-print('Detecting ESC nodes...')
-esc_nodes = detect_esc_nodes()
-print('ESC nodes:', esc_nodes)
 
 
 # Enumerating ESC.
@@ -157,6 +137,24 @@ def enumerate_all_esc(esc_nodes, timeout=60):
     return enumerated_nodes
 
 
-enumerated_esc = enumerate_all_esc(esc_nodes)
+if __name__ == '__main__':
+    # Initializing a UAVCAN node instance.
+    # In this example we're using an SLCAN adapter on the port '/dev/ttyACM0'.
+    # PyUAVCAN also supports other types of adapters, refer to its docs to learn more.
+    node = uavcan.make_node('/dev/ttyACM0', node_id=10, bitrate=1000000)
 
-print('All ESC enumerated successfully; index order is as follows:', enumerated_esc)
+    # Initializing a dynamic node ID allocator.
+    # This would not be necessary if the nodes were configured to use static node ID.
+    node_monitor = uavcan.app.node_monitor.NodeMonitor(node)
+    dynamic_node_id_allocator = uavcan.app.dynamic_node_id.CentralizedServer(node, node_monitor)
+
+    print('Waiting for all nodes to appear online, this should take less than a minute...')
+    wait_for_all_nodes_to_become_online()
+    print('Online nodes:', [node_id for _, node_id in dynamic_node_id_allocator.get_allocation_table()])
+
+    print('Detecting ESC nodes...')
+    esc_nodes = detect_esc_nodes()
+    print('ESC nodes:', esc_nodes)
+
+    enumerated_esc = enumerate_all_esc(esc_nodes)
+    print('All ESC enumerated successfully; index order is as follows:', enumerated_esc)
