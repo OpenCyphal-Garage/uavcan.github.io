@@ -90,3 +90,26 @@ Please read the documentation related to your platform (refer to subsections) fo
   * `float.h`
   * `stdint.h`
   * `stdio.h`
+
+## DSDL compiler
+
+Libuavcan has a DSDL compiler that converts DSDL definitions into libuavcan-compatible header files (`*.hpp`).
+The compiler is titled `libuavcan_dsdlc`, and it is invoked as follows:
+
+```sh
+libuavcan_dsdlc source_dir
+```
+
+Where `source_dir` is the root namespace directory containing the data type definitions to be compiled,
+e.g. `dsdl/uavcan`.
+Please use `libuavcan_dsdlc --help` to obtain more detailed usage information.
+
+You must invoke the DSDL compiler during your build process before compiling your application and/or the library.
+For example, if you are using Make, a possible way to invoke the DSDL compiler is as follows:
+
+```make
+$(info $(shell $(LIBUAVCAN_DSDLC) $(UAVCAN_DSDL_DIR)))
+UINCDIR += dsdlc_generated
+```
+
+For more information, refer to the examples specific to your target platform.
