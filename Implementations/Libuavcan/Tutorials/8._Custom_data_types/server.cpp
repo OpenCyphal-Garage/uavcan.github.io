@@ -69,7 +69,7 @@ int main(int argc, const char** argv)
      * accessible for the user. Please refer to the relevant tutorial to learn how to make the node configuration
      * accessible via UAVCAN.
      * Also, this part of the specification is highly relevant - it describes parameter naming conventions for DTID:
-     *  http://uavcan.org/Standard_data_types_and_application_level_functions#Node_configuration
+     *  https://uavcan.org/Specification/6._Application_level_functions/#node-configuration
      */
     regist_result =
         uavcan::GlobalDataTypeRegistry::instance().registerDataType<GetCurrentTime>(211);  // DTID: 242 --> 211
