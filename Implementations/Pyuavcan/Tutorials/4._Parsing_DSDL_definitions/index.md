@@ -47,7 +47,7 @@ Put this code into a file in the current directory:
 
 # pyuavcan supports Python 2.7 and Python 3.x
 from __future__ import print_function
-from pyuavcan import dsdl
+from uavcan import dsdl
 
 # Root namespace directories:
 NAMESPACE_DIRS = ['namespace_a/', 'namespace_b/']
