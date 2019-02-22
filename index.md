@@ -15,9 +15,9 @@ applications over robust vehicular networks such as CAN bus.**
 - High-quality open source reference implementations are freely available under the MIT license.
 
 This website is dedicated to the **experimental version** of the protocol, otherwise known as **UAVCAN v0**.
-There is work underway to release the first version of the protocol specification, based on the learnings from v0, and a set of
-robust reference implementations by **2019 Q2**, at which point UAVCAN v0 will reach the end of its life cycle.
-The new stable version that will replace it is known as **UAVCAN v1.0**.
+There is work underway to release the first version of the protocol specification, based on the learnings from v0,
+and a set of robust reference implementations by **2019 Q2**.
+The first version is known as **UAVCAN v1.0**.
 
 **All new designs should use UAVCAN v1.0.**
 Existing deployments will benefit from our commitment to provide long-term support and maintenance of
