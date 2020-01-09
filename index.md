@@ -15,5 +15,5 @@ Existing deployments will benefit from our commitment to provide long-term suppo
 UAVCAN v0-based systems.
 
 To learn more about the upcoming stable release UAVCAN v1.0,
-please visit the new website at [new.uavcan.org](https://new.uavcan.org/), and read the article
+please visit the new website at [**new.uavcan.org**](https://new.uavcan.org/), and read the article
 ["UAVCAN: a highly dependable publish-subscribe protocol for real-time intravehicular networking"](https://forum.uavcan.org/t/557).
