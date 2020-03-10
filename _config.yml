@@ -5,7 +5,7 @@ description: >
   UAVCAN is a lightweight protocol designed for reliable communication in aerospace
   and robotic applications via CAN bus.
 baseurl: ""
-url: "http://uavcan.org"
+url: "http://legacy.uavcan.org"
 github_username: UAVCAN
 
 # Build settings
