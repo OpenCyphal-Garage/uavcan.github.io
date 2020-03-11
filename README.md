@@ -1,8 +1,8 @@
-# UAVCAN website
+# Legacy UAVCAN website
 
-[![Gitter](https://img.shields.io/badge/gitter-join%20chat-green.svg)](https://gitter.im/UAVCAN/general)
+[![Forum](https://img.shields.io/discourse/users.svg?server=https%3A%2F%2Fforum.uavcan.org&color=1700b3)](https://forum.uavcan.org)
 
-This repository contains sources of the UAVCAN website.
+This repository contains sources of the legacy UAVCAN website available at <http://legacy.uavcan.org>.
 
 How to configure Jekyll with Github Pages: <https://help.github.com/articles/using-jekyll-with-pages>.
 
