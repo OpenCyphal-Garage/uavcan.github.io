@@ -62,6 +62,14 @@
                 {% endif %}
 
                 <div class="sidebar">
+                    <section>
+                        <h3>Obsolete</h3>
+                        This website is dedicated to the experimental version of the protocol known as UAVCAN v0
+                        that is now obsolete.
+                        To learn more about the stable release UAVCAN v1.0, please visit the
+                        <strong><a href="https://uavcan.org/">main website</a></strong>.
+                    </section>
+                    <hr/>
                     {% if side_menu_exists %}
                     <section>
                         {% assign sidebar_node_title = sidebar_node_name | replace: '_',' ' %}
@@ -74,15 +82,6 @@
 
                     <section>
                         <div id="toc"></div>
-                    </section>
-
-                    <hr/>
-                    <section>
-                        <h3>Obsolete</h3>
-                        This website is dedicated to the experimental version of the protocol known as UAVCAN v0
-                        that is now obsolete.
-                        To learn more about the stable release UAVCAN v1.0, please visit the
-                        <strong><a href="https://uavcan.org/">main website</a></strong>.
                     </section>
                 </div>
             </div>
