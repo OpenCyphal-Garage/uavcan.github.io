@@ -1,6 +1,6 @@
 # Site settings
 title: UAVCAN
-email: uavcan@googlegroups.com
+email: consortium@uavcan.org
 description: Legacy UAVCAN v0 website. Not recommended for new designs.
 baseurl: ""
 url: "https://legacy.uavcan.org"
