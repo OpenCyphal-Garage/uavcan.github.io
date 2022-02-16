@@ -2,10 +2,16 @@
 layout: home
 ---
 
-# UAVCAN v0 (legacy)
+# UAVCAN V0 - community Edition 
 
-This website is dedicated to the experimental version of the protocol, otherwise known as *UAVCAN v0*.
-**This version is now obsolete and should not be used in new designs.**
+**This website is no longer supported and a community fork has been created for continued 'v0' development at: http://dronecan.org/ **
+
+Please visit http://dronecan.org/ for the new community, renamed to 'dronecan'.
+
+## Old/legacy Info below:
+
+This website is/was dedicated to the original version of the protocol, otherwise known as *UAVCAN v0*.
+
 Existing deployments will benefit from our commitment to provide long-term support and maintenance of
 UAVCAN v0-based systems.
 
