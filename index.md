@@ -11,6 +11,8 @@ UAVCAN v0-based systems.
 
 To learn about the stable version of the protocol, please read [**The UAVCAN Guide**](https://uavcan.org/guide).
 
+Also see [DroneCAN](http://dronecan.org) -- an independent project aimed to provide continued support for legacy UAVCAN/CAN v0 under a new name.
+
 ## License
 
 UAVCAN is a standard open to everyone, and it will always remain this way.
