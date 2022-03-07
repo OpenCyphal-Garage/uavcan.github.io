@@ -3,6 +3,7 @@
 [![Forum](https://img.shields.io/discourse/users.svg?server=https%3A%2F%2Fforum.uavcan.org&color=1700b3)](https://forum.uavcan.org)
 
 This repository contains sources of the legacy UAVCAN website available at <http://legacy.uavcan.org>.
+**This website has been replaced with [dronecan.org](https://dronecan.org), which is now maintained by a different team.**
 
 How to configure Jekyll with Github Pages: <https://help.github.com/articles/using-jekyll-with-pages>.
 
